@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1630502586 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.c
+	"labyrinth.h"
+	<stdio.h>
+	<stdlib.h>
+
+1630502524 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.h
+
+1630502570 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\main.c
+	<stdio.h>
+	<stdlib.h>
+	"labyrinth.h"
+
