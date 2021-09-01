@@ -11,7 +11,7 @@ void setObjetivo(No* node, int objetivo) {
 };
 
 char* getId(No* node) {
-    return &(node->id[0]);
+    return node->id;
 };
 void setId(No* node, char id[]) {
     strcpy(node->id, id);

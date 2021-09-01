@@ -3,7 +3,7 @@
     implementação dos nós do labirinto
 */
 
-#define MAX_ID_LEN 2
+#define MAX_ID_LEN 1
 #define UP_POS 0
 #define DOWN_POS 1
 #define RIGHT_POS 2
@@ -13,7 +13,7 @@
 // possui um identificador, um booleano se for o No objetivo
 // e uma lista de nos vizinhos
 typedef struct node {
-    char id[MAX_ID_LEN+1];
+    char id[MAX_ID_LEN];
     int objetivo;
     struct No* nolist[4];
 } No;

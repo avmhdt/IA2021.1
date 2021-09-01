@@ -6,13 +6,15 @@ Autores: José, Vinícius e Yuri
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "labyrinth.h"
+//#include labyrinth.h"
+#include "search.h"
 
 No* createLabyrinth() {
     No* z = malloc(sizeof(No));
     setVizinhosNULL(z);
     setObjetivo(z, 0);
     setId(z, "Z");
+//    printf("strcmp == %d\n", strcmp(getId(z), "Z"));
 
     No* c = malloc(sizeof(No));
     setVizinhosNULL(c);
@@ -162,6 +164,7 @@ No* createLabyrinth() {
     setVizinhosNULL(w);
     setObjetivo(w, 1);
     setId(w, "W");
+    printf("id(w) = %s\n", getId(w));
     insertVizinho(w, t, DOWN_POS);
     insertVizinho(t, w, UP_POS);
 
@@ -171,6 +174,9 @@ No* createLabyrinth() {
 int main()
 {
     No* raiz = createLabyrinth();
+    int regras[4] = {0, 1, 2, 3};
+    No* bt = backtracking(raiz, "W", regras);
+    printf("bt.objetivo = %s\n", getId(bt));
     printf("Hello world!\n");
     return 0;
 }
