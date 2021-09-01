@@ -9,22 +9,22 @@
 #define RIGHT_POS 2
 #define LEFT_POS 3
 
-// Tipo estruturado para os nos do labirinto
-// possui um identificador, um booleano se for o No objetivo
-// e uma lista de nos vizinhos
-typedef struct node {
+// Tipo estruturado para os Camaras do labirinto
+// possui um identificador, um booleaCamara se for o Camara objetivo
+// e uma lista de Camaras vizinhos
+typedef struct camara {
     char id[MAX_ID_LEN];
     int objetivo;
-    struct No* nolist[4];
-} No;
+    struct Camara* Camaralist[4];
+} Camara;
 
-int getObjetivo(No* node);
-void setObjetivo(No* node, int objetivo);
+int getObjetivo(Camara* Camarade);
+void setObjetivo(Camara* Camarade, int objetivo);
 
-char* getId(No* node);
-void setId(No* node, char id[]);
+char* getId(Camara* Camarade);
+void setId(Camara* Camarade, char id[]);
 
-No* getVizinho(No* node, int pos);
-int insertVizinho(No* node, No* parent, int pos);
+Camara* getVizinho(Camara* Camarade, int pos);
+int insertVizinho(Camara* Camarade, Camara* parent, int pos);
 
-void setVizinhosNULL(No* node);
+void setVizinhosNULL(Camara* Camarade);

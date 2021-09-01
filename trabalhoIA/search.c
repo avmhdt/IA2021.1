@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-No* backtracking(No* raiz, char* objetivo, int regra[4]) {
+Camara* backtracking(Camara* raiz, char* objetivo, int regra[4]) {
     /*
     Algoritmo Backtracking
     Início
@@ -27,8 +27,8 @@ No* backtracking(No* raiz, char* objetivo, int regra[4]) {
     Fim-enquanto;
     Fim.
     */
-    No* N = raiz;
-    No* V;
+    Camara* N = raiz;
+    Camara* V;
     int i;
     int sucesso = 0, fracasso = 0;
     while(!(sucesso || fracasso)) {

@@ -2,43 +2,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getObjetivo(No* node) {
-    return node->objetivo;
+int getObjetivo(Camara* camara) {
+    return camara->objetivo;
 };
 
-void setObjetivo(No* node, int objetivo) {
-    node->objetivo = objetivo;
+void setObjetivo(Camara* camara, int objetivo) {
+    camara->objetivo = objetivo;
 };
 
-char* getId(No* node) {
-    return node->id;
+char* getId(Camara* camara) {
+    return camara->id;
 };
-void setId(No* node, char id[]) {
-    strcpy(node->id, id);
+void setId(Camara* camara, char id[]) {
+    strcpy(camara->id, id);
 };
 
-No* getVizinho(No* node, int pos) {
-    No** vizinhos = node->nolist;
+Camara* getVizinho(Camara* camara, int pos) {
+    Camara** vizinhos = camara->Camaralist;
     return vizinhos[pos];
 };
 
-int insertVizinho(No* node, No* parent, int pos) {
+int insertVizinho(Camara* camara, Camara* parent, int pos) {
     if(pos < 0 || pos > 3) {
         printf("Error. pos out of bounds.\n");
         return -1;
     }
-//    if(parent->nolist[pos] != NULL) {
-//        printf("Error inserting node. Position full.");
+//    if(parent->Camaralist[pos] != NULL) {
+//        printf("Error inserting camara. Position full.");
 //        return -2;
 //    }
-    parent->nolist[pos] = node;
+    parent->Camaralist[pos] = camara;
     return 0;
 };
 
-void setVizinhosNULL(No* node) {
-    node->nolist[UP_POS] = NULL;
-    node->nolist[DOWN_POS] = (No*)NULL;
-    node->nolist[RIGHT_POS] = (No*)NULL;
-    node->nolist[LEFT_POS] = (No*)NULL;
+void setVizinhosNULL(Camara* camara) {
+    camara->Camaralist[UP_POS] = NULL;
+    camara->Camaralist[DOWN_POS] = (Camara*)NULL;
+    camara->Camaralist[RIGHT_POS] = (Camara*)NULL;
+    camara->Camaralist[LEFT_POS] = (Camara*)NULL;
 
 };
