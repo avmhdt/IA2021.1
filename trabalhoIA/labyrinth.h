@@ -15,7 +15,7 @@
 typedef struct node {
     char id[MAX_ID_LEN+1];
     int objetivo;
-    struct No** nolist;
+    struct No* nolist[4];
 } No;
 
 int getObjetivo(No* node);
@@ -26,3 +26,5 @@ void setId(No* node, char id[]);
 
 No* getVizinho(No* node, int pos);
 int insertVizinho(No* node, No* parent, int pos);
+
+void setVizinhosNULL(No* node);

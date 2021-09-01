@@ -27,10 +27,18 @@ int insertVizinho(No* node, No* parent, int pos) {
         printf("Error. pos out of bounds.\n");
         return -1;
     }
-    if(parent->nolist[pos]) {
-        printf("Error inserting node. Position full.");
-        return -2;
-    }
+//    if(parent->nolist[pos] != NULL) {
+//        printf("Error inserting node. Position full.");
+//        return -2;
+//    }
     parent->nolist[pos] = node;
     return 0;
+};
+
+void setVizinhosNULL(No* node) {
+    node->nolist[UP_POS] = NULL;
+    node->nolist[DOWN_POS] = (No*)NULL;
+    node->nolist[RIGHT_POS] = (No*)NULL;
+    node->nolist[LEFT_POS] = (No*)NULL;
+
 };
