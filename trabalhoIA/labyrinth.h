@@ -28,3 +28,5 @@ Camara* getVizinho(Camara* Camarade, int pos);
 int insertVizinho(Camara* Camarade, Camara* parent, int pos);
 
 void setVizinhosNULL(Camara* Camarade);
+
+void traverseLabyrinth(Camara* camara, int regras[4]);

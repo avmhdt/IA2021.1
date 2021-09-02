@@ -42,3 +42,12 @@ void setVizinhosNULL(Camara* camara) {
     camara->Camaralist[LEFT_POS] = (Camara*)NULL;
 
 };
+
+void traverseLabyrinth(Camara* camara, int regras[4]) {
+    if(camara == NULL) return;
+    printf("%s\n", getId(camara));
+    int i;
+    for(i = 0; i < 4; i++) {
+        traverseLabyrinth(getVizinho(camara, regras[i]), regras);
+    }
+};
