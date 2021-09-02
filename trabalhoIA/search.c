@@ -94,32 +94,32 @@ No* backtracking(No* raiz, char* objetivo, int regra[4]) {
     }
     return N;
 }
-
+/*
 Camara* buscaLargura(Camara* raiz, char* objetivo, int regra[4]) {
-    /*
-    início
-    defina(abertos); {pilha(profundidade), fila(largura)}
-    S := raiz; fracasso := F; sucesso := F;
-    insere(S, abertos); defina(fechados);
-    enquanto não (sucesso ou fracasso) faça
-        se abertos = vazio então
-            fracasso := T;
-        senão
-            N := primeiro(abertos); {pilha(topo), fila(primeiro)}
-            se N = solução então
-                sucesso := T;
-            senão
-                enquanto R(N) ≠ vazio faça
-                    escolha r de R(N); new(u);
-                    u := r(N); insere(u, abertos);
-                    atualiza R(N);
-                fim-enquanto;
-                insere(N, fechados); {destrua(N)}
-            fim-se;
-        fim-se;
-    fim-enquanto;
-fim.
-    */
+    
+    //     início
+    //     defina(abertos); {pilha(profundidade), fila(largura)}
+    //     S := raiz; fracasso := F; sucesso := F;
+    //     insere(S, abertos); defina(fechados);
+    //     enquanto não (sucesso ou fracasso) faça
+    //         se abertos = vazio então
+    //             fracasso := T;
+    //         senão
+    //             N := primeiro(abertos); {pilha(topo), fila(primeiro)}
+    //             se N = solução então
+    //                 sucesso := T;
+    //             senão
+    //                 enquanto R(N) ≠ vazio faça
+    //                     escolha r de R(N); new(u);
+    //                     u := r(N); insere(u, abertos);
+    //                     atualiza R(N);
+    //                 fim-enquanto;
+    //                 insere(N, fechados); {destrua(N)}
+    //             fim-se;
+    //         fim-se;
+    //     fim-enquanto;
+    // fim.
+    
     int* abertos; //fila
     int sucesso = 0, fracasso = 0;
     Camara* N = raiz;
@@ -130,4 +130,4 @@ fim.
 
         }
     }
-}
+}*/

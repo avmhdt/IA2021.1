@@ -1,7 +1,9 @@
 /*
     header labyrinth.h
-    implementação dos nós do labirinto
+    implementaï¿½ï¿½o dos nï¿½s do labirinto
 */
+#ifndef LABYRINTH_H
+#define LABYRINTH_H
 
 #define MAX_ID_LEN 1
 #define UP_POS 0
@@ -9,14 +11,18 @@
 #define RIGHT_POS 2
 #define LEFT_POS 3
 
+
 // Tipo estruturado para os Camaras do labirinto
 // possui um identificador, um booleaCamara se for o Camara objetivo
 // e uma lista de Camaras vizinhos
-typedef struct camara {
+
+typedef struct camara Camara;
+
+struct camara{
     char id[MAX_ID_LEN];
     int objetivo;
-    struct Camara* Camaralist[4];
-} Camara;
+    Camara* Camaralist[4];
+};
 
 int getObjetivo(Camara* Camarade);
 void setObjetivo(Camara* Camarade, int objetivo);
@@ -30,3 +36,5 @@ int insertVizinho(Camara* Camarade, Camara* parent, int pos);
 void setVizinhosNULL(Camara* Camarade);
 
 void traverseLabyrinth(Camara* camara, int regras[4]);
+
+#endif

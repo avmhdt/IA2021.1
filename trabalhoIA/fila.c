@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "fila.h"
+#include "labyrinth.h"
 
 struct fila
 {
@@ -11,7 +12,7 @@ struct fila
 
 struct elemento
 {
-    int dado;
+    Camara *camara;
     struct elemento *prox;
 };
 typedef struct elemento Elem;
@@ -55,7 +56,7 @@ int fila_tamanho(Fila *fila)
     return contador;
 }
 
-int fila_insere(Fila *fila, int dado)
+int fila_insere(Fila *fila, Camara* camara)
 {
     // fila existe?
     if(fila==NULL) return 0;
@@ -65,7 +66,7 @@ int fila_insere(Fila *fila, int dado)
     if(no==NULL) return 0;
     // alocação bem sucedida...
     // inicializa o nó
-    no->dado = dado;
+    no->camara = camara;
     no->prox = NULL;
     if(fila->final==NULL)
         fila->inicio = no;
@@ -86,6 +87,7 @@ int fila_remove(Fila *fila)
     return 1;
 }
 
+/*
 int fila_consulta(Fila *fila, int *dado)
 {
     if(fila_vazia(fila)) return 0;
@@ -103,3 +105,4 @@ void fila_imprime(Fila *fila)
     }
     putchar('\n');
 }
+*/
