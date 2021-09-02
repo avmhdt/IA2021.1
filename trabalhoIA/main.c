@@ -12,10 +12,20 @@ Autores: Jos�, Vin�cius e Yuri
 
 int main()
 {
-    Camara* raiz = createLabyrinth();
-    int regras[4] = {0, 1, 2, 3};
-    Camara* bt = backtracking(raiz, "W", regras);
-    printf("bt.objetivo = %s\n", getId(bt));
-    printf("Hello world!\n");
+    Camara* start = createLabyrinth();
+    No* raiz = malloc(sizeof(No));
+    setCamara(raiz, start);
+    setPai(raiz, NULL);
+    allocFilhos(raiz);
+
+    printf("teste\n");
+
+    int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
+    traverseLabyrinth(start, regras);
+
+//    No* bt = backtracking(raiz, "W", regras);
+//    printf("\naaaa\n");
+//    printf("bt.objetivo = %s\n", getId(bt));
+//    printf("Hello world!\n");
     return 0;
 }
