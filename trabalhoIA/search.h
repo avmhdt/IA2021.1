@@ -18,3 +18,4 @@ void allocFilhos(No* node);
 
 
 No* backtracking(No* raiz, char* objetivo, int regra[4]);
+No* buscaLargura(No* raiz, char* objetivo, int regra[4]);

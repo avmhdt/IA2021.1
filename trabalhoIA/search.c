@@ -1,6 +1,8 @@
 #include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "pilha.h"
+#include "fila.h"
 
 Camara* getCamara(No* node) {
     return node->camara;
@@ -38,22 +40,22 @@ void allocFilhos(No* node) {
 No* backtracking(No* raiz, char* objetivo, int regra[4]) {
     /*
     Algoritmo Backtracking
-    Início
+    Inï¿½cio
     S := estado inicial;
     N := S;
     Fracasso := F;
     Sucesso := F;
-    Enquanto não (Sucesso ou Fracasso) faça
+    Enquanto nï¿½o (Sucesso ou Fracasso) faï¿½a
     Selecione o operador r de R(N);
-    Se R(N) <> vazio então
+    Se R(N) <> vazio entï¿½o
     N := r(N);
-    Se N é solução então
+    Se N ï¿½ soluï¿½ï¿½o entï¿½o
     Sucesso := T;
     Fim-se;
-    Senão
-    Se N = S então
+    Senï¿½o
+    Se N = S entï¿½o
     Fracasso := T;
-    Senão
+    Senï¿½o
     N := pai(N);
     Fim-se;
     Fim-se;
@@ -91,4 +93,41 @@ No* backtracking(No* raiz, char* objetivo, int regra[4]) {
         }
     }
     return N;
+}
+
+Camara* buscaLargura(Camara* raiz, char* objetivo, int regra[4]) {
+    /*
+    inÃ­cio
+    defina(abertos); {pilha(profundidade), fila(largura)}
+    S := raiz; fracasso := F; sucesso := F;
+    insere(S, abertos); defina(fechados);
+    enquanto nÃ£o (sucesso ou fracasso) faÃ§a
+        se abertos = vazio entÃ£o
+            fracasso := T;
+        senÃ£o
+            N := primeiro(abertos); {pilha(topo), fila(primeiro)}
+            se N = soluÃ§Ã£o entÃ£o
+                sucesso := T;
+            senÃ£o
+                enquanto R(N) â‰  vazio faÃ§a
+                    escolha r de R(N); new(u);
+                    u := r(N); insere(u, abertos);
+                    atualiza R(N);
+                fim-enquanto;
+                insere(N, fechados); {destrua(N)}
+            fim-se;
+        fim-se;
+    fim-enquanto;
+fim.
+    */
+    int* abertos;
+    int sucesso = 0, fracasso = 0;
+    Camara* N = raiz;
+    while(!(sucesso || fracasso)) {
+        if(abertos == NULL)
+            fracasso = 1;
+        else {
+
+        }
+    }
 }
