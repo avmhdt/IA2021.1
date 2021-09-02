@@ -75,7 +75,7 @@ Camara* buscaLargura(Camara* raiz, char* objetivo, int regra[4]) {
     fim-enquanto;
 fim.
     */
-    int* abertos;
+    int* abertos; //fila
     int sucesso = 0, fracasso = 0;
     Camara* N = raiz;
     while(!(sucesso || fracasso)) {
