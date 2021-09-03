@@ -164,29 +164,29 @@ Camara* createLabyrinth() {
     setVizinhosNULL(w);
     setObjetivo(w, 1);
     setId(w, "W");
-    printf("id(w) = %s\n", getId(w));
     insertVizinho(w, t, DOWN_POS);
     insertVizinho(t, w, UP_POS);
 
     return z;
 }
 
-int main()
+int main(void)
 {
-    Camara* start = createLabyrinth();
-    No* raiz = malloc(sizeof(No));
-    setCamara(raiz, start);
-    setPai(raiz, NULL);
-    allocFilhos(raiz);
-
     printf("teste\n");
 
-    int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
-    traverseLabyrinth(start, regras);
+    Camara* start = createLabyrinth();
+    /*No* raiz = malloc(sizeof(No));
+    setCamara(raiz, start);
+    setPai(raiz, NULL);
+    allocFilhos(raiz);*/
 
-//    No* bt = backtracking(raiz, "W", regras);
-//    printf("\naaaa\n");
-//    printf("bt.objetivo = %s\n", getId(bt));
-//    printf("Hello world!\n");
+    int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
+    //traverseLabyrinth(start, regras);
+
+    //    No* bt = backtracking(raiz, "W", regras);
+    //    printf("\naaaa\n");
+    //    printf("bt.objetivo = %s\n", getId(bt));
+    //    printf("Hello world!\n");
+
     return 0;
 }

@@ -4,7 +4,7 @@
 #include "pilha.h"
 #include "fila.h"
 
-Camara* getCamara(No* node) {
+/*Camara* getCamara(No* node) {
     return node->camara;
 };
 
@@ -38,30 +38,30 @@ void allocFilhos(No* node) {
 };
 
 No* backtracking(No* raiz, char* objetivo, int regra[4]) {
-    /*
-    Algoritmo Backtracking
-    In�cio
-    S := estado inicial;
-    N := S;
-    Fracasso := F;
-    Sucesso := F;
-    Enquanto n�o (Sucesso ou Fracasso) fa�a
-    Selecione o operador r de R(N);
-    Se R(N) <> vazio ent�o
-    N := r(N);
-    Se N � solu��o ent�o
-    Sucesso := T;
-    Fim-se;
-    Sen�o
-    Se N = S ent�o
-    Fracasso := T;
-    Sen�o
-    N := pai(N);
-    Fim-se;
-    Fim-se;
-    Fim-enquanto;
-    Fim.
-    */
+    
+    // Algoritmo Backtracking
+    // In�cio
+    // S := estado inicial;
+    // N := S;
+    // Fracasso := F;
+    // Sucesso := F;
+    // Enquanto n�o (Sucesso ou Fracasso) fa�a
+    // Selecione o operador r de R(N);
+    // Se R(N) <> vazio ent�o
+    // N := r(N);
+    // Se N � solu��o ent�o
+    // Sucesso := T;
+    // Fim-se;
+    // Sen�o
+    // Se N = S ent�o
+    // Fracasso := T;
+    // Sen�o
+    // N := pai(N);
+    // Fim-se;
+    // Fim-se;
+    // Fim-enquanto;
+    // Fim.
+    
     No* S = raiz;
     No* N = S;
     No* V;
@@ -94,8 +94,24 @@ No* backtracking(No* raiz, char* objetivo, int regra[4]) {
     }
     return N;
 }
-/*
-Camara* buscaLargura(Camara* raiz, char* objetivo, int regra[4]) {
+*/
+
+int ehPai(Elem* atual, Camara* camara) {
+    if(atual == NULL)
+        return 0;
+    int idPai = atual->idPai;
+    Elem* no = atual;
+    while(no->id>idPai) {
+        no = no->ant;
+        if(no == NULL)
+            return 0;
+    }
+    if(no->camara->id[0] == camara->id[0])
+        return 1;
+    return ehPai(no, camara);
+}
+
+Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
     
     //     início
     //     defina(abertos); {pilha(profundidade), fila(largura)}
@@ -120,14 +136,24 @@ Camara* buscaLargura(Camara* raiz, char* objetivo, int regra[4]) {
     //     fim-enquanto;
     // fim.
     
-    int* abertos; //fila
+    Fila* abertos = fila_cria(); //fila
+    int indice = 0;
+    fila_insere(abertos, start, -1, indice);
+    Elem* no = abertos->inicio;
     int sucesso = 0, fracasso = 0;
-    Camara* N = raiz;
+    Camara* N = start;
     while(!(sucesso || fracasso)) {
         if(abertos == NULL)
             fracasso = 1;
         else {
-
+            int i = 0;
+            for(i; i<4; i++) {
+                if(N->Camaralist[regra[i]] != NULL) {
+                    indice++;
+                    fila_insere(abertos, N->Camaralist[regra[i]], no->id, indice);
+                }
+            }
         }
     }
-}*/
+    return N;
+}

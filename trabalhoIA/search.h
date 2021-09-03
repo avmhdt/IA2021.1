@@ -1,5 +1,8 @@
 #include "labyrinth.h"
+#include "fila.h"
+
 //backtracking começo
+/*
 typedef struct {
     Camara* camara;
     struct No** filhos;
@@ -19,7 +22,8 @@ void allocFilhos(No* node);
 
 No* backtracking(No* raiz, char* objetivo, int regra[4]);
 //backtracking fim
-
+*/
 //buscaLargura começo
-//No* buscaLargura(No* raiz, char* objetivo, int regra[4]);
+int ehPai(Elem* atual, Camara* camara);
+Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
 //buscaLargura fim

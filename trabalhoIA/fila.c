@@ -1,21 +1,8 @@
-//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530
+//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530 (código base)
 #include <stdio.h>
 #include <stdlib.h>
 #include "fila.h"
 #include "labyrinth.h"
-
-struct fila
-{
-    struct elemento *inicio;
-    struct elemento *final;
-};
-
-struct elemento
-{
-    Camara *camara;
-    struct elemento *prox;
-};
-typedef struct elemento Elem;
 
 Fila* fila_cria()
 {
@@ -56,7 +43,7 @@ int fila_tamanho(Fila *fila)
     return contador;
 }
 
-int fila_insere(Fila *fila, Camara* camara)
+int fila_insere(Fila *fila, Camara* camara, int idPai, int id)
 {
     // fila existe?
     if(fila==NULL) return 0;
@@ -67,15 +54,21 @@ int fila_insere(Fila *fila, Camara* camara)
     // alocação bem sucedida...
     // inicializa o nó
     no->camara = camara;
+    no->idPai = idPai;
+    no->id = id;
     no->prox = NULL;
-    if(fila->final==NULL)
+    no->fechado = 0;
+    if(fila->final==NULL) {
         fila->inicio = no;
-    else
+    }
+    else {
         fila->final->prox = no;
+        no->ant = fila->final;
+    }
     fila->final = no;
     return 1;
 }
-
+/*
 int fila_remove(Fila *fila)
 {
     if(fila_vazia(fila)) return 0;
