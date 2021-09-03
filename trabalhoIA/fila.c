@@ -60,6 +60,7 @@ int fila_insere(Fila *fila, Camara* camara, int idPai, int id)
     no->fechado = 0;
     if(fila->final==NULL) {
         fila->inicio = no;
+        no->ant = NULL;
     }
     else {
         fila->final->prox = no;

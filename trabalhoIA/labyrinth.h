@@ -5,7 +5,7 @@
 #ifndef LABYRINTH_H
 #define LABYRINTH_H
 
-#define MAX_ID_LEN 1
+#define MAX_ID_LEN 10
 #define UP_POS 0
 #define DOWN_POS 1
 #define RIGHT_POS 2

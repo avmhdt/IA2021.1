@@ -1,6 +1,7 @@
 #include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "pilha.h"
 #include "fila.h"
 
@@ -96,19 +97,25 @@ No* backtracking(No* raiz, char* objetivo, int regra[4]) {
 }
 */
 
+//verifica se a camara que vai ser colocada na lista é ancestral de si mesma
 int ehPai(Elem* atual, Camara* camara) {
-    if(atual == NULL)
-        return 0;
     int idPai = atual->idPai;
     Elem* no = atual;
     while(no->id>idPai) {
         no = no->ant;
-        if(no == NULL)
+        if(no == NULL) {
             return 0;
+        }
     }
     if(no->camara->id[0] == camara->id[0])
         return 1;
     return ehPai(no, camara);
+}
+
+Elem* proxEscolhido(Elem* atual) {
+    if(atual != NULL && atual->fechado)
+        return proxEscolhido(atual->prox);
+    return atual;
 }
 
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
@@ -135,25 +142,39 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
     //         fim-se;
     //     fim-enquanto;
     // fim.
-    
     Fila* abertos = fila_cria(); //fila
     int indice = 0;
     fila_insere(abertos, start, -1, indice);
     Elem* no = abertos->inicio;
-    int sucesso = 0, fracasso = 0;
-    Camara* N = start;
-    while(!(sucesso || fracasso)) {
-        if(abertos == NULL)
-            fracasso = 1;
+    Camara* camara = no->camara;
+    int sucesso = 0;
+    while(!sucesso) {
+        no = proxEscolhido(no);
+        if(no == NULL)
+            return NULL;
         else {
-            int i = 0;
-            for(i; i<4; i++) {
-                if(N->Camaralist[regra[i]] != NULL) {
-                    indice++;
-                    fila_insere(abertos, N->Camaralist[regra[i]], no->id, indice);
+            camara = no->camara;
+            //camara atual
+            printf(camara->id);
+            printf("\n");
+
+            if(!strcmp(camara->id, objetivo))
+                sucesso = 1;
+            else {
+                int i = 0;
+                for(i; i<4; i++) {
+                    if(camara->Camaralist[regra[i]] != NULL) {
+                        if(!ehPai(no, camara->Camaralist[regra[i]])) {
+                            indice++;
+                            fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
+                        }
+                    }
                 }
+                no->fechado = 1;
             }
-        }
+        } 
+        
+        
     }
-    return N;
+    return camara;
 }

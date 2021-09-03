@@ -6,6 +6,7 @@ Autores: Jos�, Vin�cius e Yuri
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "labyrinth.h"
 #include "search.h"
 
@@ -181,12 +182,18 @@ int main(void)
     allocFilhos(raiz);*/
 
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
+    char objetivo[MAX_ID_LEN];
+    strcpy(objetivo, "W");
     //traverseLabyrinth(start, regras);
 
     //    No* bt = backtracking(raiz, "W", regras);
     //    printf("\naaaa\n");
     //    printf("bt.objetivo = %s\n", getId(bt));
     //    printf("Hello world!\n");
-
+    Camara* resultado = buscaLargura(start, "W", regras);
+    if(resultado == NULL)
+        printf("Erro\n");
+    else
+        printf("%s",resultado->id);
     return 0;
 }
