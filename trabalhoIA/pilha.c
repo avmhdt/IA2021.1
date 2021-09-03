@@ -1,11 +1,11 @@
-//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530
 #include <stdio.h>
 #include <stdlib.h>
 #include "pilha.h"
 
 struct elemento
 {
-    int dado;
+//    int dado;
+    Camara *camara;
     struct elemento *prox;
 };
 
@@ -38,7 +38,7 @@ int pilha_vazia(Pilha *pilha)
     return (pilha==NULL || (*pilha)==NULL);
 }
 
-int pilha_insere(Pilha *pilha, int dado)
+int pilha_insere(Pilha *pilha, Camara* camara)
 {
     // pilha existe?
     if(pilha==NULL) return 0;
@@ -48,7 +48,7 @@ int pilha_insere(Pilha *pilha, int dado)
     if(no==NULL) return 0;
     // alocação bem sucedida...
     // inicializa o nó
-    no->dado = dado;
+    no->camara = camara;
     no->prox = (*pilha);
     *pilha = no;
     return 1;
@@ -68,7 +68,7 @@ void pilha_imprime(Pilha *pilha)
     if(pilha_vazia(pilha)) return;
     Elem *no = *pilha;
     while(no){
-        printf("%d ", no->dado);
+        printf("%d ", getId(no->camara));
         no = no->prox;
     }
     putchar('\n');

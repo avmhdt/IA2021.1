@@ -174,19 +174,18 @@ Camara* createLabyrinth() {
 int main()
 {
     Camara* start = createLabyrinth();
-    No* raiz = malloc(sizeof(No));
-    setCamara(raiz, start);
-    setPai(raiz, NULL);
-    allocFilhos(raiz);
-
-    printf("teste\n");
+//    No* raiz = malloc(sizeof(No));
+//    setCamara(raiz, start);
+//    setPai(raiz, NULL);
+//    allocFilhos(raiz);
+//    printf("raiz = %s\n", getId(getCamara(raiz)));
+//
+//    printf("teste\n");
 
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
-    traverseLabyrinth(start, regras);
-
-//    No* bt = backtracking(raiz, "W", regras);
-//    printf("\naaaa\n");
-//    printf("bt.objetivo = %s\n", getId(bt));
-//    printf("Hello world!\n");
+    //traverseLabyrinth(start, regras);
+    backtracking(start, "W", regras);
+    printf("\naaaa\n");
+    printf("Hello world!\n");
     return 0;
 }
