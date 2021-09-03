@@ -110,7 +110,7 @@ Camara* createLabyrinth() {
     insertVizinho(g, l, UP_POS);
 
     Camara* q = malloc(sizeof(Camara));
-    setVizinhosNULL(g);
+    setVizinhosNULL(q);
     setObjetivo(q, 0);
     setId(q, "Q");
     insertVizinho(q, l, DOWN_POS);
@@ -185,7 +185,7 @@ int main()
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
     //traverseLabyrinth(start, regras);
     backtracking(start, "W", regras);
-    printf("\naaaa\n");
+
     printf("Hello world!\n");
     return 0;
 }

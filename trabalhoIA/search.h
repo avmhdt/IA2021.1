@@ -30,5 +30,6 @@ int match(char* key, No* node);
 
 void backtracking(Camara* start, char* objetivo, int regra[4]);
 int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4]);
+int visitado(char *objetivo, Pilha *pilha);
 
 #endif // SEARCH_H

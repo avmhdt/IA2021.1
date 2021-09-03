@@ -2,15 +2,6 @@
 #include <stdlib.h>
 #include "pilha.h"
 
-struct elemento
-{
-//    int dado;
-    Camara *camara;
-    struct elemento *prox;
-};
-
-typedef struct elemento Elem;
-
 Pilha* pilha_cria()
 {
     Pilha *pi = (Pilha*) malloc(sizeof(Pilha));
@@ -68,7 +59,7 @@ void pilha_imprime(Pilha *pilha)
     if(pilha_vazia(pilha)) return;
     Elem *no = *pilha;
     while(no){
-        printf("%d ", getId(no->camara));
+        printf("%s ", getId(no->camara));
         no = no->prox;
     }
     putchar('\n');

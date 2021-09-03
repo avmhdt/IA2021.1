@@ -116,13 +116,25 @@ void backtracking(Camara* start, char* objetivo, int regra[4]) {
     pilha_insere(raiz, start);
     Pilha *visitados = pilha_cria();
     int search = bt_search(raiz, visitados, getId((*raiz)->camara), objetivo, regra);
+    //pilha_imprime(raiz);
     return search;
 };
+
+int visitado(char *objetivo, Pilha *pilha)
+{
+    if(pilha_vazia(pilha)) return 0;
+    Elem *no = *pilha;
+    while(no){
+        if(strcmp(getId(no->camara), objetivo) == 0) return 1;
+        no = no->prox;
+    }
+}
 
 int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int regra[4]) {
     int i, b;
     Camara* vizinho;
     pilha_insere(visitados, (*atual)->camara);
+    pilha_imprime(atual);
 
     if(strcmp(getId((*atual)->camara), objetivo) == 0) {
         return 1;
@@ -140,7 +152,7 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
         }
         // backtracking:
         pilha_remove(atual);
-        return bt_search(atual, visitados, objetivo, regra);
+        return bt_search(atual, visitados, raiz, objetivo, regra);
     }
 };
 

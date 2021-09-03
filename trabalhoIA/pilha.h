@@ -5,6 +5,15 @@
 
 typedef struct elemento* Pilha;
 
+struct elemento
+{
+//    int dado;
+    Camara *camara;
+    struct elemento *prox;
+};
+
+typedef struct elemento Elem;
+
 Pilha* pilha_cria();
 void pilha_libera(Pilha *pilha);
 int pilha_vazia(Pilha *pilha);
