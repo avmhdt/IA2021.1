@@ -111,7 +111,7 @@ Camara* createLabyrinth() {
     insertVizinho(g, l, UP_POS);
 
     Camara* q = malloc(sizeof(Camara));
-    setVizinhosNULL(g);
+    setVizinhosNULL(q);
     setObjetivo(q, 0);
     setId(q, "Q");
     insertVizinho(q, l, DOWN_POS);
@@ -181,11 +181,8 @@ int main(void)
     setPai(raiz, NULL);
     allocFilhos(raiz);*/
 
-    int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
-    char objetivo[MAX_ID_LEN];
-    strcpy(objetivo, "W");
+    int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
     //traverseLabyrinth(start, regras);
-
     //    No* bt = backtracking(raiz, "W", regras);
     //    printf("\naaaa\n");
     //    printf("bt.objetivo = %s\n", getId(bt));
@@ -194,6 +191,6 @@ int main(void)
     if(resultado == NULL)
         printf("Erro\n");
     else
-        printf("%s",resultado->id);
+        printf("\nResultado: %s",resultado->id);
     return 0;
 }

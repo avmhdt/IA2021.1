@@ -24,16 +24,16 @@ struct camara{
     Camara* Camaralist[4];
 };
 
-int getObjetivo(Camara* Camarade);
-void setObjetivo(Camara* Camarade, int objetivo);
+int getObjetivo(Camara* camara);
+void setObjetivo(Camara* camara, int objetivo);
 
-char* getId(Camara* Camarade);
-void setId(Camara* Camarade, char id[]);
+char* getId(Camara* camara);
+void setId(Camara* camara, char id[]);
 
-Camara* getVizinho(Camara* Camarade, int pos);
-int insertVizinho(Camara* Camarade, Camara* parent, int pos);
+Camara* getVizinho(Camara* camara, int pos);
+int insertVizinho(Camara* camara, Camara* parent, int pos);
 
-void setVizinhosNULL(Camara* Camarade);
+void setVizinhosNULL(Camara* camara);
 
 void traverseLabyrinth(Camara* camara, int regras[4]);
 

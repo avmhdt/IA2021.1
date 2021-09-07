@@ -6,20 +6,19 @@
 
 struct fila
 {
-    struct elemento *inicio;
-    struct elemento *final;
+    struct elementoFila *inicio;
+    struct elementoFila *final;
 };
 
-struct elemento
+struct elementoFila
 {
     int idPai;
     int id;
-    int fechado;
     Camara *camara;
-    struct elemento *prox;
-    struct elemento *ant;
+    struct elementoFila *prox;
+    struct elementoFila *ant;
 };
-typedef struct elemento Elem;
+typedef struct elementoFila ElemFila;
 typedef struct fila Fila;
 
 Fila* fila_cria();
@@ -28,10 +27,11 @@ int fila_vazia(Fila *fila);
 int fila_tamanho(Fila *fila);
 int fila_insere(Fila *fila, Camara* camara, int idPai, int id);
 
-//int fila_remove(Fila *fila);
+int fila_remove(Fila *fila);
 /*
 int fila_consulta(Fila *fila, int *dado);
-void fila_imprime(Fila *fila);
 */
+void fila_imprime(Fila *fila);
+
 
 #endif
