@@ -13,6 +13,7 @@ void setObjetivo(Camara* camara, int objetivo) {
 char* getId(Camara* camara) {
     return camara->id;
 };
+
 void setId(Camara* camara, char id[]) {
     strcpy(camara->id, id);
 };

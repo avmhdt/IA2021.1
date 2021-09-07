@@ -253,18 +253,35 @@ int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
     if(strcmp(getId((*atual)->camara), objetivo) == 0) {
         return 1;
     } else {
-         vizinho = minVizinho(atual, regra, heuristica);
-         if(vizinho) {
+        /**
+        abre_vizinhos(abertos);
+        vizinho = minVizinho(abertos, heuristica);
+        **/
+        vizinho = minVizinho(atual, regra, heuristica);
+        if(vizinho) {
             pilha_insere(atual, vizinho);
             g_search(atual, objetivo, regra, heuristica);
-         } else {
+        } else {
             return 0;
-         }
+        }
     }
 
 };
+/**
+int g_search(lista* abertos, Pilha* fechados, char* objetivo)
+    Camara* vizinho;
+    int i;
+    printf("%s ", getId(abertos->camara));
+    if(!abertos) return 0;
+    if(strcmp(getId(abertos->camara), objetivo) == 0) {
+        return 1;
+    } else {
+        fecha(abertos, fechados);
+        abreVizinhos(fechados);
+        g_search(abertos, fechados, objetivo);
+    }
 
-
+**/
 /*
 Camara* buscaLargura(Camara* raiz, char* objetivo, int regra[4]) {
     /*

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1630865682 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.c
+1631024171 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.c
 	"labyrinth.h"
 	<stdio.h>
 	<stdlib.h>
@@ -17,10 +17,11 @@
 	<stdlib.h>
 	"pilha.h"
 
-1630954335 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.h
+1631038860 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.h
 	"labyrinth.h"
 	"pilha.h"
 	"fila.h"
+	"lista.h"
 
 1630699484 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\pilha.h
 	"labyrinth.h"
@@ -36,4 +37,12 @@
 	<stdio.h>
 	<stdlib.h>
 	"pilha.h"
+
+1631038850 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\lista.c
+	"lista.h"
+	<stdio.h>
+	<stdlib.h>
+
+1631038781 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\lista.h
+	"labyrinth.h"
 

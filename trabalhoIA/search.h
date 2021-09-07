@@ -4,6 +4,7 @@
 #include "labyrinth.h"
 #include "pilha.h"
 #include "fila.h"
+#include "lista.h"
 
 /*
 typedef struct node{
