@@ -4,127 +4,19 @@
 #include <string.h>
 #include "pilha.h"
 
-/*Camara* getCamara(No* node) {
-    return node->camara;
-};
-
-void setCamara(No* node, Camara* camara) {
-    node->camara = camara;
-};
-
-No* getPai(No* node) {
-    return node->pai;
-};
-
-void setPai(No* node, No* pai) {
-    node->pai = pai;
-};
-
-No* getFilho(No* node, int pos) {
-    return node->filhos[pos];
-};
-void insertFilho(No* node, No* filho) {
-    int i = 0;
-    No* irmao = node->filhos[i];
-    while(irmao != NULL) {
-        i++;
-        irmao = node->filhos[i];
-    }
-    node->filhos[i] = filho;
-};
-
-void allocFilhos(No* node) {
-    node->filhos = malloc(sizeof(No*));
-};
-
-int match(char* key, No* node) {
-    if(node == NULL) {
-        printf("NULL ");
-        return 0;
-    }
-    if(strcmp(getId(getCamara(node)), key) == 0) {
-        return 1;
-    }
-    printf("oi\n");
-    match(key, getPai(node));
-};
-
-No* backtracking(No* raiz, char* objetivo, int regra[4]) {
-    
-    // Algoritmo Backtracking
-    // In�cio
-    // S := estado inicial;
-    // N := S;
-    // Fracasso := F;
-    // Sucesso := F;
-    // Enquanto n�o (Sucesso ou Fracasso) fa�a
-    // Selecione o operador r de R(N);
-    // Se R(N) <> vazio ent�o
-    // N := r(N);
-    // Se N � solu��o ent�o
-    // Sucesso := T;
-    // Fim-se;
-    // Sen�o
-    // Se N = S ent�o
-    // Fracasso := T;
-    // Sen�o
-    // N := pai(N);
-    // Fim-se;
-    // Fim-se;
-    // Fim-enquanto;
-    // Fim.
-    
-    No* S = raiz;
-    No* N = S;
-    No* V;
-    Camara* vizinho;
-    int i;
-    int sucesso = 0, fracasso = 0;
-    while(!(sucesso || fracasso)) {
-        printf("%s ", getId(getCamara(N)));
-        for(i = 0; i < 4; i++) {
-            vizinho = getVizinho(getCamara(N), regra[i]);
-            printf("\n vizinho = %s \n", getId(vizinho));
-            //printf("match = %d\n", match(getId(vizinho), N));
-            if(vizinho != NULL && !match(getId(vizinho), N)) { // e no nao eh ancestral
-                V = malloc(sizeof(No));
-                setCamara(V, vizinho);
-                setPai(V, N);
-                allocFilhos(V);
-                insertFilho(N, V);
-                N = V;
-                break;
-            }
-        }
-        if(strcmp(getId(getCamara(N)), objetivo) == 0) {
-            sucesso = 1;
-        } else {
-            if(strcmp(getId(getCamara(N)), getId(getCamara(S))) == 0) {
-                fracasso = 1;
-            } else {
-                N = getPai(N);
-            }
-        }
-    }
-    return N;
-}
-
-
-
-
 void backtracking(Camara* start, char* objetivo, int regra[4]) {
     Pilha *raiz = pilha_cria();
     pilha_insere(raiz, start);
     Pilha *visitados = pilha_cria();
     int search = bt_search(raiz, visitados, getId((*raiz)->camara), objetivo, regra);
     //pilha_imprime(raiz);
-    return search;
+    return;
 };
 
 int visitado(char *objetivo, Pilha *pilha)
 {
     if(pilha_vazia(pilha)) return 0;
-    Elem *no = *pilha;
+    ElemPilha *no = *pilha;
     while(no){
         if(strcmp(getId(no->camara), objetivo) == 0) return 1;
         no = no->prox;
@@ -142,7 +34,7 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
     } else {
         for(i = 0; i < 4; i++) {
             vizinho = getVizinho((*atual)->camara, regra[i]);
-            if(vizinho != NULL && !visitado(vizinho, visitados)) {
+            if(vizinho != NULL && !visitado(vizinho->id, visitados)) {
                 pilha_insere(atual, vizinho);
                 b = bt_search(atual, visitados, raiz, objetivo, regra);
                 if(b) return b;
@@ -156,10 +48,6 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
         return bt_search(atual, visitados, raiz, objetivo, regra);
     }
 };
-
-
-
-*/
 
 
 

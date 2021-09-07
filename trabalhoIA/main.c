@@ -176,21 +176,14 @@ int main(void)
     printf("teste\n");
 
     Camara* start = createLabyrinth();
-    /*No* raiz = malloc(sizeof(No));
-    setCamara(raiz, start);
-    setPai(raiz, NULL);
-    allocFilhos(raiz);*/
+
 
     int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
-    //traverseLabyrinth(start, regras);
-    //    No* bt = backtracking(raiz, "W", regras);
-    //    printf("\naaaa\n");
-    //    printf("bt.objetivo = %s\n", getId(bt));
-    //    printf("Hello world!\n");
+    backtracking(start, "W", regras);/*
     Camara* resultado = buscaLargura(start, "W", regras);
     if(resultado == NULL)
         printf("Erro\n");
     else
-        printf("\nResultado: %s",resultado->id);
+        printf("\nResultado: %s",resultado->id);*/
     return 0;
 }
