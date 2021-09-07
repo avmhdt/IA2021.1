@@ -5,20 +5,21 @@
 #include "fila.h"
 #include "pilha.h"
 
-
-
-
+//backtracking começo
 void backtracking(Camara* start, char* objetivo, int regra[4]);
 int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4]);
 int visitado(char *objetivo, Pilha *pilha);
-
 //backtracking fim
 
-
-//buscaLargura começo
+//busca largura começo
 int ehPai(ElemFila* atual, Camara* camara);
 ElemFila* proxEscolhido(ElemFila* atual);
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
-//buscaLargura fim
+//busca largura fim
+
+//busca profundidade começo
+Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade); //Modificada-> Não abertura de estados já visitados
+Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int profundidade); //Sem modificações
+//busca profundidade fim
 
 #endif // SEARCH_H

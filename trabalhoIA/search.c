@@ -51,7 +51,7 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
 
 
 
-
+//começo busca em largura
 //verifica se a camara que vai ser colocada na lista é ancestral de si mesma
 int ehPai(ElemFila* atual, Camara* camara) {
     int idPai = atual->idPai;
@@ -102,32 +102,125 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
         no = abertos->inicio;
         if(no == NULL)
             return NULL;
-        else {
-            camara = no->camara;
-            //camara atual
-            printf(camara->id);
-            printf("  adiciona:\n");
 
-            if(!strcmp(camara->id, objetivo)) {
-                sucesso = 1;
-                break;
-            }
-            else {
-                int i = 0;
-                fila_insere(fechados,no->camara, no->idPai, no->id);
-                for(i; i<4; i++) {
-                    if(camara->Camaralist[regra[i]] != NULL) {
-                        if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
-                            printf(camara->Camaralist[regra[i]]->id);
-                            indice++;
-                            fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
-                        }
+        camara = no->camara;
+        if(!strcmp(camara->id, objetivo)) {
+            sucesso = 1;
+            break;
+        }
+        else {
+            int i = 0;
+            fila_insere(fechados,no->camara, no->idPai, no->id);
+            for(i; i<4; i++) {
+                if(camara->Camaralist[regra[i]] != NULL) {
+                    if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
+                        indice++;
+                        fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
                     }
                 }
-                fila_remove(abertos);
-                printf("\n");
             }
-        } 
+            fila_remove(abertos);
+        }
     }
     return camara;
 }
+//fim busca em largura
+//começo busca em profundidade
+Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade) {
+    //busca em profundidade modificada, não geração de estados já visitados
+    Pilha *abertos = pilha_cria();
+    Pilha *fechados = pilha_cria();
+    pilha_insere(abertos, start);
+    (*abertos)->profundidade = 0;
+    Camara* camara;
+    int sucesso = 0;
+    int profundidadeNova;
+    while(!sucesso) {
+        ElemPilha* no = *abertos;
+        if(no == NULL)
+            return NULL;
+        camara = no->camara;
+        profundidadeNova = no->profundidade+1;
+        if(!strcmp(camara->id, objetivo)) {
+            sucesso = 1;
+            break;
+        }
+        else if(profundidadeNova<profundidade){
+            printf("Camara Aberta: ");
+            printf(camara->id);
+            printf("\n");
+            pilha_insere(fechados, camara);
+            pilha_remove(abertos);
+
+            int i = 3;
+            for(i; i>=0; i--) {
+                if(camara->Camaralist[regra[i]] != NULL) {
+                    if(!visitado(camara->Camaralist[regra[i]]->id, fechados)) {
+                        printf(camara->Camaralist[regra[i]]->id);
+                        pilha_insere(abertos, camara->Camaralist[regra[i]]);
+                        (*abertos)->profundidade = profundidadeNova;
+                    }
+                }
+            }
+        }
+        else {
+            pilha_remove(abertos);
+        }
+        printf("\nLista: ");
+        pilha_imprime(abertos);
+    }
+    return camara;
+}
+
+Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int profundidade) {
+    //busca em profundidade não modificada
+    Pilha *abertos = pilha_cria();
+    Fila *fechados = fila_cria();
+    pilha_insere(abertos, start);
+    (*abertos)->profundidade = 0;
+    (*abertos)->idPai = -1;
+    (*abertos)->id = 0;
+    Camara* camara;
+    int sucesso = 0;
+    int profundidadeNova;
+    int indice = 0;
+    while(!sucesso) {
+        ElemPilha* no = *abertos;
+        if(no == NULL)
+            return NULL;
+        camara = no->camara;
+        profundidadeNova = no->profundidade+1;
+        if(!strcmp(camara->id, objetivo)) {
+            sucesso = 1;
+            break;
+        }
+        else if(profundidadeNova<profundidade){
+            printf("Camara Aberta: ");
+            printf(camara->id);
+            printf("\n");
+            fila_insere(fechados, camara, no->idPai, no->id);
+            pilha_remove(abertos);
+
+            int i = 3;
+            for(i; i>=0; i--) {
+                if(camara->Camaralist[regra[i]] != NULL) {
+                    if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
+                        indice++;
+                        printf(camara->Camaralist[regra[i]]->id);
+                        pilha_insere(abertos, camara->Camaralist[regra[i]]);
+                        (*abertos)->profundidade = profundidadeNova;
+                        (*abertos)->idPai = fechados->final->id;
+                        (*abertos)->id = indice;
+                    }
+                }
+            }
+        }
+        else {
+            pilha_remove(abertos);
+        }
+        printf("\nLista: ");
+        pilha_imprime(abertos);
+    }
+    return camara;
+}
+//fim busca em profundidade

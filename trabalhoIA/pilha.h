@@ -10,6 +10,9 @@ struct elementoPilha
 //    int dado;
     Camara *camara;
     struct elementoPilha *prox;
+    int profundidade;
+    int id;
+    int idPai;
 };
 
 typedef struct elementoPilha ElemPilha;

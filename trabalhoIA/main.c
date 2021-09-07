@@ -173,17 +173,16 @@ Camara* createLabyrinth() {
 
 int main(void)
 {
-    printf("teste\n");
-
     Camara* start = createLabyrinth();
 
-
     int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
-    backtracking(start, "W", regras);/*
-    Camara* resultado = buscaLargura(start, "W", regras);
+    //backtracking(start, "W", regras);
+    //Camara* resultado = buscaLargura(start, "W", regras);
+    Camara* resultado = buscaProfundidade(start, "W", regras, 10);
+    //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
     if(resultado == NULL)
         printf("Erro\n");
     else
-        printf("\nResultado: %s",resultado->id);*/
+        printf("\nResultado: %s",resultado->id);
     return 0;
 }
