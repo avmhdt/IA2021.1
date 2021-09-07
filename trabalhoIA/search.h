@@ -32,4 +32,20 @@ void backtracking(Camara* start, char* objetivo, int regra[4]);
 int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4]);
 int visitado(char *objetivo, Pilha *pilha);
 
+typedef struct heuristica {
+    struct hr* prev;
+    struct hr* next;
+
+    Camara* camara;
+    int heuristica;
+} hr;
+
+hr* hrCreate(Camara* camara, hr* parent, int heuristica);
+void hrDelete(hr* thisHr);
+
+hr* hrReset(hr* thisHr);
+void hrPrint(hr* thisHr);
+
+void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica);
+
 #endif // SEARCH_H
