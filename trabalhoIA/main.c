@@ -1,12 +1,13 @@
 /*
 Trabalho IA 2021.1
 Problema do labirinto
-Autores: José, Vinícius e Yuri
+Autores: Josï¿½, Vinï¿½cius e Yuri
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-//#include labyrinth.h"
+#include <string.h>
+#include "labyrinth.h"
 #include "search.h"
 
 Camara* createLabyrinth(hr** heuristica) {
@@ -236,7 +237,7 @@ Camara* createLabyrinth(hr** heuristica) {
     return z;
 }
 
-int main()
+int main(void)
 {
     hr **heuristica = malloc(sizeof(hr*));
     *heuristica = NULL;
@@ -258,5 +259,16 @@ int main()
 
 
     printf("Hello world!\n");
+    Camara* start = createLabyrinth();
+
+    int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
+    //backtracking(start, "W", regras);
+    //Camara* resultado = buscaLargura(start, "W", regras);
+    Camara* resultado = buscaProfundidade(start, "W", regras, 10);
+    //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
+    if(resultado == NULL)
+        printf("Erro\n");
+    else
+        printf("\nResultado: %s",resultado->id);
     return 0;
 }

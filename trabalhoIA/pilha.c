@@ -14,7 +14,7 @@ void pilha_libera(Pilha *pilha)
 {
     if(pilha==NULL) return;
     if(!pilha_vazia(pilha)){
-        Elem *aux = (*pilha);
+        ElemPilha *aux = (*pilha);
         while(*pilha){
             *pilha = (*pilha)->prox;
             free(aux);
@@ -34,7 +34,7 @@ int pilha_insere(Pilha *pilha, Camara* camara)
     // pilha existe?
     if(pilha==NULL) return 0;
     // aloca memória para um nó.
-    Elem *no = (Elem*)malloc(sizeof(Elem));
+    ElemPilha *no = (ElemPilha*)malloc(sizeof(ElemPilha));
     // malloc falhou?
     if(no==NULL) return 0;
     // alocação bem sucedida...
@@ -48,7 +48,7 @@ int pilha_insere(Pilha *pilha, Camara* camara)
 int pilha_remove(Pilha *pilha)
 {
     if(pilha==NULL || pilha_vazia(pilha)) return 0;
-    Elem *aux = *pilha;
+    ElemPilha *aux = *pilha;
     *pilha = aux->prox;
     free(aux);
     return 1;
@@ -57,7 +57,7 @@ int pilha_remove(Pilha *pilha)
 void pilha_imprime(Pilha *pilha)
 {
     if(pilha_vazia(pilha)) return;
-    Elem *no = *pilha;
+    ElemPilha *no = *pilha;
     while(no){
         printf("%s ", getId(no->camara));
         no = no->prox;

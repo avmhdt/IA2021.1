@@ -1,6 +1,7 @@
 #include "labyrinth.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int getObjetivo(Camara* camara) {
     return camara->objetivo;
@@ -28,10 +29,10 @@ int insertVizinho(Camara* camara, Camara* parent, int pos) {
         printf("Error. pos out of bounds.\n");
         return -1;
     }
-//    if(parent->Camaralist[pos] != NULL) {
-//        printf("Error inserting camara. Position full.");
-//        return -2;
-//    }
+    //    if(parent->Camaralist[pos] != NULL) {
+    //        printf("Error inserting camara. Position full.");
+    //        return -2;
+    //    }
     parent->Camaralist[pos] = camara;
     return 0;
 };

@@ -3,16 +3,19 @@
 
 #include "labyrinth.h"
 
-typedef struct elemento* Pilha;
+typedef struct elementoPilha* Pilha;
 
-struct elemento
+struct elementoPilha
 {
 //    int dado;
     Camara *camara;
-    struct elemento *prox;
+    struct elementoPilha *prox;
+    int profundidade;
+    int id;
+    int idPai;
 };
 
-typedef struct elemento Elem;
+typedef struct elementoPilha ElemPilha;
 
 Pilha* pilha_cria();
 void pilha_libera(Pilha *pilha);
