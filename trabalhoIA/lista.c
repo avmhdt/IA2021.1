@@ -92,7 +92,7 @@ void listaInsereOrd(lista* ls, Camara *camara) {
     // resto aqui - inserir quando vazia ou quando primeiro elemento eh maior
 
 };
-*/
+
 
 void listaInsereOrd(lista* ls, Camara *camara) {
     ElemLista *aux = malloc(sizeof(ElemLista));
@@ -136,3 +136,4 @@ void listaImprime(lista* ls) {
         thisElem = thisElem->next;
     }
 };
+*/

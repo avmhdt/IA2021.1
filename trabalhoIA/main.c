@@ -256,12 +256,8 @@ int main(void)
 
     gulosa(start, "W", regras, *heuristica);
 
-
-
     printf("Hello world!\n");
-    Camara* start = createLabyrinth();
-
-    int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
+    /*
     //backtracking(start, "W", regras);
     //Camara* resultado = buscaLargura(start, "W", regras);
     Camara* resultado = buscaProfundidade(start, "W", regras, 10);
@@ -270,5 +266,6 @@ int main(void)
         printf("Erro\n");
     else
         printf("\nResultado: %s",resultado->id);
+    */
     return 0;
 }

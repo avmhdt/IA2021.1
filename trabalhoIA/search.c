@@ -224,7 +224,7 @@ int ehPai(ElemFila* atual, Camara* camara) {
 }
 
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
-    
+
     //     início
     //     defina(abertos); {pilha(profundidade), fila(largura)}
     //     S := raiz; fracasso := F; sucesso := F;
@@ -380,3 +380,4 @@ Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int prof
     return camara;
 }
 //fim busca em profundidade
+*/

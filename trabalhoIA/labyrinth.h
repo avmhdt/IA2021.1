@@ -24,7 +24,7 @@ struct camara{
     int hn;
     int gn[4];
     struct Camara* Camaralist[4];
-} Camara;
+};
 
 int getObjetivo(Camara* camara);
 void setObjetivo(Camara* camara, int objetivo);
