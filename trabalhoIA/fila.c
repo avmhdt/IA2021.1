@@ -1,4 +1,3 @@
-//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530
 #include <stdio.h>
 #include <stdlib.h>
 #include "fila.h"
@@ -103,3 +102,9 @@ void fila_imprime(Fila *fila)
     }
     putchar('\n');
 }
+
+int fila_insere_ord(Fila* fila, Camara* camara) {
+
+}
+
+
