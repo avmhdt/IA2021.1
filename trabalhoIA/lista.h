@@ -13,11 +13,11 @@ typedef struct elementoLista {
 
 typedef struct ElemLista* lista;
 
-lista* createLista();
+lista* listaCria();
 void listaLibera(lista* ls);
-void listaInsere(Camara* camara, hr *heur);
-void listaRemove(char* id);
-void listaInsereOrd(Camara *camara);
+void listaInsere(lista* ls, Camara* camara, int fn);
+void listaRemove(lista* ls, char* id);
+void listaInsereOrd(lista* ls, Camara *camara);
 void listaImprime(lista* ls);
 
 #endif // LISTA_H

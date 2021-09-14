@@ -255,6 +255,8 @@ int main()
 
     gulosa(start, "W", regras, *heuristica);
 
+
+
     printf("Hello world!\n");
     return 0;
 }

@@ -2,13 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-lista* createLista() {
+lista* listaCria() {
     lista* ls = malloc(sizeof(lista));
+    if(ls!=NULL)
+        *ls = NULL;
     return ls;
 };
 
 void listaLibera(lista* ls) {
-    ElemLista* thisElem = ls->head;
+    ElemLista* thisElem = ls;
     ElemLista* nextElem;
     while(thisElem) {
         nextElem = thisElem->next;
@@ -18,11 +20,11 @@ void listaLibera(lista* ls) {
     free(ls);
 };
 
-void listaInsere(lista* ls, Camara*camara, int heuristica, int fn) {
+void listaInsere(lista* ls, Camara*camara, int fn) {
     ElemLista* thisElem = ls;
     ElemLista* nextElem;
     while(thisElem) {
-        nextElem = thisElem->next
+        nextElem = thisElem->next;
         if(!nextElem) break;
         thisElem = nextElem;
     }
@@ -31,7 +33,7 @@ void listaInsere(lista* ls, Camara*camara, int heuristica, int fn) {
         thisElem = thisElem->next;
     } else {
         thisElem = malloc(sizeof(ElemLista));
-        ls->head = thisElem;
+        ls = thisElem;
     }
     thisElem = thisElem->next;
     thisElem->camara = camara;
@@ -41,16 +43,96 @@ void listaInsere(lista* ls, Camara*camara, int heuristica, int fn) {
 void listaRemove(lista* ls, char* id) {
     ElemLista* thisElem = ls;
     ElemLista *prevElem, *nextElem;
-    while(ls) {
-        if(strcmp(getId(ls->camara), id) == 0) {
-            nextElem = ls->next;
-
+    while(thisElem) {
+        if(strcmp(getId(thisElem->camara), id) == 0) {
+            nextElem = thisElem->next;
+            prevElem = thisElem->prev;
+            prevElem->next = nextElem;
+            nextElem->prev = prevElem;
+            free(thisElem);
+            break;
         }
-        ls = ls->next;
+        thisElem = thisElem->next;
+    }
+    return;
+};
+/*
+void listaInsereOrd(lista* ls, Camara *camara) {
+    int thisHn = camara->hn;
+    ElemLista* thisElem = ls;
+    ElemLista *nextElem, *aux;
+    if(!(*ls)) {
+        aux = malloc(sizeof(ElemLista));
+        aux->camara = camara;
+        aux->fn = camara->hn; // so para a gulosa
+        *ls = aux;
+        return;
+    }
+    if(*thisElem)
+    while(thisElem) {
+        nextElem = thisElem->next;
+        if(thisElem->camara->hn < thisHn && (!nextElem || nextElem->camara->hn >= thisHn)) {
+            aux = malloc(sizeof(ElemLista));
+            aux->camara = camara;
+
+            // fn aqui
+            aux->fn = camara->hn; // so para a gulosa
+
+            thisElem->next = aux;
+            aux->prev = thisElem;
+            aux->next = nextElem;
+            if(nextElem){
+                nextElem->prev = aux;
+            }
+            return;
+        }
+        thisElem = nextElem;
+    }
+
+    // resto aqui - inserir quando vazia ou quando primeiro elemento eh maior
+
+};
+*/
+
+void listaInsereOrd(lista* ls, Camara *camara) {
+    ElemLista *aux = malloc(sizeof(ElemLista));
+    aux->prev = NULL; aux->next = NULL;
+    aux->camara = camara;
+    aux->fn = camara->hn; // so para a gulosa
+
+    int thisHn = camara->hn;
+    ElemLista *thisElem = *ls;
+    ElemLista *nextElem;
+    if(!(*ls)) {
+        *ls = aux;
+        return;
+    }
+    if((*ls)->fn > thisHn) {
+        aux->next = *ls;
+        (*ls)->prev = aux;
+        (*ls) = aux;
+        return;
+    }
+    while(thisElem) {
+        nextElem = thisElem->next;
+        if(thisElem->camara->hn < thisHn && (!nextElem || nextElem->camara->hn >= thisHn)) {
+            thisElem->next = aux;
+            aux->prev = thisElem;
+            aux->next = nextElem;
+            if(nextElem){
+                nextElem->prev = aux;
+            }
+            return;
+        }
+        thisElem = nextElem;
+    }
+    return;
+}
+
+void listaImprime(lista* ls) {
+    ElemLista *thisElem = *ls;
+    while(thisElem) {
+        printf("%s \t %d\n", thisElem->camara, thisElem->fn);
+        thisElem = thisElem->next;
     }
 };
-
-void listaInsereOrd(Camara *camara) {
-
-};
-void listaImprime(lista* ls);
