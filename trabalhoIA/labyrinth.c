@@ -14,6 +14,7 @@ void setObjetivo(Camara* camara, int objetivo) {
 char* getId(Camara* camara) {
     return camara->id;
 };
+
 void setId(Camara* camara, char id[]) {
     strcpy(camara->id, id);
 };
@@ -44,6 +45,7 @@ void setVizinhosNULL(Camara* camara) {
 
 };
 
+/*
 void traverseLabyrinth(Camara* camara, int regras[4]) {
     if(camara == NULL) return;
     printf("%s\n", getId(camara));
@@ -52,3 +54,5 @@ void traverseLabyrinth(Camara* camara, int regras[4]) {
         traverseLabyrinth(getVizinho(camara, regras[i]), regras);
     }
 };
+*/
+

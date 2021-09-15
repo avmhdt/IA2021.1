@@ -21,6 +21,7 @@ int visitado(char *objetivo, Pilha *pilha)
         if(strcmp(getId(no->camara), objetivo) == 0) return 1;
         no = no->prox;
     }
+    return 0;
 }
 
 int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int regra[4]) {
@@ -49,7 +50,134 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
     }
 };
 
+int getHeuristica(hr* start, char* id);
 
+hr* hrCreate(Camara* camara, hr* parent, int heuristica) {
+    hr *thisHr = malloc(sizeof(hr));
+    if(parent){
+        parent->next = thisHr;
+    }
+    thisHr->prev = parent;
+    thisHr->next = NULL;
+    thisHr->camara = camara;
+    thisHr->heuristica = heuristica;
+    return thisHr;
+};
+
+void hrDelete(hr* thisHr) {
+    hr* nextHr;
+    while(thisHr) {
+        nextHr = thisHr->next;
+        free(thisHr);
+        thisHr = nextHr;
+    }
+};
+
+hr* hrReset(hr* thisHr) {
+    if(!thisHr) return;
+    while(thisHr->prev) {
+        //printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
+        thisHr = thisHr->prev;
+    }
+    //printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
+    return thisHr;
+};
+
+
+void hrPrint(hr* thisHr) {
+    if(!thisHr)  {
+        printf("NULL hr\n");
+        return;
+    }
+    while(thisHr->next) {
+        printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
+        thisHr = thisHr->next;
+    }
+    printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
+    thisHr = hrReset(thisHr);
+};
+
+
+void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica) {
+    Pilha* raiz = pilha_cria();
+    pilha_insere(raiz, start);
+    int search = g_search(raiz, objetivo, regra, heuristica);
+};
+
+hr* findHr(hr* heuristica, char* qual) {
+    while(heuristica) {
+        if(strcmp(getId(heuristica->camara), qual) == 0) {
+            return heuristica;
+        }
+        heuristica = heuristica->next;
+    }
+    return NULL;
+};
+
+Camara* minVizinho(Pilha* atual, int regra[4], hr* heuristica) {
+    int i;
+    Camara *vizinho, *retorno = NULL;
+    hr* thisHr;
+
+    int min = -1;
+
+    for(i = 0; i < 4; i++) {
+        vizinho = getVizinho((*atual)->camara, regra[i]);
+        if(vizinho && !visitado(getId(vizinho), atual)) {
+            thisHr = findHr(heuristica, getId(vizinho));
+            if(thisHr) {
+                thisHr = thisHr->heuristica;
+                if(thisHr < min) {
+                    min = thisHr;
+                    retorno = vizinho;
+                }
+            } else {
+                printf("Erro. thisHr = NULL\n");
+                return NULL;
+            }
+        }
+    }
+    return retorno;
+}
+
+int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
+    Camara* vizinho;
+    int i;
+    pilha_imprime(atual);
+    if(strcmp(getId((*atual)->camara), objetivo) == 0) {
+        return 1;
+    } else {
+        
+        // abre_vizinhos(abertos);
+        // vizinho = minVizinho(abertos, heuristica);
+        
+        vizinho = minVizinho(atual, regra, heuristica);
+        if(vizinho) {
+            pilha_insere(atual, vizinho);
+            g_search(atual, objetivo, regra, heuristica);
+        } else {
+            return 0;
+        }
+    }
+
+};
+
+
+/**
+int g_search(lista* abertos, Pilha* fechados, char* objetivo)
+    Camara* vizinho;
+    int i;
+    printf("%s ", getId(abertos->camara));
+    if(!abertos) return 0;
+    if(strcmp(getId(abertos->camara), objetivo) == 0) {
+        return 1;
+    } else {
+        fecha(abertos, fechados);
+        abreVizinhos(fechados);
+        g_search(abertos, fechados, objetivo);
+    }
+
+**/
 
 //começo busca em largura
 //verifica se a camara que vai ser colocada na lista é ancestral de si mesma
@@ -68,7 +196,7 @@ int ehPai(ElemFila* atual, Camara* camara) {
 }
 
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
-    
+
     //     início
     //     defina(abertos); {pilha(profundidade), fila(largura)}
     //     S := raiz; fracasso := F; sucesso := F;
@@ -125,6 +253,7 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
     return camara;
 }
 //fim busca em largura
+
 //começo busca em profundidade
 Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade) {
     //busca em profundidade modificada, não geração de estados já visitados
@@ -154,9 +283,9 @@ Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profu
 
             int i = 3;
             for(i; i>=0; i--) {
-                if(camara->Camaralist[regra[i]] != NULL) {
-                    if(!visitado(camara->Camaralist[regra[i]]->id, fechados)) {
-                        printf(camara->Camaralist[regra[i]]->id);
+                if(camara->Camaralist[regra[i]] != NULL) { 
+                    if(!visitado(getId(camara->Camaralist[regra[i]]), fechados)) {
+                        printf(getId(camara->Camaralist[regra[i]]));
                         pilha_insere(abertos, camara->Camaralist[regra[i]]);
                         (*abertos)->profundidade = profundidadeNova;
                     }
@@ -206,7 +335,7 @@ Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int prof
                 if(camara->Camaralist[regra[i]] != NULL) {
                     if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
                         indice++;
-                        printf(camara->Camaralist[regra[i]]->id);
+                        printf(getId(camara->Camaralist[regra[i]]));
                         pilha_insere(abertos, camara->Camaralist[regra[i]]);
                         (*abertos)->profundidade = profundidadeNova;
                         (*abertos)->idPai = fechados->final->id;

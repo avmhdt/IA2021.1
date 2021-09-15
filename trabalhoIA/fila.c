@@ -1,4 +1,3 @@
-//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530 (código base)
 #include <stdio.h>
 #include <stdlib.h>
 #include "fila.h"
@@ -101,3 +100,44 @@ void fila_imprime(Fila *fila)
     }
     putchar('\n');
 }
+
+int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
+    // fila existe?
+    if(fila==NULL) return 0;
+    // aloca memória para um nó.
+    ElemFila *no = (ElemFila*)malloc(sizeof(ElemFila));
+    // malloc falhou?
+    if(no==NULL) return 0;
+
+    no->camara = camara;
+    no->idPai = idPai;
+    no->id = id;
+    no->prox = no->ant = NULL;
+
+    ElemFila *current = fila->inicio;
+    ElemFila *next;
+    if(!current) {
+        fila->inicio = fila->final = no;
+    } else if (current->camara->hn > camara->hn) {
+        fila->inicio = no;
+        no->prox = current;
+        current->ant = no;
+        return 1;
+    } else {
+        while(current) {
+        next = current->prox;
+        if(current->camara->hn < camara->hn && (!next || next->camara->hn >= camara->hn)) {
+            current->prox = no;
+            no->ant = current;
+            no->prox = next;
+            if(next) {
+                next->ant = no;
+            }
+        }
+        current = next;
+        }
+    }
+    return 1;
+}
+
+

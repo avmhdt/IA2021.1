@@ -21,7 +21,9 @@ typedef struct camara Camara;
 struct camara{
     char id[MAX_ID_LEN];
     int objetivo;
-    Camara* Camaralist[4];
+    int hn;
+    int gn[4];
+    struct Camara* Camaralist[4];
 };
 
 int getObjetivo(Camara* camara);
@@ -35,6 +37,23 @@ int insertVizinho(Camara* camara, Camara* parent, int pos);
 
 void setVizinhosNULL(Camara* camara);
 
-void traverseLabyrinth(Camara* camara, int regras[4]);
+//void traverseLabyrinth(Camara* camara, int regras[4]);
+/*****************************************************************************/
+/*
+typedef struct camaraP {
+    char id[MAX_ID_LEN];
+    CaminhoP* caminhos[4];
+} CamaraP;
 
-#endif
+typedef struct caminhoP {
+    CamaraP* origem;
+    CamaraP* destino;
+    int custo;
+} CaminhoP;
+
+char* getId(CamaraP* camara);
+void setId(CamaraP* camara, char id[]);
+
+void setCaminhosNULL(CamaraP* camara);
+*/
+#endif // LABYRINTH_H
