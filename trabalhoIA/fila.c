@@ -94,8 +94,9 @@ void fila_imprime(Fila *fila)
     ElemFila *no = fila->inicio;
     while(no){
         printf(no->camara->id);
-        printf(",idPai: %d",no->idPai);
-        printf(",id: %d\n",no->id);
+        printf(", hn = %d",no->camara->hn);
+        printf(", idPai: %d",no->idPai);
+        printf(", id: %d\n",no->id);
         no = no->prox;
     }
     putchar('\n');
@@ -118,7 +119,7 @@ int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
     ElemFila *next;
     if(!current) {
         fila->inicio = fila->final = no;
-    } else if (current->camara->hn > camara->hn) {
+    } else if (current->camara->hn >= camara->hn) {
         fila->inicio = no;
         no->prox = current;
         current->ant = no;
@@ -140,4 +141,45 @@ int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
     return 1;
 }
 
+int fila_insere_ord_gn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int gn) {
+    // fila existe?
+    if(fila==NULL) return 0;
+    // aloca memória para um nó.
+    ElemFila *no = (ElemFila*)malloc(sizeof(ElemFila));
+    // malloc falhou?
+    if(no==NULL) return 0;
 
+    no->camara = camara;
+    no->idPai = idPai;
+    no->id = id;
+    no->prox = no->ant = NULL;
+
+    int fn = (custoPai + gn) + camara->hn;
+    no->fn = fn;
+    no->custo = custoPai + gn;
+    
+    ElemFila *current = fila->inicio;
+    ElemFila *next;
+    if(!current) {
+        fila->inicio = fila->final = no;
+    } else if (current->fn >= fn) {
+        fila->inicio = no;
+        no->prox = current;
+        current->ant = no;
+        return 1;
+    } else {
+        while(current) {
+        next = current->prox;
+        if(current->fn < fn && (!next || next->fn >= fn)) {
+            current->prox = no;
+            no->ant = current;
+            no->prox = next;
+            if(next) {
+                next->ant = no;
+            }
+        }
+        current = next;
+        }
+    }
+    return 1;
+}

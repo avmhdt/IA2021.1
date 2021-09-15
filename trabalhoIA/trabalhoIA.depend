@@ -7,14 +7,15 @@
 
 1631651149 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.h
 
-1631651226 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\main.c
+1631726019 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"labyrinth.h"
 	"search.h"
+	"fila.h"
 
-1631651238 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.c
+1631724288 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.c
 	"search.h"
 	<stdio.h>
 	<stdlib.h>
@@ -33,7 +34,7 @@
 1631651176 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.h
 	"labyrinth.h"
 
-1631651134 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.c
+1631724812 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.c
 	<stdio.h>
 	<stdlib.h>
 	"fila.h"
