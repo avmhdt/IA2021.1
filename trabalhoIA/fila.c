@@ -88,6 +88,7 @@ int fila_consulta(Fila *fila, int *dado)
     return 1;
 }
 */
+
 void fila_imprime(Fila *fila)
 {
     if(fila_vazia(fila)) return;

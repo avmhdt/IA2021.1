@@ -224,3 +224,62 @@ Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int prof
     return camara;
 }
 //fim busca em profundidade
+
+//começo busca A*
+Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
+    // fracasso := F; sucesso := F; defina(abertos);
+    // S := raiz; calcule(f(S));
+    // insere(S, abertos); defina(fechados);
+    // enquanto não (sucesso ou fracasso) faça
+    //  se abertos = vazio então
+    //      fracasso := T;
+    //  senão
+    //      N := primeiro(abertos); // nó com o menor f
+    //      se N = solução então
+    //          sucesso := T;
+    //      senão
+    //          enquanto R(N) ≠ vazio faça
+    //              escolha r de R(N); new(u);
+    //              u := r(N); calcule(f(u));
+    //              insere(u, abertos); // se u não for ancestral de n
+    //              atualiza R(N);
+    //          fim-enquanto;
+    //          insere(N, fechados); // destrói N
+    //      fim-se;
+    //  fim-se;
+    // fim-enquanto;
+    // fim.
+    Fila* abertos = fila_cria(); //fila
+    Fila* fechados = fila_cria();
+    int indice = 0;
+    fila_insere(abertos, start, -1, indice);
+    ElemFila* no = abertos->inicio;
+    Camara* camara = no->camara;
+    int sucesso = 0;
+    while(!sucesso) {
+        no = abertos->inicio;
+        if(no == NULL)
+            return NULL;
+        
+        camara = no->camara;
+        if(!strcmp(camara->id, objetivo)) {
+            sucesso = 1;
+            break;
+        }
+        else {
+            int i = 0;
+            fila_insere(fechados,no->camara, no->idPai, no->id);
+            for(i; i<4; i++) {
+                if(camara->Camaralist[regra[i]] != NULL) {
+                    if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
+                        indice++;
+                        fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
+                    }
+                }
+            }
+            fila_remove(abertos);
+        }
+    }
+    return camara;
+}
+//fim busca A*
