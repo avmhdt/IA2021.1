@@ -93,8 +93,9 @@ void fila_imprime(Fila *fila)
     ElemFila *no = fila->inicio;
     while(no){
         printf(no->camara->id);
-        printf(",idPai: %d",no->idPai);
-        printf(",id: %d\n",no->id);
+        printf(", hn = %d",no->camara->hn);
+        printf(", idPai: %d",no->idPai);
+        printf(", id: %d\n",no->id);
         no = no->prox;
     }
     putchar('\n');
@@ -117,7 +118,7 @@ int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
     ElemFila *next;
     if(!current) {
         fila->inicio = fila->final = no;
-    } else if (current->camara->hn > camara->hn) {
+    } else if (current->camara->hn >= camara->hn) {
         fila->inicio = no;
         no->prox = current;
         current->ant = no;

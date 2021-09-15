@@ -161,16 +161,27 @@ int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
 
 };
 /**
-int g_search(lista* abertos, Pilha* fechados, char* objetivo)
+
+void fecha(fila* abertos, fila* fechados) {
+    ElemFila *inicio = abertos->inicio;
+    fila_insere(fechados, inicio->camara, inicio->idPai, inicio->id);
+    fila_remove(abertos);
+}
+
+void abreVizinhos(fechados) {
+
+}
+
+int g_search(fila* abertos, fila* fechados, char* objetivo)
     Camara* vizinho;
     int i;
-    printf("%s ", getId(abertos->camara));
+    printf("%s ", getId(abertos->inicio->camara));
     if(!abertos) return 0;
-    if(strcmp(getId(abertos->camara), objetivo) == 0) {
+    if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
         return 1;
     } else {
         fecha(abertos, fechados);
-        abreVizinhos(fechados);
+        abreVizinhos(fechados, abertos);
         g_search(abertos, fechados, objetivo);
     }
 
