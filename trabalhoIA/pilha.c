@@ -54,13 +54,16 @@ int pilha_remove(Pilha *pilha)
     return 1;
 }
 
-void pilha_imprime(Pilha *pilha)
+int pilha_imprime(Pilha *pilha)
 {
-    if(pilha_vazia(pilha)) return;
+    if(pilha_vazia(pilha)) return 0;
+    int quantNos = 0;
     ElemPilha *no = *pilha;
     while(no){
         printf("%s ", getId(no->camara));
         no = no->prox;
+        quantNos++;
     }
     putchar('\n');
+    return quantNos;
 }

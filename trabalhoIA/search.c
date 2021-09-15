@@ -327,6 +327,7 @@ Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profu
         printf("\nLista: ");
         pilha_imprime(abertos);
     }
+    printf("Fechados: %d\n",pilha_imprime(fechados));
     return camara;
 }
 
@@ -379,6 +380,7 @@ Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int prof
         printf("\nLista: ");
         pilha_imprime(abertos);
     }
+    printf("Fechados: %d\n", fila_imprime(fechados));
     return camara;
 }
 //fim busca em profundidade

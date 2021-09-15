@@ -88,9 +88,10 @@ int fila_consulta(Fila *fila, int *dado)
 }
 */
 
-void fila_imprime(Fila *fila)
+int fila_imprime(Fila *fila)
 {
-    if(fila_vazia(fila)) return;
+    if(fila_vazia(fila)) return 0;
+    int quantNos = 0;
     ElemFila *no = fila->inicio;
     while(no){
         printf(no->camara->id);
@@ -98,8 +99,10 @@ void fila_imprime(Fila *fila)
         printf(", idPai: %d",no->idPai);
         printf(", id: %d\n",no->id);
         no = no->prox;
+        quantNos++;
     }
     putchar('\n');
+    return quantNos;
 }
 
 int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
@@ -157,7 +160,7 @@ int fila_insere_ord_gn(Fila* fila, Camara* camara, int idPai, int id, int custoP
     int fn = (custoPai + gn) + camara->hn;
     no->fn = fn;
     no->custo = custoPai + gn;
-    
+
     ElemFila *current = fila->inicio;
     ElemFila *next;
     if(!current) {
