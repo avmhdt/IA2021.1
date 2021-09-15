@@ -189,6 +189,9 @@ void gulosa(Camara* start, char* objetivo) {
     printf("Visitados: %d\n", visitados);
     printf("Fator de ramificacao medio: %.2f\n", frm);
     printf("Tempo de execucao: %.6f s\n", executionTime);
+
+    printf("\nCaminho 2:\n");
+
     free(fr);
 };
 
