@@ -11,7 +11,7 @@ Autores: Jos�, Vin�cius e Yuri
 #include "search.h"
 #include "fila.h"
 
-Camara* createLabyrinth() { //(hr** heuristica) {
+Camara* createLabyrinth() {
     Camara* z = malloc(sizeof(Camara));
     setVizinhosNULL(z);
     setObjetivo(z, 0);
@@ -331,10 +331,10 @@ Camara* createLabyrinth() { //(hr** heuristica) {
 
 int main(void)
 {
-    //    hr **heuristica = malloc(sizeof(hr*));
-    //    *heuristica = NULL;
-    //    Camara* start = createLabyrinth(heuristica);
-    //    hrPrint(*heuristica);
+    //        hr **heuristica = malloc(sizeof(hr*));
+    //        *heuristica = NULL;
+    //        //Camara* start = createLabyrinth(heuristica);
+    //        hrPrint(*heuristica);
 
     //    No* raiz = malloc(sizeof(No));
     //    setCamara(raiz, start);
@@ -348,17 +348,20 @@ int main(void)
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
     //    backtracking(start, "W", regras);
 
-    //    gulosa(start, "W", regras, *heuristica);
+    //     gulosa(start, "W", regras, *heuristica);
+    gulosa(start, "W");
 
     //backtracking(start, "W", regras);
     //Camara* resultado = buscaLargura(start, "W", regras);
     //Camara* resultado = buscaProfundidade(start, "W", regras, 10);
     //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
+
+    /*
     Camara* resultado = buscaA(start, "W", regras);
     if(resultado == NULL)
         printf("Erro\n");
     else
         printf("\nResultado: %s",resultado->id);
-    
+    */
     return 0;
 }

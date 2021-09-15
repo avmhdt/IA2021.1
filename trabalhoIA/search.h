@@ -22,6 +22,7 @@ Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profu
 Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int profundidade); //Sem modificações
 //busca profundidade fim
 
+
 typedef struct heuristica {
     struct hr* prev;
     struct hr* next;
@@ -37,6 +38,8 @@ hr* hrReset(hr* thisHr);
 void hrPrint(hr* thisHr);
 
 void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica);
+//void gulosa(Camara* start, char* objetivo)
+
 
 //começo busca A*
 Camara* buscaA(Camara* start, char* objetivo, int regra[4]);

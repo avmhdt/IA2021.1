@@ -147,10 +147,10 @@ int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
     if(strcmp(getId((*atual)->camara), objetivo) == 0) {
         return 1;
     } else {
-        
+
         // abre_vizinhos(abertos);
         // vizinho = minVizinho(abertos, heuristica);
-        
+
         vizinho = minVizinho(atual, regra, heuristica);
         if(vizinho) {
             pilha_insere(atual, vizinho);
@@ -162,8 +162,14 @@ int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
 
 };
 
-
 /**
+void gulosa(Camara* start, char* objetivo) {
+    fila *abertos = fila_cria();
+    fila_insere_ord(abertos, start, 0, 0);
+
+    fila *fechados = fila_cria();
+    int search = g_search(abertos, fechados, objetivo);
+};
 
 void fecha(fila* abertos, fila* fechados) {
     ElemFila *inicio = abertos->inicio;
@@ -171,15 +177,27 @@ void fecha(fila* abertos, fila* fechados) {
     fila_remove(abertos);
 }
 
-void abreVizinhos(fechados) {
+void abreVizinhos(fechados, abertos) {
+    int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
+    int i;
 
+    ElemFila* atual = fechados->final;
+    Camara* vizinho;
+    int j = 1;
+    for(i = 0; i < 4; i++) {
+        vizinho = atual->camara->camaralist[regras[i]];
+        if(vizinho) {
+            fila_insere_ord(abertos, vizinho, atual->id, atual->id+j);
+            j++;
+        }
+    }
 }
 
 int g_search(fila* abertos, fila* fechados, char* objetivo)
     Camara* vizinho;
     int i;
-    printf("%s ", getId(abertos->inicio->camara));
     if(!abertos) return 0;
+    printf("%s ", getId(abertos->inicio->camara));
     if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
         return 1;
     } else {
@@ -187,8 +205,8 @@ int g_search(fila* abertos, fila* fechados, char* objetivo)
         abreVizinhos(fechados, abertos);
         g_search(abertos, fechados, objetivo);
     }
-
 **/
+
 
 //começo busca em largura
 //verifica se a camara que vai ser colocada na lista é ancestral de si mesma
@@ -294,7 +312,7 @@ Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profu
 
             int i = 3;
             for(i; i>=0; i--) {
-                if(camara->Camaralist[regra[i]] != NULL) { 
+                if(camara->Camaralist[regra[i]] != NULL) {
                     if(!visitado(camara->Camaralist[regra[i]]->id, fechados)) {
                         printf(camara->Camaralist[regra[i]]->id);
                         pilha_insere(abertos, camara->Camaralist[regra[i]]);
