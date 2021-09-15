@@ -88,6 +88,19 @@ int fila_consulta(Fila *fila, int *dado)
 }
 */
 
+int fila_conta(Fila *fila)
+{
+    if(fila_vazia(fila)) return 0;
+    int quantNos = 0;
+    ElemFila *no = fila->inicio;
+    while(no){
+        no = no->prox;
+        quantNos++;
+    }
+    return quantNos;
+}
+
+
 int fila_imprime(Fila *fila)
 {
     if(fila_vazia(fila)) return 0;

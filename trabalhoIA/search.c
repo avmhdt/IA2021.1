@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "pilha.h"
 
 void backtracking(Camara* start, char* objetivo, int regra[4]) {
@@ -164,11 +165,31 @@ int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
 */
 
 void gulosa(Camara* start, char* objetivo) {
+    clock_t timeStart = clock();
+
     Fila *abertos = fila_cria();
     fila_insere_ord(abertos, start, 0, 0);
 
     Fila *fechados = fila_cria();
-    int search = g_search(abertos, fechados, objetivo);
+    printf("Caminho: \n");
+    int *fr = malloc(sizeof(int));
+    *fr = 0;
+    int search = g_search(abertos, fechados, objetivo, fr);
+    clock_t timeEnd = clock();
+    printf("\n");
+
+    int prof = fila_conta(fechados) + 1;
+    int expandidos = prof - 1 + fila_conta(abertos);
+    int visitados = prof;
+    double frm = (*fr)/(prof-1);
+    double executionTime = (double)(timeEnd - timeStart)/CLOCKS_PER_SEC;
+
+    printf("Profundidade: %d\n", prof);
+    printf("Expandidos: %d\n", expandidos);
+    printf("Visitados: %d\n", visitados);
+    printf("Fator de ramificacao medio: %.2f\n", frm);
+    printf("Tempo de execucao: %.6f s\n", executionTime);
+    free(fr);
 };
 
 void fecha(Fila* abertos, Fila* fechados) {
@@ -188,34 +209,35 @@ int fechado(Camara* camara, Fila* fechados) {
     return 0;
 }
 
-void abreVizinhos(Fila* fechados, Fila* abertos) {
+int abreVizinhos(Fila* fechados, Fila* abertos) {
     int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
     int i;
 
     ElemFila* atual = fechados->final;
     Camara* vizinho;
-    int j = 1;
+    int j = 0;
     for(i = 0; i < 4; i++) {
         vizinho = atual->camara->Camaralist[regras[i]];
         if(vizinho && !fechado(vizinho, fechados)) {
-            fila_insere_ord(abertos, vizinho, atual->id, atual->id+j);
+            fila_insere_ord(abertos, vizinho, atual->id, atual->id+j+1);
             j++;
         }
     }
+    return j;
 }
 
-int g_search(Fila* abertos, Fila* fechados, char* objetivo) {
+int g_search(Fila* abertos, Fila* fechados, char* objetivo, int* fr) {
     Camara* vizinho;
     int i;
     if(!abertos) return 0;
-    //printf("%s ", getId(abertos->inicio->camara));
-    fila_imprime(abertos);
+    printf("%s ", getId(abertos->inicio->camara));
+    //fila_imprime(fechados);
     if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
         return 1;
     } else {
         fecha(abertos, fechados);
-        abreVizinhos(fechados, abertos);
-        g_search(abertos, fechados, objetivo);
+        *fr += abreVizinhos(fechados, abertos);
+        g_search(abertos, fechados, objetivo, fr);
     }
 }
 

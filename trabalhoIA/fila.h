@@ -36,4 +36,6 @@ int fila_imprime(Fila *fila);
 
 int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id);
 int fila_insere_ord_gn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int gn);
+
+int fila_conta(Fila *fila);
 #endif
