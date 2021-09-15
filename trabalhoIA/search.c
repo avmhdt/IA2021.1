@@ -284,8 +284,8 @@ Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profu
             int i = 3;
             for(i; i>=0; i--) {
                 if(camara->Camaralist[regra[i]] != NULL) { 
-                    if(!visitado(getId(camara->Camaralist[regra[i]]), fechados)) {
-                        printf(getId(camara->Camaralist[regra[i]]));
+                    if(!visitado(camara->Camaralist[regra[i]]->id, fechados)) {
+                        printf(camara->Camaralist[regra[i]]->id);
                         pilha_insere(abertos, camara->Camaralist[regra[i]]);
                         (*abertos)->profundidade = profundidadeNova;
                     }
@@ -335,7 +335,7 @@ Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int prof
                 if(camara->Camaralist[regra[i]] != NULL) {
                     if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
                         indice++;
-                        printf(getId(camara->Camaralist[regra[i]]));
+                        printf(camara->Camaralist[regra[i]]->id);
                         pilha_insere(abertos, camara->Camaralist[regra[i]]);
                         (*abertos)->profundidade = profundidadeNova;
                         (*abertos)->idPai = fechados->final->id;
@@ -380,16 +380,19 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
     // fim.
     Fila* abertos = fila_cria(); //fila
     Fila* fechados = fila_cria();
+    Fila* ordenada = fila_cria();
     int indice = 0;
     fila_insere(abertos, start, -1, indice);
+    fila_insere(ordenada, start, -1, indice);
     ElemFila* no = abertos->inicio;
     Camara* camara = no->camara;
     int sucesso = 0;
     while(!sucesso) {
         no = abertos->inicio;
-        if(no == NULL)
+        if(no == NULL) {
+            //fila_imprime(ordenada);
             return NULL;
-        
+        }
         camara = no->camara;
         if(!strcmp(camara->id, objetivo)) {
             sucesso = 1;
@@ -397,18 +400,20 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
         }
         else {
             int i = 0;
-            fila_insere(fechados,no->camara, no->idPai, no->id);
+            fila_insere(fechados, no->camara, no->idPai, no->id);
             for(i; i<4; i++) {
                 if(camara->Camaralist[regra[i]] != NULL) {
                     if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
                         indice++;
                         fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
+                        fila_insere_ord(ordenada,  camara->Camaralist[regra[i]], no->id, indice);
                     }
                 }
             }
             fila_remove(abertos);
         }
     }
+    //fila_imprime(ordenada);
     return camara;
 }
 //fim busca A*
