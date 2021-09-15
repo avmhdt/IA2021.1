@@ -4,6 +4,7 @@
 #include <string.h>
 #include <time.h>
 #include "pilha.h"
+#include "lista.h"
 
 void backtracking(Camara* start, char* objetivo, int regra[4]) {
     Pilha *raiz = pilha_cria();
@@ -261,30 +262,24 @@ int ehPai(ElemFila* atual, Camara* camara) {
     return ehPai(no, camara);
 }
 
-Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
+int caminho(Fila* fechados, int idPai, char* final) {
+    ElemFila* no = fechados->final;
+    printf("%s", final);
+    while(no) {
+        no = no->ant;
+        if(no->id == idPai) {
+            printf("<-%s",no->camara->id);
+            idPai = no->idPai;
+            if(idPai == -1) {
+                printf("\n");
+                return 0;
+            }
+        }
+    }
+    return 0;
+}
 
-    //     início
-    //     defina(abertos); {pilha(profundidade), fila(largura)}
-    //     S := raiz; fracasso := F; sucesso := F;
-    //     insere(S, abertos); defina(fechados);
-    //     enquanto não (sucesso ou fracasso) faça
-    //         se abertos = vazio então
-    //             fracasso := T;
-    //         senão
-    //             N := primeiro(abertos); {pilha(topo), fila(primeiro)}
-    //             se N = solução então
-    //                 sucesso := T;
-    //             senão
-    //                 enquanto R(N) ≠ vazio faça
-    //                     escolha r de R(N); new(u);
-    //                     u := r(N); insere(u, abertos);
-    //                     atualiza R(N);
-    //                 fim-enquanto;
-    //                 insere(N, fechados); {destrua(N)}
-    //             fim-se;
-    //         fim-se;
-    //     fim-enquanto;
-    // fim.
+Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
     Fila* abertos = fila_cria(); //fila
     Fila* fechados = fila_cria();
     int indice = 0;
@@ -316,6 +311,10 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
             fila_remove(abertos);
         }
     }
+    caminho(fechados,no->idPai,camara->id);
+    printf("Fechados: %d\n",fila_imprime(fechados));
+    printf("Custo solução: %d\n",no->custo);
+    //printf("Fator médio de ramificação: %f\n",indice/fila_tamanho(fechados));
     return camara;
 }
 //fim busca em largura
@@ -474,7 +473,7 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
                     if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
                         indice++;
                         fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
-                        fila_insere_ord_gn(ordenada,  camara->Camaralist[regra[i]], no->id, indice, no->custo, camara->gn[regra[i]]);
+                        fila_insere_ord_gn(ordenada,  camara->Camaralist[regra[i]], no->id, indice, no->custo, camara->pesos[regra[i]]);
                     }
                 }
             }
@@ -485,3 +484,48 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
     return camara;
 }
 //fim busca A*
+
+//começo busca ordenada
+void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
+
+    Lista *abertos = lista_cria();
+    Lista *fechados = lista_cria();
+
+    lista_insere(abertos, getId(start),  getId(start), 0, start);
+
+    for (int k=0; k<21; k++){
+      // printf("\n------------------------------------------------\n");
+      No atual = getMenorCusto(abertos);
+      // printf("\n\nNO ATUAL_______%c", atual->id[0]);
+      Camara *cam = atual->camara;
+      // printf("\n\n\nCAMARA ATUAL_______%c", cam->id[0]);
+      int i=0;
+      for (i; i<4; i++){
+        
+        if (cam->Camaralist[i]){
+          Camara *novaCam = cam->Camaralist[i];
+          // printf("\n\n %d ----- %c \n\n", i, novaCam->id[0]);
+          int custo = (cam->pesos[i]);
+          custo += atual->custo;
+          
+          if (lista_busca(fechados, novaCam->id[0]) == -1){
+            if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 1){
+              
+              lista_remove(abertos, cam->Camaralist[i]);
+              lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
+            } else if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 0){
+            lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
+            }
+          }
+          // printf("fim");
+        }
+      }
+      lista_remove(abertos, cam);
+      // printf("REMOVEU");
+      lista_insere(fechados, getId(cam), getId(cam), 0, cam);
+
+      lista_imprime(abertos, fechados);
+      // lista_imprime(fechados);
+    }
+}
+//fim busca ordenada

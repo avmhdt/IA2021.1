@@ -13,6 +13,7 @@ int visitado(char *objetivo, Pilha *pilha);
 
 //busca largura começo
 int ehPai(ElemFila* atual, Camara* camara);
+int caminho(Fila* fechados, int idPai, char* final);
 ElemFila* proxEscolhido(ElemFila* atual);
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
 //busca largura fim
@@ -44,5 +45,9 @@ void gulosa(Camara* start, char* objetivo);
 //começo busca A*
 Camara* buscaA(Camara* start, char* objetivo, int regra[4]);
 //fim busca A*
+
+//começo busca ordenada
+void buscaOrdenada(Camara* start, char* objectivo, int regra[4]);
+//fim busca ordenada
 
 #endif // SEARCH_H

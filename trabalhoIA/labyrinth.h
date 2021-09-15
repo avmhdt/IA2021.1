@@ -22,7 +22,7 @@ struct camara{
     char id[MAX_ID_LEN];
     int objetivo;
     int hn;
-    int gn[4];
+    int pesos[4];
     Camara* Camaralist[4];
 };
 
@@ -33,7 +33,7 @@ char* getId(Camara* camara);
 void setId(Camara* camara, char id[]);
 
 Camara* getVizinho(Camara* camara, int pos);
-int insertVizinho(Camara* camara, Camara* parent, int pos);
+int insertVizinho(Camara* camara, Camara* parent, int pos, int peso);
 
 void setVizinhosNULL(Camara* camara);
 
