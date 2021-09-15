@@ -206,30 +206,24 @@ int ehPai(ElemFila* atual, Camara* camara) {
     return ehPai(no, camara);
 }
 
-Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
+int caminho(Fila* fechados, int idPai, char* final) {
+    ElemFila* no = fechados->final;
+    printf("%s", final);
+    while(no) {
+        no = no->ant;
+        if(no->id == idPai) {
+            printf("<-%s",no->camara->id);
+            idPai = no->idPai;
+            if(idPai == -1) {
+                printf("\n");
+                return 0;
+            }
+        }
+    }
+    return 0;
+}
 
-    //     início
-    //     defina(abertos); {pilha(profundidade), fila(largura)}
-    //     S := raiz; fracasso := F; sucesso := F;
-    //     insere(S, abertos); defina(fechados);
-    //     enquanto não (sucesso ou fracasso) faça
-    //         se abertos = vazio então
-    //             fracasso := T;
-    //         senão
-    //             N := primeiro(abertos); {pilha(topo), fila(primeiro)}
-    //             se N = solução então
-    //                 sucesso := T;
-    //             senão
-    //                 enquanto R(N) ≠ vazio faça
-    //                     escolha r de R(N); new(u);
-    //                     u := r(N); insere(u, abertos);
-    //                     atualiza R(N);
-    //                 fim-enquanto;
-    //                 insere(N, fechados); {destrua(N)}
-    //             fim-se;
-    //         fim-se;
-    //     fim-enquanto;
-    // fim.
+Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
     Fila* abertos = fila_cria(); //fila
     Fila* fechados = fila_cria();
     int indice = 0;
@@ -261,6 +255,10 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
             fila_remove(abertos);
         }
     }
+    caminho(fechados,no->idPai,camara->id);
+    printf("Fechados: %d\n",fila_imprime(fechados));
+    printf("Custo solução: %d\n",no->custo);
+    //printf("Fator médio de ramificação: %f\n",indice/fila_tamanho(fechados));
     return camara;
 }
 //fim busca em largura
