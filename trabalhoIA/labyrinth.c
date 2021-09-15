@@ -24,7 +24,7 @@ Camara* getVizinho(Camara* camara, int pos) {
     return vizinhos[pos];
 };
 
-int insertVizinho(Camara* camara, Camara* parent, int pos) {
+int insertVizinho(Camara* camara, Camara* parent, int pos, int peso) {
     if(pos < 0 || pos > 3) {
         printf("Error. pos out of bounds.\n");
         return -1;
@@ -34,6 +34,7 @@ int insertVizinho(Camara* camara, Camara* parent, int pos) {
     //        return -2;
     //    }
     parent->Camaralist[pos] = camara;
+    parent->pesos[pos] = peso;
     return 0;
 };
 

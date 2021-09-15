@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "pilha.h"
+#include "lista.h"
 
 void backtracking(Camara* start, char* objetivo, int regra[4]) {
     Pilha *raiz = pilha_cria();
@@ -417,7 +418,7 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
                     if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
                         indice++;
                         fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
-                        fila_insere_ord_gn(ordenada,  camara->Camaralist[regra[i]], no->id, indice, no->custo, camara->gn[regra[i]]);
+                        fila_insere_ord_gn(ordenada,  camara->Camaralist[regra[i]], no->id, indice, no->custo, camara->pesos[regra[i]]);
                     }
                 }
             }
@@ -428,3 +429,48 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
     return camara;
 }
 //fim busca A*
+
+//começo busca ordenada
+void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
+
+    Lista *abertos = lista_cria();
+    Lista *fechados = lista_cria();
+
+    lista_insere(abertos, getId(start),  getId(start), 0, start);
+
+    for (int k=0; k<21; k++){
+      // printf("\n------------------------------------------------\n");
+      No atual = getMenorCusto(abertos);
+      // printf("\n\nNO ATUAL_______%c", atual->id[0]);
+      Camara *cam = atual->camara;
+      // printf("\n\n\nCAMARA ATUAL_______%c", cam->id[0]);
+      int i=0;
+      for (i; i<4; i++){
+        
+        if (cam->Camaralist[i]){
+          Camara *novaCam = cam->Camaralist[i];
+          // printf("\n\n %d ----- %c \n\n", i, novaCam->id[0]);
+          int custo = (cam->pesos[i]);
+          custo += atual->custo;
+          
+          if (lista_busca(fechados, novaCam->id[0]) == -1){
+            if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 1){
+              
+              lista_remove(abertos, cam->Camaralist[i]);
+              lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
+            } else if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 0){
+            lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
+            }
+          }
+          // printf("fim");
+        }
+      }
+      lista_remove(abertos, cam);
+      // printf("REMOVEU");
+      lista_insere(fechados, getId(cam), getId(cam), 0, cam);
+
+      lista_imprime(abertos, fechados);
+      // lista_imprime(fechados);
+    }
+}
+//fim busca ordenada

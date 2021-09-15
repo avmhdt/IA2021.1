@@ -29,8 +29,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(c);
     setObjetivo(c, 0);
     setId(c, "C");
-    insertVizinho(c, z, DOWN_POS);
-    insertVizinho(z, c, UP_POS);
+    insertVizinho(c, z, DOWN_POS , 1  );
+    insertVizinho(z, c, UP_POS , 1  );
     c->hn = 8;
 
     // fila_insere_ord(thisFila, c, 0, 0);
@@ -44,8 +44,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(d);
     setObjetivo(d, 0);
     setId(d, "D");
-    insertVizinho(d, c, RIGHT_POS);
-    insertVizinho(c, d, LEFT_POS);
+    insertVizinho(d, c, RIGHT_POS , 2  );
+    insertVizinho(c, d, LEFT_POS , 2  );
     d->hn = 9;
 
     // fila_insere_ord(thisFila, d, 0, 0);
@@ -59,8 +59,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(i);
     setObjetivo(i, 0);
     setId(i, "I");
-    insertVizinho(i, d, DOWN_POS);
-    insertVizinho(d, i, UP_POS);
+    insertVizinho(i, d, DOWN_POS , 1  );
+    insertVizinho(d, i, UP_POS , 1  );
     i->hn = 10;
 
     // fila_insere_ord(thisFila, i, 0, 0);
@@ -73,8 +73,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(j);
     setObjetivo(j, 0);
     setId(j, "J");
-    insertVizinho(j, i, RIGHT_POS);
-    insertVizinho(i, j, LEFT_POS);
+    insertVizinho(j, i, RIGHT_POS , 3  );
+    insertVizinho(i, j, LEFT_POS , 3  );
     j->hn = 11;
 
     // fila_insere_ord(thisFila, j, 0, 0);
@@ -87,8 +87,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(e);
     setObjetivo(e, 0);
     setId(e, "E");
-    insertVizinho(e, j, UP_POS);
-    insertVizinho(j, e, DOWN_POS);
+    insertVizinho(e, j, UP_POS , 2  );
+    insertVizinho(j, e, DOWN_POS , 2  );
     e->hn = 12;
 
     // fila_insere_ord(thisFila, e, 0, 0);
@@ -101,8 +101,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(b);
     setObjetivo(b, 0);
     setId(b, "B");
-    insertVizinho(b, c, LEFT_POS);
-    insertVizinho(c, b, RIGHT_POS);
+    insertVizinho(b, c, LEFT_POS , 1  );
+    insertVizinho(c, b, RIGHT_POS , 1  );
     b->hn = 9;
 
     // fila_insere_ord(thisFila, b, 0, 0);
@@ -115,8 +115,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(a);
     setObjetivo(a, 0);
     setId(a, "A");
-    insertVizinho(a, b, LEFT_POS);
-    insertVizinho(b, a, RIGHT_POS);
+    insertVizinho(a, b, LEFT_POS , 5  );
+    insertVizinho(b, a, RIGHT_POS , 5  );
     a->hn = 8;
 
     // fila_insere_ord(thisFila, a, 0, 0);
@@ -129,8 +129,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(f);
     setObjetivo(f, 0);
     setId(f, "F");
-    insertVizinho(f, a, DOWN_POS);
-    insertVizinho(a, f, UP_POS);
+    insertVizinho(f, a, DOWN_POS , 3  );
+    insertVizinho(a, f, UP_POS , 3  );
     f->hn = 7;
 
     // fila_insere_ord(thisFila, f, 0, 0);
@@ -143,8 +143,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(k);
     setObjetivo(k, 0);
     setId(k, "K");
-    insertVizinho(k, f, DOWN_POS);
-    insertVizinho(f, k, UP_POS);
+    insertVizinho(k, f, DOWN_POS , 1  );
+    insertVizinho(f, k, UP_POS , 1  );
     k->hn = 8;
 
     // fila_insere_ord(thisFila, k, 0, 0);
@@ -157,8 +157,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(p);
     setObjetivo(p, 0);
     setId(p, "P");
-    insertVizinho(p, k, DOWN_POS);
-    insertVizinho(k, p, UP_POS);
+    insertVizinho(p, k, DOWN_POS , 2  );
+    insertVizinho(k, p, UP_POS , 2  );
     p->hn = 9;
 
     // fila_insere_ord(thisFila, p, 0, 0);
@@ -171,8 +171,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(h);
     setObjetivo(h, 0);
     setId(h, "H");
-    insertVizinho(h, c, DOWN_POS);
-    insertVizinho(c, h, UP_POS);
+    insertVizinho(h, c, DOWN_POS , 4  );
+    insertVizinho(c, h, UP_POS , 4  );
     h->hn = 7;
 
     // fila_insere_ord(thisFila, h, 0, 0);
@@ -185,10 +185,10 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(g);
     setObjetivo(g, 0);
     setId(g, "G");
-    insertVizinho(g, h, LEFT_POS);
-    insertVizinho(h, g, RIGHT_POS);
-    insertVizinho(f, g, LEFT_POS);
-    insertVizinho(g, f, RIGHT_POS);
+    insertVizinho(g, h, LEFT_POS , 2  );
+    insertVizinho(h, g, RIGHT_POS , 2  );
+    insertVizinho(f, g, LEFT_POS , 5  );
+    insertVizinho(g, f, RIGHT_POS , 5  );
     g->hn = 6;
 
     // fila_insere_ord(thisFila, g, 0, 0);
@@ -201,8 +201,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(l);
     setObjetivo(l, 0);
     setId(l, "L");
-    insertVizinho(l, g, DOWN_POS);
-    insertVizinho(g, l, UP_POS);
+    insertVizinho(l, g, DOWN_POS , 2  );
+    insertVizinho(g, l, UP_POS , 2  );
     l->hn = 5;
 
     // fila_insere_ord(thisFila, l, 0, 0);
@@ -215,8 +215,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(q);
     setObjetivo(q, 0);
     setId(q, "Q");
-    insertVizinho(q, l, DOWN_POS);
-    insertVizinho(l, q, UP_POS);
+    insertVizinho(q, l, DOWN_POS , 3  );
+    insertVizinho(l, q, UP_POS , 3  );
     q->hn = 4;
 
     // fila_insere_ord(thisFila, q, 0, 0);
@@ -229,8 +229,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(r);
     setObjetivo(r, 0);
     setId(r, "R");
-    insertVizinho(r, q, RIGHT_POS);
-    insertVizinho(q, r, LEFT_POS);
+    insertVizinho(r, q, RIGHT_POS , 1  );
+    insertVizinho(q, r, LEFT_POS , 1  );
     r->hn = 3;
 
     // fila_insere_ord(thisFila, r, 0, 0);
@@ -243,8 +243,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(m);
     setObjetivo(m, 0);
     setId(m, "M");
-    insertVizinho(m, r, UP_POS);
-    insertVizinho(r, m, DOWN_POS);
+    insertVizinho(m, r, UP_POS , 3  );
+    insertVizinho(r, m, DOWN_POS , 3  );
     m->hn = 4;
 
     // fila_insere_ord(thisFila, m, 0, 0);
@@ -257,8 +257,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(n);
     setObjetivo(n, 0);
     setId(n, "N");
-    insertVizinho(n, m, RIGHT_POS);
-    insertVizinho(m, n, LEFT_POS);
+    insertVizinho(n, m, RIGHT_POS , 2  );
+    insertVizinho(m, n, LEFT_POS , 2  );
     n->hn = 3;
 
     // fila_insere_ord(thisFila, n, 0, 0);
@@ -271,10 +271,10 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(s);
     setObjetivo(s, 0);
     setId(s, "S");
-    insertVizinho(s, n, DOWN_POS);
-    insertVizinho(n, s, UP_POS);
-    insertVizinho(s, r, RIGHT_POS);
-    insertVizinho(r, s, LEFT_POS);
+    insertVizinho(s, n, DOWN_POS , 3  );
+    insertVizinho(n, s, UP_POS , 3  );
+    insertVizinho(s, r, RIGHT_POS , 4  );
+    insertVizinho(r, s, LEFT_POS , 4  );
     s->hn = 2;
 
     // fila_insere_ord(thisFila, s, 0, 0);
@@ -287,8 +287,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(t);
     setObjetivo(t, 0);
     setId(t, "T");
-    insertVizinho(t, s, RIGHT_POS);
-    insertVizinho(s, t, LEFT_POS);
+     insertVizinho(t, s, RIGHT_POS , 5  );
+    insertVizinho(s, t, LEFT_POS , 5  );
     t->hn = 1;
 
     // fila_insere_ord(thisFila, t, 0, 0);
@@ -301,8 +301,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(o);
     setObjetivo(o, 0);
     setId(o, "O");
-    insertVizinho(o, t, UP_POS);
-    insertVizinho(t, o, DOWN_POS);
+    insertVizinho(o, t, UP_POS , 4  );
+    insertVizinho(t, o, DOWN_POS , 4  );
     o->hn = 2;
 
     // fila_insere_ord(thisFila, o, 0, 0);
@@ -315,8 +315,8 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     setVizinhosNULL(w);
     setObjetivo(w, 1);
     setId(w, "W");
-    insertVizinho(w, t, DOWN_POS);
-    insertVizinho(t, w, UP_POS);
+    insertVizinho(w, t, DOWN_POS , 3  );
+    insertVizinho(t, w, UP_POS , 3  );
     w->hn = 0;
 
     // fila_insere_ord(thisFila, w, 0, 0);
@@ -351,10 +351,14 @@ int main(void)
     //    gulosa(start, "W", regras, *heuristica);
 
     //backtracking(start, "W", regras);
-    Camara* resultado = buscaLargura(start, "W", regras);
+    // Camara* resultado = buscaLargura(start, "W", regras);
     //Camara* resultado = buscaProfundidade(start, "W", regras, 10);
     //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
     //Camara* resultado = buscaA(start, "W", regras);
+
+    // buscaOrdenada(start, "W", regras);
+
+
     if(resultado == NULL)
         printf("Erro\n");
     else
