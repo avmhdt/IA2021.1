@@ -68,8 +68,7 @@ int fila_insere(Fila *fila, Camara* camara, int idPai, int id)
     return 1;
 }
 
-int fila_remove(Fila *fila)
-{
+int fila_remove(Fila *fila) {
     if(fila_vazia(fila)) return 0;
     ElemFila *no = fila->inicio;
     fila->inicio = no->prox;
@@ -79,17 +78,26 @@ int fila_remove(Fila *fila)
     return 1;
 }
 
-/*
-int fila_consulta(Fila *fila, int *dado)
-{
+int fila_remove_ord(Fila *fila, int id) {
     if(fila_vazia(fila)) return 0;
-    *dado = fila->inicio->dado;
+    ElemFila *no = fila->inicio;
+    if(no->id == id) {
+        return fila_remove(fila);
+    }
+    while(no->id != id) {
+        no = no->prox;
+    }
+    no->ant->prox = no->prox;
+    if(no->prox == NULL) {
+        fila->final = no->ant;
+    }
+    else
+        no->prox->ant = no->ant;
+    free(no);
     return 1;
 }
-*/
 
-int fila_imprime(Fila *fila)
-{
+int fila_imprime(Fila *fila) {
     if(fila_vazia(fila)) return 0;
     int quantNos = 0;
     ElemFila *no = fila->inicio;

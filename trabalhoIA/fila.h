@@ -29,6 +29,7 @@ int fila_tamanho(Fila *fila);
 int fila_insere(Fila *fila, Camara* camara, int idPai, int id);
 
 int fila_remove(Fila *fila);
+int fila_remove_ord(Fila *fila, int id);
 /*
 int fila_consulta(Fila *fila, int *dado);
 */
