@@ -49,7 +49,7 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
         return bt_search(atual, visitados, raiz, objetivo, regra);
     }
 };
-
+/*
 int getHeuristica(hr* start, char* id);
 
 hr* hrCreate(Camara* camara, hr* parent, int heuristica) {
@@ -161,23 +161,34 @@ int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
     }
 
 };
+*/
 
-/**
 void gulosa(Camara* start, char* objetivo) {
-    fila *abertos = fila_cria();
+    Fila *abertos = fila_cria();
     fila_insere_ord(abertos, start, 0, 0);
 
-    fila *fechados = fila_cria();
+    Fila *fechados = fila_cria();
     int search = g_search(abertos, fechados, objetivo);
 };
 
-void fecha(fila* abertos, fila* fechados) {
+void fecha(Fila* abertos, Fila* fechados) {
     ElemFila *inicio = abertos->inicio;
     fila_insere(fechados, inicio->camara, inicio->idPai, inicio->id);
     fila_remove(abertos);
 }
 
-void abreVizinhos(fechados, abertos) {
+int fechado(Camara* camara, Fila* fechados) {
+    ElemFila* thisElem = fechados->inicio;
+    while(thisElem) {
+        if(strcmp(thisElem->camara->id, camara->id) == 0) {
+            return 1;
+        }
+        thisElem = thisElem->prox;
+    }
+    return 0;
+}
+
+void abreVizinhos(Fila* fechados, Fila* abertos) {
     int regras[4] = {UP_POS, DOWN_POS, RIGHT_POS, LEFT_POS};
     int i;
 
@@ -185,19 +196,20 @@ void abreVizinhos(fechados, abertos) {
     Camara* vizinho;
     int j = 1;
     for(i = 0; i < 4; i++) {
-        vizinho = atual->camara->camaralist[regras[i]];
-        if(vizinho) {
+        vizinho = atual->camara->Camaralist[regras[i]];
+        if(vizinho && !fechado(vizinho, fechados)) {
             fila_insere_ord(abertos, vizinho, atual->id, atual->id+j);
             j++;
         }
     }
 }
 
-int g_search(fila* abertos, fila* fechados, char* objetivo)
+int g_search(Fila* abertos, Fila* fechados, char* objetivo) {
     Camara* vizinho;
     int i;
     if(!abertos) return 0;
-    printf("%s ", getId(abertos->inicio->camara));
+    //printf("%s ", getId(abertos->inicio->camara));
+    fila_imprime(abertos);
     if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
         return 1;
     } else {
@@ -205,7 +217,7 @@ int g_search(fila* abertos, fila* fechados, char* objetivo)
         abreVizinhos(fechados, abertos);
         g_search(abertos, fechados, objetivo);
     }
-**/
+}
 
 
 //começo busca em largura
