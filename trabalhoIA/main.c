@@ -346,10 +346,10 @@ int main(void)
 
     Camara* start = createLabyrinth();
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
-    //    backtracking(start, "W", regras);
 
-    //     gulosa(start, "W", regras, *heuristica);
-    gulosa(start, "W");
+    //backtracking(start, "W", regras);
+    //gulosa(start, "W");
+    ida(start, "W", regras);
 
     //backtracking(start, "W", regras);
     //Camara* resultado = buscaLargura(start, "W", regras);

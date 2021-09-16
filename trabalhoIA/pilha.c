@@ -67,3 +67,14 @@ int pilha_imprime(Pilha *pilha)
     putchar('\n');
     return quantNos;
 }
+
+int pilha_conta(Pilha *pilha) {
+    if(pilha_vazia(pilha)) return 0;
+    int quantNos = 0;
+    ElemPilha *no = *pilha;
+    while(no) {
+        quantNos++;
+        no = no->prox;
+    }
+    return quantNos;
+}

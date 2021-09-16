@@ -7,7 +7,7 @@
 
 //backtracking começo
 void backtracking(Camara* start, char* objetivo, int regra[4]);
-int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4]);
+int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4], int *pais, int *filhos, double* custo);
 int visitado(char *objetivo, Pilha *pilha);
 //backtracking fim
 
@@ -41,7 +41,7 @@ void hrPrint(hr* thisHr);
 */
 //void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica);
 void gulosa(Camara* start, char* objetivo);
-
+void ida(Camara* start, char* objetivo, int regra[4]);
 
 //começo busca A*
 Camara* buscaA(Camara* start, char* objetivo, int regra[4]);
