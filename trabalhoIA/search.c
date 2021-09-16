@@ -237,7 +237,7 @@ int g_search(Fila* abertos, Fila* fechados, char* objetivo, int* fr) {
     printf("%s ", getId(abertos->inicio->camara));
     //fila_imprime(fechados);
     if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
-        printf("\n*********\n");
+        printf("\n*********\nCaminho: ");
         caminho(fechados, abertos->inicio->idPai, objetivo);
         return 1;
     } else {
