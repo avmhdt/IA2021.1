@@ -13,6 +13,7 @@ struct elementoPilha
     int profundidade;
     int id;
     int idPai;
+    int custo;
 };
 
 typedef struct elementoPilha ElemPilha;
