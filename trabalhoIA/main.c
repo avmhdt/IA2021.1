@@ -352,7 +352,7 @@ int main(void)
     gulosa(start, "W");
 
     //backtracking(start, "W", regras);
-    // Camara* resultado = buscaLargura(start, "W", regras);
+    //Camara* resultado = buscaLargura(start, "W", regras);
     //Camara* resultado = buscaProfundidade(start, "W", regras, 10);
     //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
 

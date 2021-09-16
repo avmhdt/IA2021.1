@@ -14,6 +14,7 @@ int visitado(char *objetivo, Pilha *pilha);
 //busca largura começo
 int ehPai(ElemFila* atual, Camara* camara);
 int caminho(Fila* fechados, int idPai, char* final);
+int existeMenor(Fila* fila, ElemFila* no, char* id);
 ElemFila* proxEscolhido(ElemFila* atual);
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
 //busca largura fim
