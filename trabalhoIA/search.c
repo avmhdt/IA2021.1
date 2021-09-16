@@ -224,6 +224,23 @@ int caminho(Fila* fechados, int idPai, char* final) {
     return 0;
 }
 
+int existeMenor(Fila* fila, ElemFila* no, char* id) {
+    int peso = no->custo;
+    ElemFila* noFila = fila->inicio;
+    while(noFila) {
+        if(!strcmp(noFila->camara->id, id)) {
+            if(noFila->custo <= peso)
+                return 1;
+            fila_remove_ord(fila, noFila->id);
+            fila_insere(fila, no->camara, no->id, no->id);
+            fila->final->custo = peso;
+            return 0;
+        }
+        noFila = noFila->prox;
+    }
+    return 0;
+}
+
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
     Fila* abertos = fila_cria(); //fila
     Fila* fechados = fila_cria();
@@ -244,7 +261,7 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
         }
         else {
             int i = 0;
-            fila_insere(fechados,no->camara, no->idPai, no->id);
+            fila_insere(fechados, camara, no->idPai, no->id);
             for(i; i<4; i++) {
                 Camara* prox = camara->Camaralist[regra[i]];
                 if(prox != NULL) {
@@ -403,6 +420,8 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
     // fim.
     Fila* abertos = fila_cria();
     Fila* fechados = fila_cria();
+    Fila* menorValor = fila_cria();
+    Fila* podado = fila_cria();
     int indice = 0;
     fila_insere(abertos, start, -1, indice);
     ElemFila* no = abertos->inicio;
@@ -415,24 +434,31 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
             return NULL;
         }
         camara = no->camara;
-        if(!strcmp(camara->id, objetivo)) {
-            sucesso = 1;
-            break;
-        }
-        else {
-            int i = 0;
-            fila_insere(fechados, no->camara, no->idPai, no->id);
-            fechados->final->custo = no->custo;
-            for(i; i<4; i++) {
-                Camara* prox = camara->Camaralist[regra[i]];
-                if(prox != NULL) {
-                    if(!ehPai(fechados->final, prox)) {
-                        printf("%d,%d,%s\n",no->id,no->idPai,no->camara->id);
-                        indice++;
-                        fila_insere_ord_fn(abertos, prox, no->id, indice, no->custo, camara->pesos[regra[i]]);
+        if(!existeMenor(menorValor, no, no->camara->id)) {
+            if(!strcmp(camara->id, objetivo)) {
+                sucesso = 1;
+                break;
+            }
+            else {
+                int i = 0;
+                fila_insere(fechados, camara, no->idPai, no->id);
+                fila_insere(menorValor, camara, no->idPai, no->id);
+                fechados->final->custo = no->custo;
+                for(i; i<4; i++) {
+                    Camara* prox = camara->Camaralist[regra[i]];
+                    if(prox != NULL) {
+                        if(!ehPai(fechados->final, prox)) {
+                            printf("%d,%d,%s\n",no->id,no->idPai,no->camara->id);
+                            indice++;
+                            fila_insere_ord_fn(abertos, prox, no->id, indice, no->custo, camara->pesos[regra[i]]);
+                        }
                     }
                 }
+                fila_remove_ord(abertos, no->id);
             }
+        }
+        else {
+            fila_insere(podado, no, no->idPai, no->id);
             fila_remove_ord(abertos, no->id);
         }
     }

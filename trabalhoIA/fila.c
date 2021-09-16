@@ -57,6 +57,7 @@ int fila_insere(Fila *fila, Camara* camara, int idPai, int id)
     no->id = id;
     no->prox = NULL;
     no->custo = 0;
+    no->fn = 0;
     if(fila->final==NULL) {
         fila->inicio = no;
         no->ant = NULL;
