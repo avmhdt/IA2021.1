@@ -169,7 +169,7 @@ void gulosa(Camara* start, char* objetivo) {
     clock_t timeStart = clock();
 
     Fila *abertos = fila_cria();
-    fila_insere_ord(abertos, start, 0, 0);
+    fila_insere_ord(abertos, start, -1, 0);
 
     Fila *fechados = fila_cria();
     printf("Caminho: \n");
@@ -191,7 +191,7 @@ void gulosa(Camara* start, char* objetivo) {
     printf("Fator de ramificacao medio: %.2f\n", frm);
     printf("Tempo de execucao: %.6f s\n", executionTime);
 
-    printf("\nCaminho 2:\n");
+    //fila_imprime(fechados);
 
     free(fr);
 };
@@ -237,6 +237,8 @@ int g_search(Fila* abertos, Fila* fechados, char* objetivo, int* fr) {
     printf("%s ", getId(abertos->inicio->camara));
     //fila_imprime(fechados);
     if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
+        printf("\n*********\n");
+        caminho(fechados, abertos->inicio->idPai, objetivo);
         return 1;
     } else {
         fecha(abertos, fechados);
@@ -266,7 +268,6 @@ int caminho(Fila* fechados, int idPai, char* final) {
     ElemFila* no = fechados->final;
     printf("%s", final);
     while(no) {
-        no = no->ant;
         if(no->id == idPai) {
             printf("<-%s",no->camara->id);
             idPai = no->idPai;
@@ -275,6 +276,7 @@ int caminho(Fila* fechados, int idPai, char* final) {
                 return 0;
             }
         }
+        no = no->ant;
     }
     return 0;
 }
@@ -501,16 +503,16 @@ void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
       // printf("\n\n\nCAMARA ATUAL_______%c", cam->id[0]);
       int i=0;
       for (i; i<4; i++){
-        
+
         if (cam->Camaralist[i]){
           Camara *novaCam = cam->Camaralist[i];
           // printf("\n\n %d ----- %c \n\n", i, novaCam->id[0]);
           int custo = (cam->pesos[i]);
           custo += atual->custo;
-          
+
           if (lista_busca(fechados, novaCam->id[0]) == -1){
             if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 1){
-              
+
               lista_remove(abertos, cam->Camaralist[i]);
               lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
             } else if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 0){
