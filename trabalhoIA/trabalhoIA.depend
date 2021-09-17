@@ -1,13 +1,13 @@
 # depslib dependency file v1.0
-1631749877 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.c
+1631885636 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.c
 	"labyrinth.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1631749878 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.h
+1631885636 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\labyrinth.h
 
-1631839810 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\main.c
+1631890062 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -15,44 +15,44 @@
 	"search.h"
 	"fila.h"
 
-1631839800 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.c
-	"search.h"
+1631889960 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<time.h>
 	"pilha.h"
 	"lista.h"
+	"search.h"
 
-1631838280 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.h
+1631889808 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.h
 	"labyrinth.h"
 	"fila.h"
 	"pilha.h"
 
-1631822112 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\pilha.h
+1631885636 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\pilha.h
 	"labyrinth.h"
 
-1631803115 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.h
+1631885678 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.h
 	"labyrinth.h"
 
-1631803088 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.c
+1631885636 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.c
 	<stdio.h>
 	<stdlib.h>
 	"fila.h"
 	"labyrinth.h"
 
-1631803736 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\pilha.c
+1631885636 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\pilha.c
 	<stdio.h>
 	<stdlib.h>
 	"pilha.h"
 
-1631749878 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\lista.c
+1631888862 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\lista.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
 	<string.h>
 	"labyrinth.h"
 
-1631749878 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\lista.h
+1631888712 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\lista.h
 	"labyrinth.h"
 

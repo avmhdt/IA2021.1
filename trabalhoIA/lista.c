@@ -1,11 +1,8 @@
-//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530
 #include <stdio.h>
 #include <stdlib.h>
 #include "lista.h"
 #include <string.h>
 #include "labyrinth.h"
-
-#define MAX_ID_LEN 1
 
 // typedef struct lista Lista;
 
@@ -31,7 +28,7 @@ No getMenorCusto(Lista *lista){
     No min = lista->inicio;
     No no = lista->inicio;
     while (no){
-      
+
       if (no->custo < min->custo){
         min = no;
       }
@@ -74,11 +71,11 @@ int lista_tamanho(Lista *lista)
 
 
 int lista_busca(Lista * lista, char id){
-    
+
     No no = lista->inicio;
     int i=0;
     while (no){
-        
+
         if (no->id[0] == id){
           return i;
         }
@@ -115,12 +112,12 @@ int lista_insere(Lista *lista, char*id, char* idPai, int custo, Camara *camara)
     if(no==NULL) return 0;
     // alocação bem sucedida...
     // inicializa o nó
-    
+
     setId(no,id);
     setId(no->idPai, idPai);
     no->custo = custo;
-    
-    
+
+
     //printf("\n\n---------------------------------\n%c", no->custo);
     no->prox = NULL;
     no->camara = camara;
@@ -160,11 +157,11 @@ int lista_removeFinal(Lista *lista)
 }
 
 int lista_compara(Lista *lista, char id[], int custo){
-  
+
   No no = lista->inicio;
   while (no){
     if (no->id[0] == id[0]){
-      
+
       if (no->custo > custo){
         return 1;
       } else {
@@ -230,10 +227,10 @@ int lista_remove(Lista *lista, Camara* elem){
 void lista_imprime(Lista *abertos, Lista *fechados)
 {
     printf("\n");
-    
+
     if(lista_vazia(abertos)) return;
     No no = abertos->inicio;
-    
+
     while(no){
         printf("  %c(%d)", no->id[0], no->custo);
         no = no->prox;
@@ -244,7 +241,7 @@ void lista_imprime(Lista *abertos, Lista *fechados)
         printf("  %c", no->id[0]);
         no = no->prox;
     }
-    
+
 }
 
 int caminho2 (Lista *fechados, Camara* start, char* objectivo){
@@ -267,8 +264,8 @@ int caminho2 (Lista *fechados, Camara* start, char* objectivo){
     printf("<-%s", no->idPai);
     profundidade ++;
     idPai = no->idPai;
-      
-    
+
+
   }
   return profundidade;
 }
