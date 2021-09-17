@@ -13,7 +13,7 @@ Autores: Jos�, Vin�cius e Yuri
 
 
 
-int create(char* ref, Camara lista[]){
+int create(char* ref, Camara lista[]) {
   
   FILE *arq;
   int result;
@@ -422,8 +422,7 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     return z;
 }
 
-int main(void)
-{
+int main(void) {
   Camara lista[100];
   int total = create ("entrada.txt", lista);
 
@@ -456,42 +455,8 @@ int main(void)
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
 
     //backtracking(start, "w", regras);
-    gulosa(start, "w");
+    //gulosa(start, "w");
     //ida(start, "w", regras);
-
-    // backtracking(start, "w", regras);
-    // Camara* resultado = buscaLargura(start, "W", regras);
-    //Camara* resultado = buscaProfundidade(start, "W", regras, 10);
-    //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
-
-    /*
-    Camara* resultado = buscaA(start, "W", regras);
-    //Camara* resultado = buscaA(start, "W", regras);
-
-    // buscaOrdenada(start, "W", regras);
-
-
-    //Camara* resultado = buscaA(start, "W", regras);
-
-    buscaOrdenada(start, "w", regras);
-
-
-    // if(resultado == NULL)
-    //     printf("Erro\n");
-    // else
-    //     printf("\nResultado: %s",resultado->id);
-    //backtracking(start, "W", regras);
-    Camara* resultado1 = buscaLargura(start, "w", regras);
-    Camara* resultado2 = buscaProfundidade(start, "w", regras, 10);
-    Camara* resultado = buscaA(start, "w");
-    if(resultado == NULL)
-        printf("Erro\n");
-    else
-        printf("\nResultado: %s",resultado->id);
-    */
-
-    //    backtracking(start, "W", regras);
-    //    gulosa(start, "W", regras, *heuristica);
 
     //buscaOrdenada(start, "w", regras);
     
