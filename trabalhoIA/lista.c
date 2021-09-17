@@ -4,20 +4,16 @@
 #include <string.h>
 #include "labyrinth.h"
 
-// typedef struct lista Lista;
-
 Lista* lista_cria()
 {
     Lista *li = (Lista*) malloc(sizeof(Lista));
     if(li!=NULL)
         li->inicio = li->final = NULL;
-    //printf("Lista criada");
     return li;
 }
 
 No getInicio(Lista *lista){
     No no = lista->inicio;
-    //printf("eita ---- %c", no->id[0]);
     return no;
 }
 
@@ -115,7 +111,6 @@ int lista_insere(Lista *lista, char*id, char* idPai, int custo, Camara *camara)
     no->custo = custo;
 
 
-    //printf("\n\n---------------------------------\n%c", no->custo);
     no->prox = NULL;
     no->camara = camara;
     if(lista->final==NULL){
@@ -171,24 +166,9 @@ int lista_compara(Lista *lista, char id[], int custo){
 }
 
 int lista_remove(Lista *lista, Camara* elem){
-    // printf("\n\nREMOCAO %c\n\n", elem->id[0]);
-    // if (lista_busca(lista, elem->id[0]) == -1){
-    //   //printf("deu menos um");
-    //   return 0;
-    // }
-    //printf("\nsegue -- %c\n\n", elem->id[0]);
-    // No no = lista->final;
-    // printf("FINAL DA LISTA %c", no->id[0]);
-    // if (no->id[0] == elem->id[0]){
-    //   lista_removeFinal(lista);
-    //   //printf("removeinicio");
-    //   return 1;
-    // }
     No no = lista->inicio;
-    // printf("INICIO DA LISTA %c\n\n", no->id[0]);
     if (no->id[0] == elem->id[0]){
       lista_removeInicio(lista);
-      //printf("removeinicio");
       return 1;
     }
     while (no){
@@ -198,28 +178,14 @@ int lista_remove(Lista *lista, Camara* elem){
         break;
       }
     }
-                      // while (no->prox && no->prox->id[0] != elem->id[0]){
-                      //   //printf("\n%c\n", no->prox->id[0]);
-                      //   no = no->prox;
-                      // }
-    // printf("fim do while -- %c\n", no->id[0]);
+
     No aux = no->prox->prox;
-    // No *aux2 = &aux->prox;
 
     no->prox->prox = NULL;
     free(no->prox);
     no->prox = aux;
     return 1;
 }
-
-// int lista_consulta(Lista *lista, int *dado)
-// {
-//     if(fila_vazia(lista)) return 0;
-//     *dado = lista->inicio->dado;
-//     return 1;
-// }
-
-
 
 void lista_imprime(Lista *abertos, Lista *fechados)
 {
@@ -253,9 +219,7 @@ int caminho2 (Lista *fechados, Camara* start, char* objectivo){
   printf("<-%s ", no->idPai);
   while (no->id[0] != start->id[0]){
     no = fechados->inicio;
-    // printf("Quase no id");
     while(no->id[0] != idPai[0]){
-      // printf("\n%c ---- %c\n", no->id[0] , idPai[0]);
       no = no->prox;
     }
     printf("<-%s", no->idPai);

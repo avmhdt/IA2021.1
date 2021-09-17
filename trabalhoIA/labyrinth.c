@@ -29,10 +29,6 @@ int insertVizinho(Camara* camara, Camara* parent, int pos, int peso) {
         printf("Error. pos out of bounds.\n");
         return -1;
     }
-    //    if(parent->Camaralist[pos] != NULL) {
-    //        printf("Error inserting camara. Position full.");
-    //        return -2;
-    //    }
     parent->Camaralist[pos] = camara;
     parent->pesos[pos] = peso;
     return 0;
@@ -58,15 +54,4 @@ Camara* getById (Camara lista[], int size, char *id[]){
     setId(nulo, "nu");
     return nulo;
 }
-
-/*
-void traverseLabyrinth(Camara* camara, int regras[4]) {
-    if(camara == NULL) return;
-    printf("%s\n", getId(camara));
-    int i;
-    for(i = 0; i < 4; i++) {
-        traverseLabyrinth(getVizinho(camara, regras[i]), regras);
-    }
-};
-*/
 

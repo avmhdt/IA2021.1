@@ -39,23 +39,4 @@ void setVizinhosNULL(Camara* camara);
 
 Camara* getById (Camara lista[], int size, char *id[]);
 
-//void traverseLabyrinth(Camara* camara, int regras[4]);
-/*****************************************************************************/
-/*
-typedef struct camaraP {
-    char id[MAX_ID_LEN];
-    CaminhoP* caminhos[4];
-} CamaraP;
-
-typedef struct caminhoP {
-    CamaraP* origem;
-    CamaraP* destino;
-    int custo;
-} CaminhoP;
-
-char* getId(CamaraP* camara);
-void setId(CamaraP* camara, char id[]);
-
-void setCaminhosNULL(CamaraP* camara);
-*/
 #endif // LABYRINTH_H

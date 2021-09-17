@@ -31,17 +31,13 @@ int fila_insere(Fila *fila, Camara* camara, int idPai, int id);
 
 int fila_remove(Fila *fila);
 int fila_remove_ord(Fila *fila, int id);
-/*
-int fila_consulta(Fila *fila, int *dado);
-*/
+
 int fila_imprime(Fila *fila);
 
-//int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id);
 int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id, int peso, int custoPai);
 
 int fila_insere_ord_gn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int gn);
 
 int fila_conta(Fila *fila);
-//int fila_insere_ord_fn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int peso);
 int fila_insere_ord_fn(Fila* fila, Camara* camara, int id, int peso, ElemFila* pai);
 #endif

@@ -23,7 +23,6 @@ struct lista
 };
 
 typedef struct lista Lista;
-// typedef struct no *No;
 
 Lista* lista_cria();
 void lista_libera(Lista *lista);
@@ -32,7 +31,6 @@ int lista_tamanho(Lista *lista);
 int lista_insere(Lista *lista, char* id, char* idPai, int custo, Camara *camara);
 int lista_removeInicio(Lista *lista);
 int lista_removeFinal(Lista *lista);
-// int lista_consulta(Lista *lista, int *dado);
 void lista_imprime(Lista *abertos, Lista *fechados);
 No getInicio(Lista *lista);
 No getMenorCusto(Lista *lista);

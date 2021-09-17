@@ -452,9 +452,6 @@ int main(void) {
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
 
     backtracking(start, objetivo, regras);
-    //gulosa(start, objetivo);
-    //ida(start, objetivo, regras);
-    //buscaOrdenada(start, objetivo, regras);
 
     Camara* resultado1 = buscaLargura(start, objetivo, regras);
     if(resultado1 == NULL)
@@ -462,9 +459,16 @@ int main(void) {
     Camara* resultado2 = buscaProfundidade(start, objetivo, regras, profundidade);
     if(resultado2 == NULL)
       printf("Erro\n");
+
+    buscaOrdenada(start, objetivo, regras);
+
+    gulosa(start, objetivo);
+
     Camara* resultado = buscaA(start, objetivo);
     if(resultado == NULL)
       printf("Erro\n");
+
+    ida(start, objetivo, regras);
 
   }
   else
