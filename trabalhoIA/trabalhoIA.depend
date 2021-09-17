@@ -15,7 +15,7 @@
 	"search.h"
 	"fila.h"
 
-1631892115 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.c
+1631895778 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\search.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -32,10 +32,10 @@
 1631891410 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\pilha.h
 	"labyrinth.h"
 
-1631891410 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.h
+1631895228 c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.h
 	"labyrinth.h"
 
-1631891410 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.c
+1631895256 source:c:\users\jose carvalho\documents\github\ia2021.1\trabalhoia\fila.c
 	<stdio.h>
 	<stdlib.h>
 	"fila.h"

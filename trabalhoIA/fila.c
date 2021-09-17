@@ -130,7 +130,7 @@ int fila_imprime(Fila *fila)
     return quantNos;
 }
 
-int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
+int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id, int peso, int custoPai) {
     // fila existe?
     if(fila==NULL) return 0;
     // aloca memória para um nó.
@@ -142,6 +142,7 @@ int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
     no->idPai = idPai;
     no->id = id;
     no->prox = no->ant = NULL;
+    no->custo = peso + custoPai;
 
     ElemFila *current = fila->inicio;
     ElemFila *next;

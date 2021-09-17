@@ -20,7 +20,7 @@ void backtracking(Camara* start, char* objetivo, int regra[4]) {
     Pilha *raiz = pilha_cria();
     pilha_insere(raiz, start);
     Pilha *visitados = pilha_cria();
-    int search = bt_search(raiz, visitados, getId((*raiz)->camara), objetivo, regra, folhas, custo);
+    int search = bt_search(raiz, visitados, getId((*raiz)->camara), objetivo, regra, folhas, custo  );
     clock_t timeEnd = clock();
 
     double executionTime = (double) (timeEnd - timeStart)/CLOCKS_PER_SEC;
@@ -102,7 +102,7 @@ void gulosa(Camara* start, char* objetivo) {
     clock_t timeStart = clock();
 
     Fila *abertos = fila_cria();
-    fila_insere_ord(abertos, start, -1, 0);
+    fila_insere_ord(abertos, start, -1, 0, 0, 0);
 
     Fila *fechados = fila_cria();
     int *fr = malloc(sizeof(int));
@@ -122,7 +122,12 @@ void gulosa(Camara* start, char* objetivo) {
         sucesso = 'S';
     } else sucesso = 'N';
 
+    int custo = fechados->final->custo;
+
     printf("Sucesso? %c\n", sucesso);
+    printf("Caminho: ");
+    caminho(fechados, abertos->inicio->idPai, objetivo);
+    printf("Custo: %d\n", custo);
     printf("Profundidade: %d\n", prof);
     printf("Expandidos: %d\n", expandidos);
     printf("Visitados: %d\n", visitados);
@@ -139,6 +144,7 @@ void gulosa(Camara* start, char* objetivo) {
 void fecha(Fila* abertos, Fila* fechados) {
     ElemFila *inicio = abertos->inicio;
     fila_insere(fechados, inicio->camara, inicio->idPai, inicio->id);
+    fechados->final->custo = inicio->custo;
     fila_remove(abertos);
 }
 
@@ -163,7 +169,7 @@ int abreVizinhos(Fila* fechados, Fila* abertos) {
     for(i = 0; i < 4; i++) {
         vizinho = atual->camara->Camaralist[regras[i]];
         if(vizinho && !fechado(vizinho, fechados)) {
-            fila_insere_ord(abertos, vizinho, atual->id, atual->id+j+1);
+            fila_insere_ord(abertos, vizinho, atual->id, atual->id+j+1, atual->camara->pesos[regras[i]], atual->custo);
             j++;
         }
     }
@@ -175,8 +181,8 @@ int g_search(Fila* abertos, Fila* fechados, char* objetivo, int* fr) {
     //printf("%s ", getId(abertos->inicio->camara));
     //fila_imprime(fechados);
     if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
-        printf("\nCaminho: ");
-        caminho(fechados, abertos->inicio->idPai, objetivo);
+        //printf("\nCaminho: ");
+        //caminho(fechados, abertos->inicio->idPai, objetivo);
         return 1;
     } else {
         fecha(abertos, fechados);
