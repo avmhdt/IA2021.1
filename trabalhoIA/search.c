@@ -1,9 +1,10 @@
-#include "search.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "pilha.h"
 #include "lista.h"
+#include "search.h"
 
 void backtracking(Camara* start, char* objetivo, int regra[4]) {
     Pilha *raiz = pilha_cria();
@@ -207,11 +208,27 @@ int ehPai(ElemFila* atual, Camara* camara) {
     return ehPai(no, camara);
 }
 
+int ehPai2(ElemFila* atual, Camara* camara) {
+    int idPai = atual->idPai;
+    ElemFila* no = atual;
+    while(no) {
+        if(no->id == idPai) {
+            if(!strcmp(no->camara->id, camara->id))
+                return 1;
+            idPai = no->idPai;
+        }
+        no = no->ant;
+        if(no == NULL) {
+            return 0;
+        }
+    }
+    return 0;
+}
+
 int caminho(Fila* fechados, int idPai, char* final) {
     ElemFila* no = fechados->final;
     printf("%s", final);
     while(no) {
-        no = no->ant;
         if(no->id == idPai) {
             printf("<-%s",no->camara->id);
             idPai = no->idPai;
@@ -220,18 +237,44 @@ int caminho(Fila* fechados, int idPai, char* final) {
                 return 0;
             }
         }
+        no = no->ant;
     }
     return 0;
 }
 
+int existeMenor(Fila* fila, ElemFila* no, char* id) {
+    int peso = no->fn;
+    ElemFila* noFila = fila->inicio;
+    while(noFila) {
+        if(!strcmp(noFila->camara->id, id)) {
+            if(noFila->fn <= peso)
+                return 1;
+            fila_remove_ord(fila, noFila->id);
+            fila_insere(fila, no->camara, no->idPai, no->id);
+            fila->final->custo = no->custo;
+            fila->final->fn = no->custo + no->camara->hn;
+            return 0;
+        }
+        noFila = noFila->prox;
+    }
+    fila_insere(fila, no->camara, no->idPai, no->id);
+    fila->final->custo = no->custo;
+    fila->final->fn = no->custo + no->camara->hn;
+    return 0;
+}
+
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
-    Fila* abertos = fila_cria(); //fila
+    clock_t tempo;
+    tempo = clock();
+    Fila* abertos = fila_cria();
     Fila* fechados = fila_cria();
     int indice = 0;
+    int nFechados = 0;
     fila_insere(abertos, start, -1, indice);
-    ElemFila* no = abertos->inicio;
-    Camara* camara = no->camara;
+    ElemFila* no;
+    Camara* camara;
     int sucesso = 0;
+    int profundidade = 0;
     while(!sucesso) {
         no = abertos->inicio;
         if(no == NULL)
@@ -244,76 +287,43 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
         }
         else {
             int i = 0;
-            fila_insere(fechados,no->camara, no->idPai, no->id);
+            int aux = indice;
+            fila_insere(fechados, camara, no->idPai, no->id);
             for(i; i<4; i++) {
-                if(camara->Camaralist[regra[i]] != NULL) {
-                    if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
+                Camara* prox = camara->Camaralist[regra[i]];
+                if(prox != NULL) {
+                    if(!ehPai(fechados->final, prox)) {
                         indice++;
-                        fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
+                        fila_insere(abertos, prox, no->id, indice);
+                        abertos->final->custo = no->custo + camara->pesos[regra[i]];
+                        abertos->final->profundidade = no->profundidade + 1;
                     }
                 }
+            }
+            if(aux != indice) {
+                nFechados++;
+                if(abertos->final->profundidade > profundidade)
+                    profundidade = abertos->final->profundidade;
             }
             fila_remove(abertos);
         }
     }
-    caminho(fechados,no->idPai,camara->id);
-    printf("Fechados: %d\n",fila_imprime(fechados));
-    printf("Custo solução: %d\n",no->custo);
-    //printf("Fator médio de ramificação: %f\n",indice/fila_tamanho(fechados));
+
+    printf("Tempo de execução - busca em largura: %fs\n", (float) (clock()-tempo)/CLOCKS_PER_SEC);
+    printf("Caminho: ");
+    caminho(fechados, no->idPai, camara->id);
+    printf("Nós fechados: %d\n", fila_tamanho(fechados));
+    printf("Custo solução: %d\n", no->custo);
+    printf("Profundidade: %d\n", profundidade);
+    printf("Fator médio de ramificação: %f\n\n",(float) indice/nFechados);
     return camara;
 }
 //fim busca em largura
 
 //começo busca em profundidade
 Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade) {
-    //busca em profundidade modificada, não geração de estados já visitados
-    Pilha *abertos = pilha_cria();
-    Pilha *fechados = pilha_cria();
-    pilha_insere(abertos, start);
-    (*abertos)->profundidade = 0;
-    Camara* camara;
-    int sucesso = 0;
-    int profundidadeNova;
-    while(!sucesso) {
-        ElemPilha* no = *abertos;
-        if(no == NULL)
-            return NULL;
-        camara = no->camara;
-        profundidadeNova = no->profundidade+1;
-        if(!strcmp(camara->id, objetivo)) {
-            sucesso = 1;
-            break;
-        }
-        else if(profundidadeNova<profundidade){
-            printf("Camara Aberta: ");
-            printf(camara->id);
-            printf("\n");
-            pilha_insere(fechados, camara);
-            pilha_remove(abertos);
-
-            int i = 3;
-            for(i; i>=0; i--) {
-                if(camara->Camaralist[regra[i]] != NULL) { 
-                    if(!visitado(camara->Camaralist[regra[i]]->id, fechados)) {
-                        printf(camara->Camaralist[regra[i]]->id);
-                        pilha_insere(abertos, camara->Camaralist[regra[i]]);
-                        (*abertos)->profundidade = profundidadeNova;
-                    }
-                }
-            }
-        }
-        else {
-            pilha_remove(abertos);
-        }
-        printf("\nLista: ");
-        pilha_imprime(abertos);
-    }
-    printf("Fechados: %d\n",pilha_imprime(fechados));
-    return camara;
-}
-
-Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int profundidade) {
-    //busca em profundidade não modificada
+    clock_t tempo;
+    tempo = clock();
     Pilha *abertos = pilha_cria();
     Fila *fechados = fila_cria();
     pilha_insere(abertos, start);
@@ -321,11 +331,14 @@ Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int prof
     (*abertos)->idPai = -1;
     (*abertos)->id = 0;
     Camara* camara;
+    ElemPilha* no;
     int sucesso = 0;
     int profundidadeNova;
+    int profundidadeMax = 0;
     int indice = 0;
+    int nFechados = 0;
     while(!sucesso) {
-        ElemPilha* no = *abertos;
+        no = *abertos;
         if(no == NULL)
             return NULL;
         camara = no->camara;
@@ -335,70 +348,62 @@ Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int prof
             break;
         }
         else if(profundidadeNova<profundidade){
-            printf("Camara Aberta: ");
-            printf(camara->id);
-            printf("\n");
+            int custo = no->custo;
             fila_insere(fechados, camara, no->idPai, no->id);
             pilha_remove(abertos);
-
+            int aux = indice;
             int i = 3;
             for(i; i>=0; i--) {
-                if(camara->Camaralist[regra[i]] != NULL) {
-                    if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
+                Camara* prox = camara->Camaralist[regra[i]];
+                if(prox != NULL) {
+                    if(!ehPai(fechados->final, prox)) {
                         indice++;
-                        printf(camara->Camaralist[regra[i]]->id);
-                        pilha_insere(abertos, camara->Camaralist[regra[i]]);
+                        pilha_insere(abertos, prox);
                         (*abertos)->profundidade = profundidadeNova;
                         (*abertos)->idPai = fechados->final->id;
                         (*abertos)->id = indice;
+                        (*abertos)->custo = camara->pesos[regra[i]] + custo;
                     }
                 }
+            }
+            if(aux != indice) {
+                nFechados++;
+                if(profundidadeNova > profundidadeMax)
+                    profundidadeMax = profundidadeNova;
             }
         }
         else {
             pilha_remove(abertos);
         }
-        printf("\nLista: ");
-        pilha_imprime(abertos);
     }
-    printf("Fechados: %d\n", fila_imprime(fechados));
+    
+    printf("Tempo de execução - busca em profundidade: %fs\n", (float) (clock()-tempo)/CLOCKS_PER_SEC);
+    printf("Caminho: ");
+    caminho(fechados, no->idPai, camara->id);
+    printf("Nós fechados: %d\n", fila_tamanho(fechados));
+    printf("Custo solução: %d\n", no->custo);
+    printf("Profundidade: %d\n", profundidadeMax);
+    printf("Fator médio de ramificação: %f\n\n", (float) indice/nFechados);
+    
     return camara;
 }
 //fim busca em profundidade
 
 //começo busca A*
-Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
-    // fracasso := F; sucesso := F; defina(abertos);
-    // S := raiz; calcule(f(S));
-    // insere(S, abertos); defina(fechados);
-    // enquanto não (sucesso ou fracasso) faça
-    //  se abertos = vazio então
-    //      fracasso := T;
-    //  senão
-    //      N := primeiro(abertos); // nó com o menor f
-    //      se N = solução então
-    //          sucesso := T;
-    //      senão
-    //          enquanto R(N) ≠ vazio faça
-    //              escolha r de R(N); new(u);
-    //              u := r(N); calcule(f(u));
-    //              insere(u, abertos); // se u não for ancestral de n
-    //              atualiza R(N);
-    //          fim-enquanto;
-    //          insere(N, fechados); // destrói N
-    //      fim-se;
-    //  fim-se;
-    // fim-enquanto;
-    // fim.
-    Fila* abertos = fila_cria(); //fila
+Camara* buscaA(Camara* start, char* objetivo) {
+    clock_t tempo;
+    tempo = clock();
+    Fila* abertos = fila_cria();
     Fila* fechados = fila_cria();
-    Fila* ordenada = fila_cria();
+    Fila* menorValor = fila_cria();
+    Fila* podado = fila_cria();
     int indice = 0;
     fila_insere(abertos, start, -1, indice);
-    fila_insere(ordenada, start, -1, indice);
-    ElemFila* no = abertos->inicio;
-    Camara* camara = no->camara;
+    ElemFila* no;
+    Camara* camara;
+    int nFechados = 0;
     int sucesso = 0;
+    int profundidade = 0;
     while(!sucesso) {
         no = abertos->inicio;
         if(no == NULL) {
@@ -406,33 +411,56 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
             return NULL;
         }
         camara = no->camara;
-        if(!strcmp(camara->id, objetivo)) {
-            sucesso = 1;
-            break;
-        }
-        else {
-            int i = 0;
-            fila_insere(fechados, no->camara, no->idPai, no->id);
-            for(i; i<4; i++) {
-                if(camara->Camaralist[regra[i]] != NULL) {
-                    if(!ehPai(fechados->final, camara->Camaralist[regra[i]])) {
-                        indice++;
-                        fila_insere(abertos, camara->Camaralist[regra[i]], no->id, indice);
-                        fila_insere_ord_gn(ordenada,  camara->Camaralist[regra[i]], no->id, indice, no->custo, camara->pesos[regra[i]]);
+        if(!existeMenor(menorValor, no, no->camara->id)) {
+            if(!strcmp(camara->id, objetivo)) {
+                sucesso = 1;
+                break;
+            }
+            else {
+                int i = 0;
+                int aux = indice;
+                fila_insere(fechados, camara, no->idPai, no->id);
+                //fila_insere(menorValor, camara, no->idPai, no->id);
+                fechados->final->custo = no->custo;
+                for(i; i<4; i++) {
+                    Camara* prox = camara->Camaralist[i];
+                    if(prox != NULL) {
+                        if(!ehPai2(fechados->final, prox)) {
+                            indice++;
+                            fila_insere_ord_fn(abertos, prox, indice, camara->pesos[i], no);
+                        }
                     }
                 }
+                if(aux != indice) {
+                    nFechados++;
+                    if(no->profundidade + 1 > profundidade)
+                        profundidade = no->profundidade + 1;
+                }
+                fila_remove_ord(abertos, no->id);
             }
-            fila_remove(abertos);
+        }
+        else {
+            fila_insere(podado, no, no->idPai, no->id);
+            fila_remove_ord(abertos, no->id);
         }
     }
-    //fila_imprime(ordenada);
+
+    printf("Tempo de execução - busca A*: %fs\n", (float) (clock()-tempo)/CLOCKS_PER_SEC);
+    printf("Caminho: ");
+    caminho(fechados, no->idPai, camara->id);
+    printf("Nós fechados: %d\n", fila_tamanho(fechados));
+    printf("Custo solução: %d\n", no->custo);
+    printf("Profundidade: %d\n", profundidade);
+    printf("Fator médio de ramificação: %f\n\n", (float) (indice-fila_tamanho(podado))/nFechados);
+
     return camara;
 }
 //fim busca A*
 
 //começo busca ordenada
-void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
-
+  void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
+    clock_t tempo;
+    tempo = clock();
     int sucesso = 0, custo;
     No atual;
     // No anterior;
@@ -470,6 +498,7 @@ void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
               
               lista_remove(abertos, cam->Camaralist[i]);
               lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
+              
             } else if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 0){
             // printf("\n\nINSERINDO -- %s -- %s -- %d",getId(cam->Camaralist[i]), getId(cam), custo);
             lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
@@ -492,8 +521,15 @@ void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
     while (vish->prox){
       vish = vish->prox;
     }
-    printf("\n\n\nCUSTO: %d\n", custo);
+    
+    printf("\n\n\nTempo de execução - busca ordenada: %fs\n", (float) (clock()-tempo)/CLOCKS_PER_SEC);
+    printf("Caminho: ");
     caminho2(fechados, start, objectivo);
+    printf("\nNós fechados: %d\n", lista_tamanho(fechados));
+    printf("Custo solução: %d\n",custo);
+    // printf("Profundidade: %d\n", profundidade);
+    // printf("Fator médio de ramificação: %f\n\n", (float) (indice-fila_tamanho(podado))/nFechados);
+    printf("\n\n\n");
 }
 //fim busca ordenada
 

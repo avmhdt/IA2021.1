@@ -46,6 +46,19 @@ void setVizinhosNULL(Camara* camara) {
 
 };
 
+Camara* getById (Camara lista[], int size, char *id[]){
+    int i = 0;
+    for (i; i<size; i++){
+      if (!strcmp(lista[i].id, id[0])){
+        Camara *cam = &lista[i];
+        return cam;
+      }
+    }
+    Camara *nulo = malloc(sizeof(Camara));
+    setId(nulo, "nu");
+    return nulo;
+}
+
 /*
 void traverseLabyrinth(Camara* camara, int regras[4]) {
     if(camara == NULL) return;

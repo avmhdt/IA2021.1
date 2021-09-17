@@ -56,6 +56,9 @@ int fila_insere(Fila *fila, Camara* camara, int idPai, int id)
     no->idPai = idPai;
     no->id = id;
     no->prox = NULL;
+    no->custo = 0;
+    no->fn = camara->hn;
+    no->profundidade = 0;
     if(fila->final==NULL) {
         fila->inicio = no;
         no->ant = NULL;
@@ -68,8 +71,7 @@ int fila_insere(Fila *fila, Camara* camara, int idPai, int id)
     return 1;
 }
 
-int fila_remove(Fila *fila)
-{
+int fila_remove(Fila *fila) {
     if(fila_vazia(fila)) return 0;
     ElemFila *no = fila->inicio;
     fila->inicio = no->prox;
@@ -79,17 +81,26 @@ int fila_remove(Fila *fila)
     return 1;
 }
 
-/*
-int fila_consulta(Fila *fila, int *dado)
-{
+int fila_remove_ord(Fila *fila, int id) {
     if(fila_vazia(fila)) return 0;
-    *dado = fila->inicio->dado;
+    ElemFila *no = fila->inicio;
+    if(no->id == id) {
+        return fila_remove(fila);
+    }
+    while(no->id != id) {
+        no = no->prox;
+    }
+    no->ant->prox = no->prox;
+    if(no->prox == NULL) {
+        fila->final = no->ant;
+    }
+    else
+        no->prox->ant = no->ant;
+    free(no);
     return 1;
 }
-*/
 
-int fila_imprime(Fila *fila)
-{
+int fila_imprime(Fila *fila) {
     if(fila_vazia(fila)) return 0;
     int quantNos = 0;
     ElemFila *no = fila->inicio;
@@ -144,7 +155,7 @@ int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
     return 1;
 }
 
-int fila_insere_ord_gn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int gn) {
+int fila_insere_ord_fn(Fila* fila, Camara* camara, int id, int peso, ElemFila* pai) {
     // fila existe?
     if(fila==NULL) return 0;
     // aloca memória para um nó.
@@ -153,13 +164,13 @@ int fila_insere_ord_gn(Fila* fila, Camara* camara, int idPai, int id, int custoP
     if(no==NULL) return 0;
 
     no->camara = camara;
-    no->idPai = idPai;
+    no->idPai = pai->id;
     no->id = id;
     no->prox = no->ant = NULL;
-
-    int fn = (custoPai + gn) + camara->hn;
+    no->profundidade = pai->profundidade+1;
+    int fn = (pai->custo + peso) + camara->hn;
     no->fn = fn;
-    no->custo = custoPai + gn;
+    no->custo = pai->custo + peso;
 
     ElemFila *current = fila->inicio;
     ElemFila *next;

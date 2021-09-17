@@ -95,6 +95,18 @@ int lista_busca(Lista * lista, char id){
     return -1;
 }
 
+No getNoByID (Lista *lista, char* id){
+    No no = lista->inicio;
+    while (no){
+      if (!strcmp(no->camara->id, id)){
+        return no;
+      }
+      no = no->prox;
+    }
+    No nulo = (No)malloc(sizeof(No)+sizeof(Camara));
+    nulo->profundidade = -1;
+    return nulo;
+}
 
 int lista_insere(Lista *lista, char*id, char* idPai, int custo, Camara *camara)
 {
@@ -110,6 +122,8 @@ int lista_insere(Lista *lista, char*id, char* idPai, int custo, Camara *camara)
     setId(no,id);
     setId(no->idPai, idPai);
     no->custo = custo;
+    
+    
     //printf("\n\n---------------------------------\n%c", no->custo);
     no->prox = NULL;
     no->camara = camara;
@@ -237,7 +251,7 @@ void lista_imprime(Lista *abertos, Lista *fechados)
 }
 
 void caminho2 (Lista *fechados, Camara* start, char* objectivo){
-  printf("\n\nCAMINHO:  %c", objectivo[0]);
+  printf(" %c", objectivo[0]);
   No no = fechados->inicio;
   while(no->prox){
     no = no->prox;
@@ -258,5 +272,4 @@ void caminho2 (Lista *fechados, Camara* start, char* objectivo){
     
   }
 
-  printf("\n\n\n\n");
 }

@@ -13,20 +13,6 @@ Autores: Jos�, Vin�cius e Yuri
 
 
 
-Camara* getById (Camara lista[], int size, char *id[]){
-    int i = 0;
-    for (i; i<size; i++){
-      if (!strcmp(lista[i].id, id[0])){
-        Camara *cam = &lista[i];
-        return cam;
-      }
-    }
-    Camara *nulo = malloc(sizeof(Camara));
-    setId(nulo, "nu");
-    return nulo;
-}
-
-
 int create(char* ref, Camara lista[]){
     
     FILE *arq;
@@ -471,13 +457,21 @@ int main(void)
     //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
     //Camara* resultado = buscaA(start, "W", regras);
 
-    // buscaOrdenada(start, "w", regras);
+    buscaOrdenada(start, "w", regras);
 
 
     // if(resultado == NULL)
     //     printf("Erro\n");
     // else
     //     printf("\nResultado: %s",resultado->id);
+    //backtracking(start, "W", regras);
+    Camara* resultado1 = buscaLargura(start, "w", regras);
+    Camara* resultado2 = buscaProfundidade(start, "w", regras, 10);
+    Camara* resultado = buscaA(start, "w");
+    if(resultado == NULL)
+        printf("Erro\n");
+    else
+        printf("\nResultado: %s",resultado->id);
     
     return 0;
 }
