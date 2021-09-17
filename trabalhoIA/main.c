@@ -353,7 +353,7 @@ int main(void)
     //backtracking(start, "W", regras);
     Camara* resultado1 = buscaLargura(start, "W", regras);
     Camara* resultado2 = buscaProfundidade(start, "W", regras, 10);
-    Camara* resultado = buscaA(start, "W", regras);
+    Camara* resultado = buscaA(start, "W");
     if(resultado == NULL)
         printf("Erro\n");
     else

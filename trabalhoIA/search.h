@@ -41,7 +41,7 @@ void hrPrint(hr* thisHr);
 void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica);
 
 //começo busca A*
-Camara* buscaA(Camara* start, char* objetivo, int regra[4]);
+Camara* buscaA(Camara* start, char* objetivo);
 //fim busca A*
 
 //começo busca ordenada

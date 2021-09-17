@@ -7,7 +7,6 @@ typedef struct elementoPilha* Pilha;
 
 struct elementoPilha
 {
-//    int dado;
     Camara *camara;
     struct elementoPilha *prox;
     int profundidade;
