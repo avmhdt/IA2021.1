@@ -7,7 +7,7 @@
 
 //backtracking começo
 void backtracking(Camara* start, char* objetivo, int regra[4]);
-int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4]);
+int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4], int *folhas, int* custo);
 int visitado(char *objetivo, Pilha *pilha);
 //backtracking fim
 
@@ -24,6 +24,7 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
 Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade);
 //busca profundidade fim
 
+/*
 typedef struct heuristica {
     struct hr* prev;
     struct hr* next;
@@ -37,8 +38,18 @@ void hrDelete(hr* thisHr);
 
 hr* hrReset(hr* thisHr);
 void hrPrint(hr* thisHr);
+*/
+//void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica);
 
-void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica);
+void fecha(Fila* abertos, Fila* fechados);
+int fechado(Camara* camara, Fila* fechados);
+int abreVizinhos(Fila* fechados, Fila* abertos);
+int g_search(Fila* abertos, Fila* fechados, char* objetivo, int* fr);
+
+void gulosa(Camara* start, char* objetivo);
+
+int minFnDescartado(Pilha* descartados);
+void ida(Camara* start, char* objetivo, int regra[4]);
 
 //começo busca A*
 Camara* buscaA(Camara* start, char* objetivo);

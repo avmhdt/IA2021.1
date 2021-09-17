@@ -3,8 +3,6 @@
 
 #include "labyrinth.h"
 
-#define MAX_ID_LEN 10
-
 typedef struct no *No;
 struct no
 {
