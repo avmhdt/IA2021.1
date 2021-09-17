@@ -463,11 +463,10 @@ Camara* buscaA(Camara* start, char* objetivo) {
     tempo = clock();
     int sucesso = 0, custo;
     No atual;
-    // No anterior;
+    
     Lista *abertos = lista_cria();
     Lista *fechados = lista_cria();
 
-    // printf("AHSIUAHSIAHSIH\n\n\n\n%s---%s", getId(start),  getId(start));
     lista_insere(abertos, getId(start),  getId(start), 0, start);
 
     while(!sucesso){
@@ -476,20 +475,13 @@ Camara* buscaA(Camara* start, char* objetivo) {
       Camara *cam = atual->camara;
       if(!strcmp(cam->id, objectivo)) {
             sucesso = 1;
-            // break;
         }
-      // printf("\n------------------------------------------------\n");
       
-      
-      // printf("\n\nNO ATUAL_______%c___%c", atual->id[0], atual->idPai[0]);
-      
-      // printf("\n\n\nCAMARA ATUAL_______%c", cam->id[0]);
       int i=0;
       for (i; i<4; i++){
         
         if (cam->Camaralist[i]){
           Camara *novaCam = cam->Camaralist[i];
-          // printf("\n\n %d ----- %c \n\n", i, novaCam->id[0]);
           int custo = (cam->pesos[i]);
           custo += atual->custo;
           
@@ -500,28 +492,21 @@ Camara* buscaA(Camara* start, char* objetivo) {
               lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
               
             } else if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 0){
-            // printf("\n\nINSERINDO -- %s -- %s -- %d",getId(cam->Camaralist[i]), getId(cam), custo);
             lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
             }
           }
-          // printf("fim");
+          
         }
       }
-      // printf("\n\nSAIU DO LOOP_______%c___%c", atual->id[0], atual->idPai[0]);
-     
-      // printf("\n\nREMOVEU_______%c___%c", atual->id[0], atual->idPai[0]);
+      
       lista_insere(fechados, atual->id, atual->idPai, 0, cam);
       lista_remove(abertos, cam);
 
       lista_imprime(abertos, fechados);
-      // lista_imprime(fechados);
+      
       
     }
-    No vish = fechados->inicio;
-    while (vish->prox){
-      vish = vish->prox;
-    }
-    
+        
     printf("\n\n\nTempo de execução - busca ordenada: %fs\n", (float) (clock()-tempo)/CLOCKS_PER_SEC);
     printf("Caminho: ");
     caminho2(fechados, start, objectivo);
