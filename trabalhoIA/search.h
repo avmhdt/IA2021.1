@@ -7,7 +7,7 @@
 
 //backtracking começo
 void backtracking(Camara* start, char* objetivo, int regra[4]);
-int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4], int *folhas, int* custo);
+int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4], int *folhas, int* custo,int* profundidadeMax);
 int visitado(char *objetivo, Pilha *pilha);
 //backtracking fim
 
@@ -16,7 +16,6 @@ int ehPai(ElemFila* atual, Camara* camara);
 int ehPai2(ElemFila* atual, Camara* camara);
 int caminho(Fila* fechados, int idPai, char* final);
 int existeMenor(Fila* fila, ElemFila* no, char* id);
-ElemFila* proxEscolhido(ElemFila* atual);
 Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
 //busca largura fim
 
@@ -24,12 +23,13 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
 Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade);
 //busca profundidade fim
 
+//busca gulosa começo
 void fecha(Fila* abertos, Fila* fechados);
 int fechado(Camara* camara, Fila* fechados);
 int abreVizinhos(Fila* fechados, Fila* abertos);
 int g_search(Fila* abertos, Fila* fechados, char* objetivo, int* fr);
-
 void gulosa(Camara* start, char* objetivo);
+//busca gulosa fim
 
 int minFnDescartado(Pilha* descartados);
 void ida(Camara* start, char* objetivo, int regra[4]);

@@ -266,3 +266,43 @@ int caminho2 (Lista *fechados, Camara* start, char* objectivo){
   }
   return profundidade;
 }
+
+int lista_insere_ord(Lista* lista, Camara* camara, No noPai, char* id, int custo) {
+    // fila existe?
+    if(lista==NULL) return 0;
+    // aloca memória para um nó.
+    No no = (No)malloc(sizeof(No)+sizeof(Camara));
+    // malloc falhou?
+    if(no==NULL) return 0;
+
+    no->camara = camara;
+    setId(no,id);
+    setId(no->idPai, noPai->id);
+    no->prox = no->ant = NULL;
+    no->custo = custo;
+
+    No current = lista->inicio;
+    No next;
+    if(!current) {
+        lista->inicio = lista->final = no;
+    } else if (current->custo >= custo) {
+        lista->inicio = no;
+        no->prox = current;
+        current->ant = no;
+        return 1;
+    } else {
+        while(current) {
+        next = current->prox;
+        if(current->custo < custo && (!next || next->custo >= custo)) {
+            current->prox = no;
+            no->ant = current;
+            no->prox = next;
+            if(next) {
+                next->ant = no;
+            }
+        }
+        current = next;
+        }
+    }
+    return 1;
+}

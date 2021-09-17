@@ -11,8 +11,6 @@ Autores: Jos�, Vin�cius e Yuri
 #include "search.h"
 #include "fila.h"
 
-
-
 int create(char* ref, Camara lista[]){
 
   FILE *arq;
@@ -422,8 +420,7 @@ Camara* createLabyrinth() { //(hr** heuristica) {
     return z;
 }
 
-int main(void)
-{
+int main(void) {
   Camara lista[100];
   int total = create ("entrada.txt", lista);
 
@@ -450,16 +447,14 @@ int main(void)
       objetivo = &lista[i];
       objetivoEncontrado = 1;
     }
-    printf("%s, %d\n", lista[i].id, i);
   }
   if(objetivoEncontrado && comecoEncontrado) {
-    // Camara* start = createLabyrinth();
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
 
-    backtracking(start, "w", regras);
-    gulosa(start, "w");
-    ida(start, "w", regras);
-    buscaOrdenada(start, "w", regras);
+    backtracking(start, objetivo, regras);
+    //gulosa(start, objetivo);
+    //ida(start, objetivo, regras);
+    //buscaOrdenada(start, objetivo, regras);
 
     Camara* resultado1 = buscaLargura(start, objetivo, regras);
     if(resultado1 == NULL)
