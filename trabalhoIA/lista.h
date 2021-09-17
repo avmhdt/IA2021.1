@@ -1,10 +1,9 @@
-//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530
 #ifndef LISTA_H
 #define LISTA_H
 
 #include "labyrinth.h"
 
-#define MAX_ID_LEN 1
+#define MAX_ID_LEN 10
 
 typedef struct no *No;
 struct no

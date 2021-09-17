@@ -1,16 +1,10 @@
-//https://gist.github.com/IsaacBruno/6c0dc146ef4bfe2f8038c954219d0530
 #include <stdio.h>
 #include <stdlib.h>
 #include "lista.h"
 #include <string.h>
 #include "labyrinth.h"
 
-#define MAX_ID_LEN 1
-
 // typedef struct lista Lista;
-
-
-
 
 Lista* lista_cria()
 {
