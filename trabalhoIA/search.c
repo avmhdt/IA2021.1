@@ -8,6 +8,8 @@
 
 void backtracking(Camara* start, char* objetivo, int regra[4]) {
 
+    printf("\n******** Backtracking ********\n");
+
     int* folhas = malloc(sizeof(int));
     *folhas = 0;
 
@@ -64,7 +66,7 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
     int i, b;
     Camara* vizinho;
     pilha_insere(visitados, (*atual)->camara);
-    pilha_imprime(atual);
+    //pilha_imprime(atual);
 
     int j = 0;
     if(strcmp(getId((*atual)->camara), objetivo) == 0) {
@@ -93,121 +95,10 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
         return bt_search(atual, visitados, raiz, objetivo, regra, folhas, custo);
     }
 };
-/*
-int getHeuristica(hr* start, char* id);
-
-hr* hrCreate(Camara* camara, hr* parent, int heuristica) {
-    hr *thisHr = malloc(sizeof(hr));
-    if(parent){
-        parent->next = thisHr;
-    }
-    thisHr->prev = parent;
-    thisHr->next = NULL;
-    thisHr->camara = camara;
-    thisHr->heuristica = heuristica;
-    return thisHr;
-};
-
-void hrDelete(hr* thisHr) {
-    hr* nextHr;
-    while(thisHr) {
-        nextHr = thisHr->next;
-        free(thisHr);
-        thisHr = nextHr;
-    }
-};
-
-hr* hrReset(hr* thisHr) {
-    if(!thisHr) return;
-    while(thisHr->prev) {
-        //printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
-        thisHr = thisHr->prev;
-    }
-    //printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
-    return thisHr;
-};
-
-
-void hrPrint(hr* thisHr) {
-    if(!thisHr)  {
-        printf("NULL hr\n");
-        return;
-    }
-    while(thisHr->next) {
-        printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
-        thisHr = thisHr->next;
-    }
-    printf(" %s \t %d\n", getId(thisHr->camara), thisHr->heuristica);
-    thisHr = hrReset(thisHr);
-};
-
-
-void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica) {
-    Pilha* raiz = pilha_cria();
-    pilha_insere(raiz, start);
-    int search = g_search(raiz, objetivo, regra, heuristica);
-};
-
-hr* findHr(hr* heuristica, char* qual) {
-    while(heuristica) {
-        if(strcmp(getId(heuristica->camara), qual) == 0) {
-            return heuristica;
-        }
-        heuristica = heuristica->next;
-    }
-    return NULL;
-};
-
-Camara* minVizinho(Pilha* atual, int regra[4], hr* heuristica) {
-    int i;
-    Camara *vizinho, *retorno = NULL;
-    hr* thisHr;
-
-    int min = -1;
-
-    for(i = 0; i < 4; i++) {
-        vizinho = getVizinho((*atual)->camara, regra[i]);
-        if(vizinho && !visitado(getId(vizinho), atual)) {
-            thisHr = findHr(heuristica, getId(vizinho));
-            if(thisHr) {
-                thisHr = thisHr->heuristica;
-                if(thisHr < min) {
-                    min = thisHr;
-                    retorno = vizinho;
-                }
-            } else {
-                printf("Erro. thisHr = NULL\n");
-                return NULL;
-            }
-        }
-    }
-    return retorno;
-}
-
-int g_search(Pilha* atual, char* objetivo, int regra[4], hr* heuristica) {
-    Camara* vizinho;
-    int i;
-    pilha_imprime(atual);
-    if(strcmp(getId((*atual)->camara), objetivo) == 0) {
-        return 1;
-    } else {
-
-        // abre_vizinhos(abertos);
-        // vizinho = minVizinho(abertos, heuristica);
-
-        vizinho = minVizinho(atual, regra, heuristica);
-        if(vizinho) {
-            pilha_insere(atual, vizinho);
-            g_search(atual, objetivo, regra, heuristica);
-        } else {
-            return 0;
-        }
-    }
-
-};
-*/
 
 void gulosa(Camara* start, char* objetivo) {
+    printf("\n******** Busca Gulosa *******\n");
+
     clock_t timeStart = clock();
 
     Fila *abertos = fila_cria();
@@ -281,10 +172,10 @@ int abreVizinhos(Fila* fechados, Fila* abertos) {
 
 int g_search(Fila* abertos, Fila* fechados, char* objetivo, int* fr) {
     if(!abertos) return 0;
-    printf("%s ", getId(abertos->inicio->camara));
+    //printf("%s ", getId(abertos->inicio->camara));
     //fila_imprime(fechados);
     if(strcmp(getId(abertos->inicio->camara), objetivo) == 0) {
-        printf("\n*********\nCaminho: ");
+        printf("\nCaminho: ");
         caminho(fechados, abertos->inicio->idPai, objetivo);
         return 1;
     } else {
@@ -423,56 +314,7 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]) {
 }
 //fim busca em largura
 
-//começo busca em profundidade
 Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade) {
-    //busca em profundidade modificada, não geração de estados já visitados
-    Pilha *abertos = pilha_cria();
-    Pilha *fechados = pilha_cria();
-    pilha_insere(abertos, start);
-    (*abertos)->profundidade = 0;
-    Camara* camara;
-    int sucesso = 0;
-    int profundidadeNova;
-    while(!sucesso) {
-        ElemPilha* no = *abertos;
-        if(no == NULL)
-            return NULL;
-        camara = no->camara;
-        profundidadeNova = no->profundidade+1;
-        if(!strcmp(camara->id, objetivo)) {
-            sucesso = 1;
-            break;
-        }
-        else if(profundidadeNova<profundidade){
-            printf("Camara Aberta: ");
-            printf(camara->id);
-            printf("\n");
-            pilha_insere(fechados, camara);
-            pilha_remove(abertos);
-
-            int i = 3;
-            for(i; i>=0; i--) {
-                Camara* prox = camara->Camaralist[regra[i]];
-                if(prox != NULL) {
-                    if(!visitado(prox->id, fechados)) {
-                        printf(prox->id);
-                        pilha_insere(abertos, prox);
-                        (*abertos)->profundidade = profundidadeNova;
-                    }
-                }
-            }
-        }
-        else {
-            pilha_remove(abertos);
-        }
-        printf("\nLista: ");
-        pilha_imprime(abertos);
-    }
-    printf("Fechados: %d\n",pilha_imprime(fechados));
-    return camara;
-}
-
-Camara* buscaProfundidade2(Camara* start, char* objetivo, int regra[4], int profundidade) {
     //busca em profundidade não modificada
     clock_t tempo;
     tempo = clock();
@@ -719,6 +561,7 @@ int minFnDescartado(Pilha* descartados) {
 }
 
 void ida(Camara* start, char* objetivo, int regra[4]) {
+    printf("\n******* Busca IDA* ********\n");
     double executionTime;
     clock_t timeStart = clock();
     int nvisitados;
@@ -750,9 +593,9 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
 
         fn = N->hn + custo;
 
-        pilha_imprime(atual);
-        printf("patamar = %d \t patamar_old = %d \t", patamar, patamar_old);
-        printf("custo = %d\n", custo);
+        //pilha_imprime(atual);
+        //printf("patamar = %d \t patamar_old = %d \t", patamar, patamar_old);
+        //printf("custo = %d\n", custo);
 
         if(patamar_old == patamar) {
             fracasso = 1;
@@ -760,7 +603,7 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
             sucesso = 1;
         } else {
             if(fn > patamar) {
-                printf("descartando %s\n", N->id);
+                //printf("descartando %s\n", N->id);
                 pilha_insere(descartados, N);
                 (*descartados)->fn = fn;
                 //(*descartados)->peso = custo;
@@ -790,7 +633,7 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
             if(j == 4) folhas++;
             if(RNvazio) {
                 if(strcmp(N->id, start->id) == 0) {
-                    printf("reset\n");
+                    //printf("reset\n");
                     patamar_old = patamar;
                     patamar = minFnDescartado(descartados);
                     if(patamar < 0) {
@@ -805,12 +648,12 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
                     }
                     folhas = 0;
                 } else {
-                    printf("removendo\n");
-                    pilha_imprime(atual);
+                    //printf("removendo\n");
+                    //pilha_imprime(atual);
                     custo -= (*atual)->peso;
-                    printf("custo = %d\n", custo);
+                    //printf("custo = %d\n", custo);
                     pilha_remove(atual);
-                    pilha_imprime(atual);
+                    //pilha_imprime(atual);
                     N = (*atual)->camara;
                     fn = N->hn + custo;
                 }

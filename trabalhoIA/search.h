@@ -24,23 +24,6 @@ Camara* buscaLargura(Camara* start, char* objetivo, int regra[4]);
 Camara* buscaProfundidade(Camara* start, char* objetivo, int regra[4], int profundidade);
 //busca profundidade fim
 
-/*
-typedef struct heuristica {
-    struct hr* prev;
-    struct hr* next;
-
-    Camara* camara;
-    int heuristica;
-} hr;
-
-hr* hrCreate(Camara* camara, hr* parent, int heuristica);
-void hrDelete(hr* thisHr);
-
-hr* hrReset(hr* thisHr);
-void hrPrint(hr* thisHr);
-*/
-//void gulosa(Camara* start, char* objetivo, int regra[4], hr* heuristica);
-
 void fecha(Fila* abertos, Fila* fechados);
 int fechado(Camara* camara, Fila* fechados);
 int abreVizinhos(Fila* fechados, Fila* abertos);

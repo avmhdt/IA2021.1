@@ -14,7 +14,7 @@ Autores: Jos�, Vin�cius e Yuri
 
 
 int create(char* ref, Camara lista[]){
-  
+
   FILE *arq;
   int result;
   char str[100];
@@ -27,16 +27,16 @@ int create(char* ref, Camara lista[]){
   arq = fopen(ref, "rt");
   if (arq == NULL){
     printf("Erro na abertura do arquivo");
-  }    
-  
+  }
+
   i = 0;
   while(!feof(arq)){
     result = fgets(str, 100, arq);
-    if (result){        
+    if (result){
       token = strtok(str,",");
       j=0;
       while(token){
-        switch (j){            
+        switch (j){
           case 0:
             a[0] = token;
             break;
@@ -52,17 +52,17 @@ int create(char* ref, Camara lista[]){
           case 4:
             e[0] = token;
             // puts(token);
-        }         
-        
+        }
+
         token = strtok(NULL, ",");
         j++;
-        
+
       }
-      
+
         d2 = strtol(d[0], NULL, 10);
         hn = strtol(e[0], NULL, 10);
-        
-        
+
+
         if (!(strcmp(c[0],"DOWN_POS"))){
           pos2 = DOWN_POS;
         } else if (!(strcmp(c[0],"UP_POS"))){
@@ -74,10 +74,10 @@ int create(char* ref, Camara lista[]){
         } else {
           pos2=0;
         }
-        
+
         int existe = 0;
-        for (int k =0; k<contador; k++){            
-          if (!strcmp(lista[k].id, a[0])){              
+        for (int k =0; k<contador; k++){
+          if (!strcmp(lista[k].id, a[0])){
             existe = 1;
           }
         }
@@ -89,7 +89,7 @@ int create(char* ref, Camara lista[]){
           cam->hn = hn;
           lista[contador] = *cam;
           contador++;
-          
+
         }
         Camara *cam1 = getById(lista, contador, a);
         Camara *cam2 = getById(lista, contador, b);
@@ -97,8 +97,8 @@ int create(char* ref, Camara lista[]){
         if(strcmp(cam1->id, "nu") && strcmp(cam2->id, "nu")){
           insertVizinho(cam1, cam2, pos2, d2);
         }
-    }      
-    i++;    
+    }
+    i++;
   }
   fclose(arq);
   return contador;
@@ -456,46 +456,11 @@ int main(void)
     // Camara* start = createLabyrinth();
     int regras[4] = {UP_POS, RIGHT_POS, DOWN_POS, LEFT_POS};
 
-    //backtracking(start, "w", regras);
+    backtracking(start, "w", regras);
     gulosa(start, "w");
-    //ida(start, "w", regras);
-
-    // backtracking(start, "w", regras);
-    // Camara* resultado = buscaLargura(start, "W", regras);
-    //Camara* resultado = buscaProfundidade(start, "W", regras, 10);
-    //Camara* resultado = buscaProfundidade2(start, "W", regras, 10);
-
-    /*
-    Camara* resultado = buscaA(start, "W", regras);
-    //Camara* resultado = buscaA(start, "W", regras);
-
-    // buscaOrdenada(start, "W", regras);
-
-
-    //Camara* resultado = buscaA(start, "W", regras);
-
+    ida(start, "w", regras);
     buscaOrdenada(start, "w", regras);
 
-
-    // if(resultado == NULL)
-    //     printf("Erro\n");
-    // else
-    //     printf("\nResultado: %s",resultado->id);
-    //backtracking(start, "W", regras);
-    Camara* resultado1 = buscaLargura(start, "w", regras);
-    Camara* resultado2 = buscaProfundidade(start, "w", regras, 10);
-    Camara* resultado = buscaA(start, "w");
-    if(resultado == NULL)
-        printf("Erro\n");
-    else
-        printf("\nResultado: %s",resultado->id);
-    */
-
-    //    backtracking(start, "W", regras);
-    //    gulosa(start, "W", regras, *heuristica);
-
-    //buscaOrdenada(start, "w", regras);
-    
     Camara* resultado1 = buscaLargura(start, objetivo, regras);
     if(resultado1 == NULL)
       printf("Erro\n");
@@ -509,6 +474,6 @@ int main(void)
   }
   else
     printf("Objetivo ou ponto de partida não encontrado, digite uma câmara válida");
-  
+
   return 0;
 }
