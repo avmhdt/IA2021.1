@@ -450,7 +450,6 @@ int main(void)
       objetivo = &lista[i];
       objetivoEncontrado = 1;
     }
-    printf("%s, %d\n", lista[i].id, i);
   }
   if(objetivoEncontrado && comecoEncontrado) {
     // Camara* start = createLabyrinth();
