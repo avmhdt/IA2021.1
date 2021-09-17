@@ -37,6 +37,8 @@ int insertVizinho(Camara* camara, Camara* parent, int pos, int peso);
 
 void setVizinhosNULL(Camara* camara);
 
+Camara* getById (Camara lista[], int size, char *id[]);
+
 //void traverseLabyrinth(Camara* camara, int regras[4]);
 /*****************************************************************************/
 /*

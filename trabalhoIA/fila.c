@@ -57,7 +57,8 @@ int fila_insere(Fila *fila, Camara* camara, int idPai, int id)
     no->id = id;
     no->prox = NULL;
     no->custo = 0;
-    no->fn = 0;
+    no->fn = camara->hn;
+    no->profundidade = 0;
     if(fila->final==NULL) {
         fila->inicio = no;
         no->ant = NULL;
@@ -168,7 +169,7 @@ int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id) {
     return 1;
 }
 
-int fila_insere_ord_fn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int peso) {
+int fila_insere_ord_fn(Fila* fila, Camara* camara, int id, int peso, ElemFila* pai) {
     // fila existe?
     if(fila==NULL) return 0;
     // aloca memória para um nó.
@@ -177,13 +178,13 @@ int fila_insere_ord_fn(Fila* fila, Camara* camara, int idPai, int id, int custoP
     if(no==NULL) return 0;
 
     no->camara = camara;
-    no->idPai = idPai;
+    no->idPai = pai->id;
     no->id = id;
     no->prox = no->ant = NULL;
-
-    int fn = (custoPai + peso) + camara->hn;
+    no->profundidade = pai->profundidade+1;
+    int fn = (pai->custo + peso) + camara->hn;
     no->fn = fn;
-    no->custo = custoPai + peso;
+    no->custo = pai->custo + peso;
 
     ElemFila *current = fila->inicio;
     ElemFila *next;

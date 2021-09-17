@@ -10,11 +10,7 @@
 // typedef struct lista Lista;
 
 
-struct lista
-{
-  struct no *inicio;
-  struct no *final;
-};
+
 
 Lista* lista_cria()
 {
@@ -35,7 +31,7 @@ No getMenorCusto(Lista *lista){
     No min = lista->inicio;
     No no = lista->inicio;
     while (no){
-      // printf("\n\n  %d --- %d \n\n", no->custo, min->custo);
+      
       if (no->custo < min->custo){
         min = no;
       }
@@ -78,27 +74,36 @@ int lista_tamanho(Lista *lista)
 
 
 int lista_busca(Lista * lista, char id){
-    // printf("\n\nBuscando %c\n\n", id);
+    
     No no = lista->inicio;
     int i=0;
     while (no){
-        // printf("\n --- %c", no->id[0]);
+        
         if (no->id[0] == id){
-          // printf("\n\n entrou no if -- %d\n\n", i);
           return i;
         }
         if (no->prox != NULL)
           no = no->prox;
         else {
-          // printf("fudeu");
           no = NULL;
         }
         i=i+1;
     }
-    //printf("--------------------\n %c\n", id);
     return -1;
 }
 
+No getNoByID (Lista *lista, char* id){
+    No no = lista->inicio;
+    while (no){
+      if (!strcmp(no->camara->id, id)){
+        return no;
+      }
+      no = no->prox;
+    }
+    No nulo = (No)malloc(sizeof(No)+sizeof(Camara));
+    nulo->profundidade = -1;
+    return nulo;
+}
 
 int lista_insere(Lista *lista, char*id, char* idPai, int custo, Camara *camara)
 {
@@ -114,13 +119,19 @@ int lista_insere(Lista *lista, char*id, char* idPai, int custo, Camara *camara)
     setId(no,id);
     setId(no->idPai, idPai);
     no->custo = custo;
+    
+    
     //printf("\n\n---------------------------------\n%c", no->custo);
     no->prox = NULL;
     no->camara = camara;
-    if(lista->final==NULL)
+    if(lista->final==NULL){
         lista->inicio = no;
-    else
+        no->ant = NULL;
+    }
+    else{
         lista->final->prox = no;
+        no->ant = lista->final;
+    }
     lista->final = no;
     return 1;
 }
@@ -149,11 +160,11 @@ int lista_removeFinal(Lista *lista)
 }
 
 int lista_compara(Lista *lista, char id[], int custo){
-  // printf("\n\nCOMPARA\n\n%c ---- %d", id[0], custo);
+  
   No no = lista->inicio;
   while (no){
     if (no->id[0] == id[0]){
-      // printf("\n\t%c --- %c", no->id[0], id[0]);
+      
       if (no->custo > custo){
         return 1;
       } else {
@@ -219,7 +230,7 @@ int lista_remove(Lista *lista, Camara* elem){
 void lista_imprime(Lista *abertos, Lista *fechados)
 {
     printf("\n");
-    // printf("\n\nsize: %d \n\n", lista_tamanho(lista));
+    
     if(lista_vazia(abertos)) return;
     No no = abertos->inicio;
     
@@ -227,11 +238,37 @@ void lista_imprime(Lista *abertos, Lista *fechados)
         printf("  %c(%d)", no->id[0], no->custo);
         no = no->prox;
     }
-    printf("   |   ");
+    printf("  **************  ");
     no = fechados->inicio;
     while(no){
         printf("  %c", no->id[0]);
         no = no->prox;
     }
-    // putchar('\n');
+    
+}
+
+int caminho2 (Lista *fechados, Camara* start, char* objectivo){
+  printf(" %c", objectivo[0]);
+  int profundidade = 0;
+  No no = fechados->inicio;
+  while(no->prox){
+    no = no->prox;
+  }
+
+  char* idPai =  no->idPai;
+  printf("<-%s ", no->idPai);
+  while (no->id[0] != start->id[0]){
+    no = fechados->inicio;
+    // printf("Quase no id");
+    while(no->id[0] != idPai[0]){
+      // printf("\n%c ---- %c\n", no->id[0] , idPai[0]);
+      no = no->prox;
+    }
+    printf("<-%s", no->idPai);
+    profundidade ++;
+    idPai = no->idPai;
+      
+    
+  }
+  return profundidade;
 }

@@ -15,6 +15,7 @@ struct elementoFila
     int id;
     int custo;
     int fn;
+    int profundidade;
     Camara *camara;
     struct elementoFila *prox;
     struct elementoFila *ant;
@@ -39,5 +40,6 @@ int fila_insere_ord(Fila* fila, Camara* camara, int idPai, int id);
 int fila_insere_ord_gn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int gn);
 
 int fila_conta(Fila *fila);
-int fila_insere_ord_fn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int peso);
+//int fila_insere_ord_fn(Fila* fila, Camara* camara, int idPai, int id, int custoPai, int peso);
+int fila_insere_ord_fn(Fila* fila, Camara* camara, int id, int peso, ElemFila* pai);
 #endif

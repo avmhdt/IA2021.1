@@ -13,8 +13,16 @@ struct no
   char idPai[MAX_ID_LEN];
   int custo;
   int fechado;
+  int profundidade;
   struct no *prox;
+  struct no *ant;
   Camara *camara;
+};
+
+struct lista
+{
+  struct no *inicio;
+  struct no *final;
 };
 
 typedef struct lista Lista;
@@ -34,4 +42,6 @@ No getMenorCusto(Lista *lista);
 int lista_remove(Lista *lista, Camara* elem);
 int lista_busca(Lista * lista, char id);
 int lista_compara(Lista *lista, char id[], int custo);
+int caminho2 (Lista *fechados, Camara* start, char* objectivo);
+No getNoByID (Lista *lista, char* id);
 #endif

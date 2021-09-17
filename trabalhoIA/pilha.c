@@ -41,6 +41,8 @@ int pilha_insere(Pilha *pilha, Camara* camara)
     // inicializa o nó
     no->camara = camara;
     no->prox = (*pilha);
+    no->custo = 0;
+    no->profundidade = 0;
     *pilha = no;
     return 1;
 }
