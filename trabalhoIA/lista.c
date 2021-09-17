@@ -6,9 +6,6 @@
 
 // typedef struct lista Lista;
 
-
-
-
 Lista* lista_cria()
 {
     Lista *li = (Lista*) malloc(sizeof(Lista));

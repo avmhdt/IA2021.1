@@ -597,7 +597,7 @@ Camara* buscaA(Camara* start, char* objetivo) {
         }
     }
 
-    printf("Tempo de execução - busca A*: %fs\n", (float) (clock()-tempo)/CLOCKS_PER_SEC);
+    printf("Tempo de execução - busca A*: %10fs\n", (double) (clock()-tempo)/CLOCKS_PER_SEC);
     printf("Caminho: ");
     caminho(fechados, no->idPai, camara->id);
     printf("Nós fechados: %d\n", fila_tamanho(fechados));
