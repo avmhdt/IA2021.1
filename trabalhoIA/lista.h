@@ -14,7 +14,14 @@ struct no
   int custo;
   int fechado;
   struct no *prox;
+  struct no *ant;
   Camara *camara;
+};
+
+struct lista
+{
+  struct no *inicio;
+  struct no *final;
 };
 
 typedef struct lista Lista;
@@ -34,4 +41,5 @@ No getMenorCusto(Lista *lista);
 int lista_remove(Lista *lista, Camara* elem);
 int lista_busca(Lista * lista, char id);
 int lista_compara(Lista *lista, char id[], int custo);
+void caminho2 (Lista *fechados, Camara* start, char* objectivo);
 #endif

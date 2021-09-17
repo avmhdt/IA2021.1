@@ -10,11 +10,7 @@
 // typedef struct lista Lista;
 
 
-struct lista
-{
-  struct no *inicio;
-  struct no *final;
-};
+
 
 Lista* lista_cria()
 {
@@ -117,10 +113,14 @@ int lista_insere(Lista *lista, char*id, char* idPai, int custo, Camara *camara)
     //printf("\n\n---------------------------------\n%c", no->custo);
     no->prox = NULL;
     no->camara = camara;
-    if(lista->final==NULL)
+    if(lista->final==NULL){
         lista->inicio = no;
-    else
+        no->ant = NULL;
+    }
+    else{
         lista->final->prox = no;
+        no->ant = lista->final;
+    }
     lista->final = no;
     return 1;
 }
@@ -227,11 +227,36 @@ void lista_imprime(Lista *abertos, Lista *fechados)
         printf("  %c(%d)", no->id[0], no->custo);
         no = no->prox;
     }
-    printf("   |   ");
+    printf("  **************  ");
     no = fechados->inicio;
     while(no){
         printf("  %c", no->id[0]);
         no = no->prox;
     }
     // putchar('\n');
+}
+
+void caminho2 (Lista *fechados, Camara* start, char* objectivo){
+  printf("\n\nCAMINHO:  %c", objectivo[0]);
+  No no = fechados->inicio;
+  while(no->prox){
+    no = no->prox;
+  }
+
+  char* idPai =  no->idPai;
+  printf(" <- %s ", no->idPai);
+  while (no->id[0] != start->id[0]){
+    no = fechados->inicio;
+    // printf("Quase no id");
+    while(no->id[0] != idPai[0]){
+      // printf("\n%c ---- %c\n", no->id[0] , idPai[0]);
+      no = no->prox;
+    }
+    printf("<- %s ", no->idPai);
+    idPai = no->idPai;
+      
+    
+  }
+
+  printf("\n\n\n\n");
 }

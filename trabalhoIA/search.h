@@ -46,5 +46,4 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]);
 //começo busca ordenada
 void buscaOrdenada(Camara* start, char* objectivo, int regra[4]);
 //fim busca ordenada
-
 #endif // SEARCH_H

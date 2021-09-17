@@ -433,16 +433,28 @@ Camara* buscaA(Camara* start, char* objetivo, int regra[4]) {
 //começo busca ordenada
 void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
 
+    int sucesso = 0, custo;
+    No atual;
+    // No anterior;
     Lista *abertos = lista_cria();
     Lista *fechados = lista_cria();
 
+    // printf("AHSIUAHSIAHSIH\n\n\n\n%s---%s", getId(start),  getId(start));
     lista_insere(abertos, getId(start),  getId(start), 0, start);
 
-    for (int k=0; k<21; k++){
-      // printf("\n------------------------------------------------\n");
-      No atual = getMenorCusto(abertos);
-      // printf("\n\nNO ATUAL_______%c", atual->id[0]);
+    while(!sucesso){
+      atual = getMenorCusto(abertos);
+      custo = atual->custo;
       Camara *cam = atual->camara;
+      if(!strcmp(cam->id, objectivo)) {
+            sucesso = 1;
+            // break;
+        }
+      // printf("\n------------------------------------------------\n");
+      
+      
+      // printf("\n\nNO ATUAL_______%c___%c", atual->id[0], atual->idPai[0]);
+      
       // printf("\n\n\nCAMARA ATUAL_______%c", cam->id[0]);
       int i=0;
       for (i; i<4; i++){
@@ -459,18 +471,29 @@ void buscaOrdenada(Camara* start, char* objectivo, int regra[4]){
               lista_remove(abertos, cam->Camaralist[i]);
               lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
             } else if (lista_compara(abertos, getId(cam->Camaralist[i]), custo) == 0){
+            // printf("\n\nINSERINDO -- %s -- %s -- %d",getId(cam->Camaralist[i]), getId(cam), custo);
             lista_insere(abertos, getId(cam->Camaralist[i]), getId(cam), custo, cam->Camaralist[i]);
             }
           }
           // printf("fim");
         }
       }
+      // printf("\n\nSAIU DO LOOP_______%c___%c", atual->id[0], atual->idPai[0]);
+     
+      // printf("\n\nREMOVEU_______%c___%c", atual->id[0], atual->idPai[0]);
+      lista_insere(fechados, atual->id, atual->idPai, 0, cam);
       lista_remove(abertos, cam);
-      // printf("REMOVEU");
-      lista_insere(fechados, getId(cam), getId(cam), 0, cam);
 
       lista_imprime(abertos, fechados);
       // lista_imprime(fechados);
+      
     }
+    No vish = fechados->inicio;
+    while (vish->prox){
+      vish = vish->prox;
+    }
+    printf("\n\n\nCUSTO: %d\n", custo);
+    caminho2(fechados, start, objectivo);
 }
 //fim busca ordenada
+
