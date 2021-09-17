@@ -427,10 +427,10 @@ int main(void)
 
     Camara lista[100];
     int total = create ("entrada.txt", lista);
-    for (int i=0; i<total; i++){
-      printf(" %d ", lista[i].hn);
-    }
-    printf("\n\n\n");
+    // for (int i=0; i<total; i++){
+    //   printf(" %d ", lista[i].hn);
+    // }
+    // printf("\n\n\n");
     Camara* start = &lista[0];
     //    hr **heuristica = malloc(sizeof(hr*));
     //    *heuristica = NULL;

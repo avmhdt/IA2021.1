@@ -502,19 +502,20 @@ Camara* buscaA(Camara* start, char* objetivo) {
       lista_insere(fechados, atual->id, atual->idPai, 0, cam);
       lista_remove(abertos, cam);
 
-      lista_imprime(abertos, fechados);
+      // lista_imprime(abertos, fechados);
       
       
     }
         
     printf("\n\n\nTempo de execução - busca ordenada: %fs\n", (float) (clock()-tempo)/CLOCKS_PER_SEC);
     printf("Caminho: ");
-    caminho2(fechados, start, objectivo);
+    int profundidade = caminho2(fechados, start, objectivo);
     printf("\nNós fechados: %d\n", lista_tamanho(fechados));
     printf("Custo solução: %d\n",custo);
-    // printf("Profundidade: %d\n", profundidade);
+    
+    printf("Profundidade: %d\n", profundidade);
     // printf("Fator médio de ramificação: %f\n\n", (float) (indice-fila_tamanho(podado))/nFechados);
-    printf("\n\n\n");
+    printf("\n");
 }
 //fim busca ordenada
 
