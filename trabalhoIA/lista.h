@@ -41,4 +41,6 @@ int lista_busca(Lista * lista, char id);
 int lista_compara(Lista *lista, char id[], int custo);
 int caminho2 (Lista *fechados, Camara* start, char* objectivo);
 No getNoByID (Lista *lista, char* id);
+
+int lista_insere_ord(Lista* lista, Camara* camara, No noPai, char* id, int custo);
 #endif
