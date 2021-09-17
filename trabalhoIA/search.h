@@ -7,7 +7,7 @@
 
 //backtracking começo
 void backtracking(Camara* start, char* objetivo, int regra[4]);
-int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4], int *pais, int *filhos, double* custo);
+int bt_search(Pilha* atual, Pilha* visitados, char*raiz, char* objetivo, int regra[4], int *folhas, double* custo);
 int visitado(char *objetivo, Pilha *pilha);
 //backtracking fim
 

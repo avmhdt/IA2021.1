@@ -8,9 +8,8 @@
 
 void backtracking(Camara* start, char* objetivo, int regra[4]) {
 
-    int* filhos = malloc(sizeof(int));
-    int* pais = malloc(sizeof(int));
-    *filhos = *pais = 0;
+    int* folhas = malloc(sizeof(int));
+    *folhas = 0;
 
     double *custo = malloc(sizeof(double));
     *custo = 0;
@@ -19,7 +18,7 @@ void backtracking(Camara* start, char* objetivo, int regra[4]) {
     Pilha *raiz = pilha_cria();
     pilha_insere(raiz, start);
     Pilha *visitados = pilha_cria();
-    int search = bt_search(raiz, visitados, getId((*raiz)->camara), objetivo, regra, pais, filhos, custo);
+    int search = bt_search(raiz, visitados, getId((*raiz)->camara), objetivo, regra, folhas, custo);
     clock_t timeEnd = clock();
 
     double executionTime = (double) (timeEnd - timeStart)/CLOCKS_PER_SEC;
@@ -29,20 +28,21 @@ void backtracking(Camara* start, char* objetivo, int regra[4]) {
     } else sucesso = 'N';
 
     int nvisitados = pilha_conta(visitados);
-    double frm = (double)(*filhos)/(double)(*pais);
+    double frm = (double)(nvisitados-1)/(double)(nvisitados - *folhas);
 
     printf("\nSucesso? %c\n", sucesso);
     printf("Caminho: ");
     pilha_imprime(raiz);
     printf("\nExpandidos/Visitados: %d\n", nvisitados);
-    //printf("Fator de ramificacao medio: %.2f\n", frm);
+    printf("Fator de ramificacao medio: %.2f\n", frm);
     printf("Tempo de execucao: %.6f s\n", executionTime);
+
+    //pilha_imprime(visitados);
 
     pilha_libera(raiz);
     pilha_libera(visitados);
 
-    free(filhos);
-    free(pais);
+    free(folhas);
     free(custo);
 
     return;
@@ -59,7 +59,7 @@ int visitado(char *objetivo, Pilha *pilha)
     return 0;
 }
 
-int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int regra[4], int *pais, int *filhos, double* custo) {
+int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int regra[4], int *folhas, double* custo) {
     int i, b;
     Camara* vizinho;
     pilha_insere(visitados, (*atual)->camara);
@@ -72,24 +72,25 @@ int bt_search(Pilha* atual, Pilha* visitados, char* raiz, char* objetivo, int re
         for(i = 0; i < 4; i++) {
             vizinho = getVizinho((*atual)->camara, regra[i]);
             if(vizinho != NULL && !visitado(vizinho->id, visitados)) {
-                if(j == 0) {
-                    (*pais) += 1;
-                }
-                j++;
-                (*filhos) += 1;
+                //if(j == 0) {
+                //    (*pais) += 1;
+                //}
+                //j++;
+                //(*filhos) += 1;
                 *custo += (*atual)->camara->pesos[regra[i]];
 
                 pilha_insere(atual, vizinho);
-                b = bt_search(atual, visitados, raiz, objetivo, regra, pais, filhos, custo);
+                b = bt_search(atual, visitados, raiz, objetivo, regra, folhas, custo);
                 if(b) return b; else *custo -= (*atual)->camara->pesos[regra[i]];
-            };
+            } else j++;
         }
+        if(j == 4) *folhas += 1;
         if(strcmp(getId((*atual)->camara), raiz) == 0) {
             return 0;
         }
         // backtracking:
         pilha_remove(atual);
-        return bt_search(atual, visitados, raiz, objetivo, regra, pais, filhos, custo);
+        return bt_search(atual, visitados, raiz, objetivo, regra, folhas, custo);
     }
 };
 /*
@@ -674,15 +675,14 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
     double executionTime;
     clock_t timeStart = clock();
     int nvisitados, nexpandidos;
-    int pais = 0, filhos = 0;
+    int folhas = 0;
     double frm;
     Pilha* descartados = pilha_cria();
     Pilha* visitados = pilha_cria();
     Pilha* atual = pilha_cria();
 
-    int sucesso = 0, fracasso = 0, i, RNvazio;
+    int sucesso = 0, fracasso = 0, i, RNvazio, j;
     Camara *N = start, *vizinho;
-
 
     int patamar = N->hn, minfn;
     int patamar_old = - 1;
@@ -696,6 +696,7 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
         //fn = N->hn + custo;
         //pilha_insere(atual, N);
         //(*atual)->fn = fn;
+
         pilha_insere(visitados, N);
         (*visitados)->fn = fn;
         //(*visitados)->peso = custo;
@@ -721,27 +722,25 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
                 N = (*atual)->camara;
             }
             RNvazio = 1;
+            j = 0;
             for(i = 0; i < 4; i++) {
                 vizinho = N->Camaralist[regra[i]];
-                if(vizinho) {
-                    if(visitado(vizinho->id, visitados)) {
-                        filhos++;
-                    } else {
-                        //printf("vizinho\n");
-                        filhos++;
-                        pais++;
-                        RNvazio = 0;
-                        peso = N->pesos[regra[i]];
-                        custo += peso;
-                        N = vizinho;
-                        fn = N->hn + custo;
-                        pilha_insere(atual, N);
-                        (*atual)->fn = fn;
-                        (*atual)->peso = peso;
-                        break;
-                    }
+                if(vizinho && !visitado(vizinho->id, visitados)) {
+                    //printf("vizinho\n");
+                    RNvazio = 0;
+                    peso = N->pesos[regra[i]];
+                    custo += peso;
+                    N = vizinho;
+                    fn = N->hn + custo;
+                    pilha_insere(atual, N);
+                    (*atual)->fn = fn;
+                    (*atual)->peso = peso;
+                    break;
+                } else {
+                    j++;
                 }
             }
+            if(j == 4) folhas++;
             if(RNvazio) {
                 if(strcmp(N->id, start->id) == 0) {
                     printf("reset\n");
@@ -757,7 +756,7 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
                     while(!pilha_vazia(descartados)) {
                         pilha_remove(descartados);
                     }
-                    filhos = pais = 0;
+                    folhas = 0;
                 } else {
                     printf("removendo\n");
                     pilha_imprime(atual);
@@ -783,14 +782,14 @@ void ida(Camara* start, char* objetivo, int regra[4]) {
         suc = 'S';
     } else suc = 'N';
 
-    frm = (double)filhos/(double)pais;
+    frm = (double)(nvisitados-1)/(double)(nvisitados-folhas);
 
     printf("\nSucesso? %c\n", suc);
     printf("Caminho: ");
     pilha_imprime(atual);
     printf("Custo: %d\n", custo);
     printf("Expandidos/Visitados: %d\n", nvisitados);
-    //printf("Fator de ramificacao medio: %.2f\n", frm);
+    printf("Fator de ramificacao medio: %.2f\n", frm);
     printf("Tempo de execucao: %.6f s", executionTime);
 
     pilha_libera(descartados);
